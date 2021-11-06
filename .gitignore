@@ -1,0 +1,8 @@
+.import/
+.mono/
+.plugged/
+.venv/
+addons/*
+!addons/gd-plug
+!addons/glam
+assets/

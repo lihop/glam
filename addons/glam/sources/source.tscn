@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/glam/sources/source.gd" type="Script" id=1]
+[ext_resource path="res://addons/glam/util/cacheable_http_request.gd" type="Script" id=2]
+
+[node name="Source" type="Node"]
+script = ExtResource( 1 )
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+use_threads = true
+script = ExtResource( 2 )
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

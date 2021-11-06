@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="16"
+   viewBox="0 0 16 16"
+   width="16"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="icon_glam.svg"
+   inkscape:export-filename="/home/leroy/projects/glam/addons/glam/spinner.png"
+   inkscape:export-xdpi="1536"
+   inkscape:export-ydpi="1536"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     id="namedview837"
+     showgrid="false"
+     inkscape:zoom="31.717352"
+     inkscape:cx="1.77207"
+     inkscape:cy="5.213278"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <path
+     fill="currentColor"
+     d="m 12.623402,2.0071322 2.118572,3.7455405 H 12.375261 L 10.755313,2.0071322 Z m -2.996432,0 1.619946,3.7455405 H 4.7530832 L 6.3730306,2.0071322 Z m -6.2503729,0 H 5.2446853 L 3.624739,5.7526727 H 1.2580256 Z M 1.2580256,6.501781 h 2.3573502 l 2.8793838,5.892206 c 0.035113,0.07255 -0.0632,0.138114 -0.1170533,0.07725 z m 3.4693068,0 h 6.5453336 l -3.2071187,7.448944 c -0.023413,0.05619 -0.1053387,0.05619 -0.1287533,0 z m 4.7779055,5.892206 2.8793861,-5.892206 h 2.35735 l -5.1196856,5.967115 c -0.053834,0.0632 -0.1521648,-0.0024 -0.1170495,-0.07492 z"
+     id="path1404"
+     style="stroke-width:0.0234097;fill:#ff69b4;fill-opacity:1" />
+</svg>

@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "ResourceFormatSaver",
+"class": "GlamAssetResourceFormatSaver",
+"language": "GDScript",
+"path": "res://addons/glam/glam_resource_format_saver.gd"
+} ]
+_global_script_class_icons={
+"GlamAssetResourceFormatSaver": ""
+}
+
+[application]
+
+config/name="GLAM"
+config/description="Godot Libre Asset Manager."
+config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg", "res://addons/glam/plugin.cfg", "res://addons/godot_xterm/plugin.cfg", "res://addons/gut/plugin.cfg" )
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

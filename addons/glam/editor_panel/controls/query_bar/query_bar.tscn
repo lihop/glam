@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/glam/editor_panel/controls/query_bar/query_bar.gd" type="Script" id=1]
+[ext_resource path="res://addons/glam/icons/icon_animation_filter.svg" type="Texture" id=2]
+[ext_resource path="res://addons/glam/icons/icon_search.svg" type="Texture" id=3]
+
+[node name="QueryBar" type="HBoxContainer"]
+anchor_right = 1.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Filters" type="MenuButton" parent="."]
+visible = false
+margin_right = 71.0
+margin_bottom = 26.0
+focus_mode = 2
+text = "Filters"
+icon = ExtResource( 2 )
+items = [ "Generate Licenses", null, 0, false, false, 0, 0, null, "", false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_right = 1024.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+clear_button_enabled = true
+shortcut_keys_enabled = false
+right_icon = ExtResource( 3 )
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="SortLabel" type="Label" parent="."]
+visible = false
+margin_left = 923.0
+margin_top = 6.0
+margin_right = 952.0
+margin_bottom = 20.0
+text = "Sort:"
+
+[node name="SortSelect" type="OptionButton" parent="."]
+visible = false
+margin_left = 956.0
+margin_right = 1024.0
+margin_bottom = 26.0
+text = "Latest"
+items = [ "Latest", null, false, 0, null, "Popular", null, false, 1, null, "Alphabet", null, false, 2, null, "Downloads", null, false, 3, null ]
+selected = 0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.25
+one_shot = true
+
+[connection signal="gui_input" from="LineEdit" to="." method="_on_LineEdit_gui_input"]
+[connection signal="text_changed" from="LineEdit" to="." method="_on_LineEdit_text_changed"]
+[connection signal="text_entered" from="LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="item_selected" from="SortSelect" to="." method="_on_SortSelect_item_selected"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

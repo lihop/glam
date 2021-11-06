@@ -1,0 +1,4 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: GLAM: Godot Libre Asset Manager
+Upstream-Contact: Leroy Hopson <glam@leroy.geek.nz>
+Source: https://github.com/lihop/glam

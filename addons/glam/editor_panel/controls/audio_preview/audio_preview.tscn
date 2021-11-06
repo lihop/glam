@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/glam/editor_panel/controls/audio_preview/audio_preview.gd" type="Script" id=1]
+[ext_resource path="res://addons/glam/editor_panel/controls/audio_preview/button.gd" type="Script" id=2]
+[ext_resource path="res://addons/glam/util/cacheable_http_request.gd" type="Script" id=3]
+
+[node name="AudioPreview" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="TextureRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -19.0
+margin_top = -10.0
+margin_right = 19.0
+margin_bottom = 10.0
+disabled = true
+toggle_mode = true
+text = "Play"
+flat = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+use_threads = true
+script = ExtResource( 3 )
+
+[connection signal="toggled" from="TextureRect/Button" to="TextureRect/Button" method="_on_toggled"]
+[connection signal="toggled" from="TextureRect/Button" to="." method="_on_Button_toggled"]
