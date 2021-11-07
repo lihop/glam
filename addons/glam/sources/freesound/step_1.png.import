@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/step_3.png-ceb3d735af543622502ab751325b7405.stex"
+path="res://.import/step_1.png-7a252cc646a9f092e42903e970832a06.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/glam/sources_temp/freesound/step_3.png"
-dest_files=[ "res://.import/step_3.png-ceb3d735af543622502ab751325b7405.stex" ]
+source_file="res://addons/glam/sources/freesound/step_1.png"
+dest_files=[ "res://.import/step_1.png-7a252cc646a9f092e42903e970832a06.stex" ]
 
 [params]
 

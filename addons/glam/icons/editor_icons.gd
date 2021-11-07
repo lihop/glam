@@ -3,18 +3,10 @@
 tool
 extends Node
 
-var _node: Node
-
-
-func _init(node: Node = null):
-	_node = node
-
 
 func get_icon(icon_name: String) -> Texture:
-	if Engine.editor_hint and _node and _node.is_inside_tree():
-		return _node.get_tree().get_root().get_child(0).get_gui_base().get_icon(
-			icon_name, "EditorIcons"
-		)
+	if Engine.editor_hint and is_inside_tree():
+		return get_tree().get_root().get_child(0).get_gui_base().get_icon(icon_name, "EditorIcons")
 	else:
 		match icon_name:
 			"AudioStreamSample":

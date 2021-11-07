@@ -22,7 +22,7 @@ func set_zoom_factor(value := 1.0) -> void:
 
 func _notification(what):
 	match what:
-		NOTIFICATION_SORT_CHILDREN:
+		NOTIFICATION_RESIZED:
 			set_zoom_factor(zoom_factor)
 
 

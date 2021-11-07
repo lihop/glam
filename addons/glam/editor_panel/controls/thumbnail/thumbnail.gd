@@ -105,26 +105,6 @@ func get_drag_data(_position):
 		return {files = [], type = "files"}
 
 
-#func _input(event):
-#	if event is InputEventMouseButton:
-#		if _dragging and event.button_index == BUTTON_LEFT and not event.pressed:
-#			_dragging = false
-
-#func _on_cancelled():
-#	var glam: EditorPlugin = get_tree().get_nodes_in_group("glam_editor_plugin")[0]
-#	var undo_redo: UndoRedo = glam.get_undo_redo()
-#	if undo_redo.get_current_action_name() == "Set material":
-#		undo_redo.undo()
-
-#func can_drop_data(position, data):
-#	if "type" in data and data.type == "files":
-#		return true
-#
-#
-#func drop_data(position, data):
-#	_dragging = false
-
-
 func _notification(what):
 	match what:
 		NOTIFICATION_RESIZED:

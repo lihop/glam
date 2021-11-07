@@ -36,7 +36,7 @@ var loading := false
 var status: int = Status.NONE
 var status_line := "" setget set_status_line
 
-onready var _editor_icons := EditorIcons.new(self)
+onready var _glam = get_tree().get_meta("glam")
 
 var _filters := [] setget , get_filters
 var _search_string := "" setget set_search_string, get_search_string
@@ -193,7 +193,7 @@ func get_display_name() -> String:
 
 
 func get_icon() -> Texture:
-	return _editor_icons.get_icon("ResourcePreloader")
+	return _glam.get_editor_icon("ResourcePreloader")
 
 
 func _touch_config_file():
@@ -236,16 +236,6 @@ func import_files(files: Array):
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
-
-
-#func rescan_filesystem() -> void:
-#	yield(get_tree(), "idle_frame")
-#	var glam: EditorPlugin = get_tree().get_nodes_in_group("glam_editor_plugin")[0]
-#	var fs: EditorFileSystem = glam.get_editor_interface().get_resource_filesystem()
-#	fs.call_deferred("scan")
-#	while fs.is_scanning():
-#		yield(get_tree(), "idle_frame")
-#	return
 
 
 func create_metadata_license_file(path: String) -> void:

@@ -32,7 +32,7 @@ onready var _results := find_node("Results")
 onready var _glam = get_tree().get_meta("glam")
 onready var _thumbnail_grid := find_node("ThumbnailGrid")
 onready var _status_line := find_node("StatusLine")
-onready var _request_cache: RequestCache = get_tree().get_meta("_glam_request_cache")
+onready var _request_cache: RequestCache = get_tree().get_meta("glam").request_cache
 
 
 func _ready():

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-47ab0222667ef51cfd1e85265c96e739.stex"
+path="res://.import/step_3.png-5dcf674b1b0616bb6be53a28ba0544fe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/glam/sources_temp/freesound/icon.png"
-dest_files=[ "res://.import/icon.png-47ab0222667ef51cfd1e85265c96e739.stex" ]
+source_file="res://addons/glam/sources/freesound/step_3.png"
+dest_files=[ "res://.import/step_3.png-5dcf674b1b0616bb6be53a28ba0544fe.stex" ]
 
 [params]
 
@@ -29,6 +29,6 @@ process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
-size_limit=0
+size_limit=400
 detect_3d=true
 svg/scale=1.0

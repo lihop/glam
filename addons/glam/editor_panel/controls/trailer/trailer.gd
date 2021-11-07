@@ -20,6 +20,8 @@ var _was_on_screen := is_on_screen()
 
 
 func is_on_screen() -> bool:
+	if not is_inside_tree():
+		return false
 	return get_global_rect().intersects(get_viewport_rect())
 
 

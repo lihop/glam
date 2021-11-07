@@ -248,7 +248,6 @@ margin_left = 219.0
 margin_right = 283.0
 margin_bottom = 22.0
 disabled = true
-enabled_focus_mode = 0
 text = "Authenticating..."
 flat = false
 

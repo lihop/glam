@@ -13,7 +13,7 @@ var _request_cache: RequestCache
 
 func _ready():
 	use_threads = true
-	_request_cache = get_tree().get_meta("_glam_request_cache")
+	_request_cache = get_tree().get_meta("glam").request_cache
 	assert(_request_cache)
 
 
