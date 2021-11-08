@@ -5,4 +5,4 @@
 addons/*
 !addons/gd-plug
 !addons/glam
-assets/
+/assets/
