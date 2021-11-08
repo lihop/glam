@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/glam/sources/ambient_cg/icon.png" type="Texture" id=1]
 [ext_resource path="res://addons/glam/editor_panel/editor_panel.gd" type="Script" id=2]
-[ext_resource path="res://addons/glam/editor_panel/controls/query_bar/query_bar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/glam/controls/query_bar/query_bar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/glam/icon_glam.svg" type="Texture" id=4]
 
 [node name="AssetPanel" type="Control"]

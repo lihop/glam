@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/glam/controls/search_bar/search_bar.gd" type="Script" id=1]
+[ext_resource path="res://addons/glam/icons/icon_search.svg" type="Texture" id=2]
+
+[node name="SearchBar" type="HBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_right = 1024.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+clear_button_enabled = true
+shortcut_keys_enabled = false
+right_icon = ExtResource( 2 )
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.25
+one_shot = true
+
+[connection signal="text_changed" from="LineEdit" to="." method="_on_LineEdit_text_changed"]
+[connection signal="text_entered" from="LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

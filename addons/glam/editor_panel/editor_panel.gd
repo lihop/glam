@@ -25,7 +25,7 @@ func _ready():
 			var source_script := "%s/%s/%s_source.gd" % [sources_dir, source_dir, source_dir]
 			if dir.file_exists(source_script):
 				var source = load(source_script).new()
-				var panel = preload("./source_panel/source_panel.tscn").instance()
+				var panel = preload("../source_panel/source_panel.tscn").instance()
 				panel.source = source
 				panel.add_child(source)
 				panel.visible = false

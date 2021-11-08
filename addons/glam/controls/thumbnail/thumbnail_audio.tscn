@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/glam/controls/thumbnail/thumbnail.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/glam/controls/thumbnail/thumbnail_audio.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="Thumbnail" instance=ExtResource( 1 )]
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Button" type="Button" parent="VBoxContainer/PreviewImage" index="3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -19.0
+margin_top = -10.0
+margin_right = 19.0
+margin_bottom = 10.0
+toggle_mode = true
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="3"]

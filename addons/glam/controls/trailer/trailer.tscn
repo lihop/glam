@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/glam/controls/spinner/spinner.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/glam/controls/trailer/trailer.gd" type="Script" id=2]
+[ext_resource path="res://addons/glam/icons/icon_progress_6.svg" type="Texture" id=3]
+
+[node name="Trailer" type="VBoxContainer"]
+anchor_right = 1.0
+margin_top = -300.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 0, 34 )
+size_flags_horizontal = 3
+alignment = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Padding" type="Control" parent="."]
+margin_top = 1.0
+margin_right = 1024.0
+margin_bottom = 301.0
+rect_min_size = Vector2( 0, 300 )
+mouse_filter = 2
+
+[node name="Spinner" parent="." instance=ExtResource( 1 )]
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 762.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+texture = ExtResource( 3 )
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+margin_top = 305.0
+margin_right = 1024.0
+margin_bottom = 319.0
+size_flags_horizontal = 3
+text = "No matches found."
+align = 1
