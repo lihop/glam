@@ -1,0 +1,30 @@
+name: 'Test'
+
+on:
+  push:
+  schedule: # Keep the cache alive!
+    - cron: 7 1 * * fri
+
+jobs:
+  test:
+    name: ${{ matrix.os }} ${{ matrix.version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        version: [ "v3.3-stable", "v3.3.4-stable", "v3.4-stable" ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Godot
+        id: setup-godot
+        uses: lihop/setup-godot@v0.1.0
+        with:
+          version: ${{ matrix.version }}
+      - name: Install plugins
+        shell: bash
+        run: godot --no-window -s plug.gd install
+      - name: Run tests
+        shell: bash
+        run: godot --no-window -s addons/gut/gut_cmdln.gd
