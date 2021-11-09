@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
 # SPDX-License-Identifier: MIT
 tool
-extends "../../editor_panel/controls/authentication/authentication.gd"
+extends "../../controls/authentication/authentication.gd"
 
 
 func get_label() -> String:

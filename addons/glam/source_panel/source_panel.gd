@@ -21,13 +21,15 @@ var selected_thumbnail: Thumbnail
 
 var _file := File.new()
 
-onready var account_button := find_node("AccountButton")
+onready var _account_button := find_node("AccountButton")
 onready var account_menu := find_node("AccountMenu")
 onready var user_label := find_node("UserLabel")
 onready var source_link := find_node("SourceLink")
 onready var thumbnail_grid := find_node("ThumbnailGrid")
 onready var _details_pane := find_node("DetailsPane")
 onready var _trailer := find_node("Trailer")
+onready var _results_pane := find_node("ResultsPane")
+onready var _status_bar := find_node("StatusBar")
 onready var _results := find_node("Results")
 onready var _glam = get_tree().get_meta("glam")
 onready var _thumbnail_grid := find_node("ThumbnailGrid")
@@ -52,7 +54,7 @@ func _ready():
 	# If the source requires authentication, then it must provide an authentication
 	# scene for this purpose. This scene will be provided with the source.
 	if "AuthenticationScene" in source:
-		account_button.visible = true
+		_account_button.visible = true
 		$StatusBar/VSeparator.visible = true
 		authentication = source.AuthenticationScene.instance()
 		authentication.connect("authenticated", self, "_check_authentication")
@@ -168,24 +170,36 @@ func _check_authentication():
 	if authentication:
 		var authenticated = yield(source.get_authenticated(), "completed")
 		authentication.visible = not authenticated
-		_results.visible = authenticated
+		_results_pane.visible = authenticated
+		_status_bar.visible = authenticated
 
-		var popup_menu: PopupMenu = account_button.get_popup()
+		var popup_menu: PopupMenu = _account_button.get_popup()
+
+		if not popup_menu.is_connected("id_pressed", self, "_on_account_menu_id_pressed"):
+			popup_menu.connect("id_pressed", self, "_on_account_menu_id_pressed")
+
 		if authenticated:
 			var user = yield(source.get_auth_user(), "completed")
-			account_button.text = "Account"
+			_account_button.text = "Account"
 			popup_menu.clear()
 			popup_menu.add_item("User: %s" % user)
 			popup_menu.set_item_disabled(0, true)
 			popup_menu.add_item("Log Out")
-			account_button.disabled = false
-			account_button.set_focus_mode(FOCUS_ALL)
+			_account_button.disabled = false
+			_account_button.set_focus_mode(FOCUS_ALL)
 		else:
 			popup_menu.hide()
 			popup_menu.clear()
-			account_button.disabled = true
-			account_button.set_focus_mode(FOCUS_NONE)
-			account_button.text = "Authenticating..."
+			_account_button.disabled = true
+			_account_button.set_focus_mode(FOCUS_NONE)
+			_account_button.text = "Authenticating..."
+
+
+func _on_account_menu_id_pressed(id: int) -> void:
+	match id:
+		1:
+			source.logout()
+			_check_authentication()
 
 
 func _on_authenticated():
@@ -207,9 +221,9 @@ func _on_thumbnail_selected(thumbnail: Thumbnail):
 	_details_pane.asset = thumbnail.asset
 
 
-func _on_LogoutButton_pressed():
-	source.logout()
-	_check_authentication()
+#func _on_LogoutButton_pressed():
+#	source.logout()
+#	_check_authentication()
 
 
 func _on_Trailer_screen_entered():

@@ -6,3 +6,4 @@ addons/*
 !addons/gd-plug
 !addons/glam
 /assets/
+todo.gd

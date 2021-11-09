@@ -117,7 +117,7 @@ func set_tags(value: Array) -> void:
 	var lower = []
 	for tag in value:
 		if tag is String:
-			lower.append(tag.to_lower())
+			lower.append(tag.to_lower().strip_edges())
 	tags = lower
 
 
