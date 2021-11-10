@@ -4,7 +4,6 @@ tool
 extends "../source.gd"
 
 const Source := preload("../source.gd")
-const CacheableHTTPRequest := preload("../../util/cacheable_http_request.gd")
 const Unzipper := preload("../../util/unzipper.gd")
 
 const _API_URL := "https://ambientCG.com/api/v2/full_json"
@@ -80,53 +79,26 @@ func fetch_more() -> void:
 
 
 func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
-	yield(get_tree(), "idle_frame")  # Ensure function can be yielded.
-
-	var http_request := CacheableHTTPRequest.new()
-	http_request.use_threads = true
-	add_child(http_request)
-
-	var err = http_request.request(url)
-	if err != OK:
-		fetch_result.error = err
-		return
-
-	var response = yield(http_request, "cacheable_request_completed")
-	http_request.queue_free()
-
-	if fetch_result.get_query_hash() != get_query_hash():
-		return
-
 	_next_page_url = null
 	_num_results = "?"
 	_num_loaded = -1
 
-	var result = response[0]
-	var response_code = response[1]
-	var body = response[3]
-
-	if result != OK:
-		fetch_result.error = result
+	var json = yield(_fetch_json(url), "completed")
+	if fetch_result.get_query_hash() != get_query_hash():
 		return
-
-	if response_code != 200:
-		fetch_result.error = FAILED
-		return
-
-	var parsed = JSON.parse(body.get_string_from_utf8())
-	if parsed.error:
-		fetch_result.error = parsed.error
+	if json.error != OK:
+		fetch_result.error = json.error
 		return
 
 	var results = []
-	for asset in parsed.result.foundAssets:
+	for asset in json.data.foundAssets:
 		match asset.dataType:
 			"PhotoTexturePBR":
 				results.append(SpatialMaterialAsset.from_data(asset))
 
-	_next_page_url = parsed.result.nextPageHttp
-	_num_results = GDash.get_val(parsed, "result.numberOfResults")
-	_num_loaded = GDash.get_val(parsed, "result.searchQuery.offset", 0) + results.size()
+	_next_page_url = json.data.nextPageHttp
+	_num_results = GDash.get_val(json, "data.numberOfResults")
+	_num_loaded = GDash.get_val(json, "data.searchQuery.offset", 0) + results.size()
 
 	fetch_result.assets = results
 	return

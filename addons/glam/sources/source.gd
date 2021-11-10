@@ -4,6 +4,7 @@ tool
 extends Node
 
 const Asset := preload("../assets/asset.gd")
+const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
 const EditorIcons := preload("../icons/editor_icons.gd")
 const GDash := preload("../util/gdash.gd")
 
@@ -244,6 +245,38 @@ func create_metadata_license_file(path: String) -> void:
 	file.store_line("SPDX-FileCopyrightText: none")
 	file.store_line("SPDX-License-Identifier: CC0-1.0")
 	file.close()
+
+
+# Fetches and parses json data from the given url.
+func _fetch_json(url: String) -> Dictionary:
+	yield(get_tree(), "idle_frame")  # Ensure function can be yielded.
+
+	var http_request := CacheableHTTPRequest.new()
+	add_child(http_request)
+
+	var err = http_request.request(url)
+	if err != OK:
+		return {error = err}
+
+	var response = yield(http_request, "cacheable_request_completed")
+	http_request.queue_free()
+
+	var result: int = response[0]
+	var response_code: int = response[1]
+	var body: PoolByteArray = response[3]
+
+	if result != OK:
+		return {error = result}
+
+	if response_code != 200:
+		return {error = FAILED}
+
+	var parsed = JSON.parse(body.get_string_from_utf8())
+
+	if parsed.error:
+		return {error = parsed.error}
+
+	return {error = OK, data = parsed.result}
 
 
 # Downloads a single file from `url` to `dest` on the local machine. `dest`

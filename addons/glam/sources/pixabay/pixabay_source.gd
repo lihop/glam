@@ -5,7 +5,6 @@ extends "../source.gd"
 
 const AuthenticationScene := preload("./authentication.tscn")
 const ImageAsset := preload("./pixabay_image_asset.gd")
-const CacheableHTTPRequest := preload("../../util/cacheable_http_request.gd")
 
 const API_URL := "https://pixabay.com/api"
 const CONFIG_FILE := "user://../glam/sources/pixabay.cfg"
@@ -126,42 +125,16 @@ func fetch_more() -> void:
 
 
 func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
-	yield(get_tree(), "idle_frame")  # Ensure function can be yielded.
-
-	var http_request := CacheableHTTPRequest.new()
-	http_request.use_threads = true
-	add_child(http_request)
-
-	var err = http_request.request(url)
-	if err != OK:
-		fetch_result.error = err
-		return
-
-	var response = yield(http_request, "cacheable_request_completed")
-	http_request.queue_free()
+	var json = yield(_fetch_json(url), "completed")
 
 	if fetch_result.get_query_hash() != get_query_hash():
 		return
-
-	var result = response[0]
-	var response_code = response[1]
-	var body = response[3]
-
-	if result != OK:
-		fetch_result.error = result
-		return
-
-	if response_code != 200:
-		fetch_result.error = FAILED
-		return
-
-	var parsed = JSON.parse(body.get_string_from_utf8())
-	if parsed.error:
-		fetch_result.error = parsed.error
+	if json.error:
+		fetch_result.error = json.error
 		return
 
 	var results = []
-	for asset in parsed.result.hits:
+	for asset in json.data.hits:
 		results.append(ProxyTextureAsset.from_data(asset))
 #	for asset in parsed.result.foundAssets:
 #		match asset.dataType:
@@ -169,7 +142,7 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 #				results.append(SpatialMaterialAsset.from_data(asset))
 #
 	_page += 1
-	_hits = parsed.result.totalHits
+	_hits = json.data.totalHits
 	_hits_loaded = _hits_loaded + results.size()
 
 	fetch_result.assets = results
