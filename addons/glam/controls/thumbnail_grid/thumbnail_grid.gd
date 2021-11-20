@@ -41,8 +41,9 @@ func append(assets := []) -> void:
 		thumbnail.connect("download_requested", self, "_on_download_requested")
 		add_child(thumbnail)
 		thumbnail.asset = asset
-	if first:
-		get_child(0).pressed = true
+		if first:
+			thumbnail.pressed = true
+			first = false
 
 
 func _on_thumbnail_toggled(pressed: bool, thumbnail: Thumbnail) -> void:
