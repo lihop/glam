@@ -32,7 +32,7 @@ func clear() -> void:
 
 
 func append(assets := []) -> void:
-	var first := get_child_count() == 0
+	var first := true
 	for asset in assets:
 		assert(asset is Asset, "%s is not an Asset." % asset)
 		var thumbnail: Thumbnail = ThumbnailScene.instance()
@@ -41,8 +41,9 @@ func append(assets := []) -> void:
 		thumbnail.connect("download_requested", self, "_on_download_requested")
 		add_child(thumbnail)
 		thumbnail.asset = asset
-	if first:
-		get_child(0).pressed = true
+		if first:
+			thumbnail.pressed = true
+			first = false
 
 
 func _on_thumbnail_toggled(pressed: bool, thumbnail: Thumbnail) -> void:
