@@ -34,6 +34,17 @@ func set_spinning(value: bool) -> void:
 		_timer.start() if spinning else _timer.stop()
 
 
+func _set(property: String, value) -> bool:
+	match property:
+		"visible":
+			assert(value is bool)
+			visible = value
+			spinning = visible
+			return true
+		_:
+			return false
+
+
 func _on_Timer_timeout():
 	if _icons.empty():
 		_load_icons()
