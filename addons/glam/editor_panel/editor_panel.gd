@@ -33,6 +33,12 @@ func _ready():
 				source_select.add_icon_item(source.get_icon(), source.get_display_name())
 				sources.append({source = source, panel = panel})
 		source_dir = dir.get_next()
+
+	# Trigger authentication in all panels, so we don't have to wait to authenticate
+	# the first time we open the panel.
+	for source in sources:
+		source.panel.show()
+
 	select_source(0)
 
 
