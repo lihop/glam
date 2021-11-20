@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg", "res://addons/editor_icon_previewer/plugin.cfg", "res://addons/glam/plugin.cfg", "res://addons/godot_xterm/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg", "res://addons/editor_icon_previewer/plugin.cfg", "res://addons/epic-anchors/plugin.cfg", "res://addons/glam/plugin.cfg", "res://addons/godot_xterm/plugin.cfg", "res://addons/gut/plugin.cfg" )
 
 [physics]
 
