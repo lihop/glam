@@ -53,3 +53,16 @@ If you cloned this repo locally and want to work on it you will need to install 
 ```
 godot --no-window -s plug.gd install
 ```
+
+### Testing
+
+GLAM uses the [Gut](https://github.com/bitwes/Gut) tool for testing. These tests can be run from the command line using:
+```
+godot --no-window -s addons/gut/gut_cmdln.gd
+```
+By default, only unit tests will be run.
+To run all tests (including integration tests) use:
+```
+godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig_all.json
+```
+**Note:** Integration tests require Node.js to be installed as they use the `npx` command to start an [http-server](https://www.npmjs.com/package/http-server) HTTP server. The integration tests also take a long time (more than 30 seconds) to run.

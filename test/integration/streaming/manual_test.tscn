@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/glam/streaming/http_audio_stream_player.gd" type="Script" id=1]
+[ext_resource path="res://test/integration/streaming/manual_test.gd" type="Script" id=2]
+
+[node name="StreamTest" type="Node"]
+script = ExtResource( 2 )
+
+[node name="HTTPAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource( 1 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

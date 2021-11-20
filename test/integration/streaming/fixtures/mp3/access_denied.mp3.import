@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/access_denied.mp3-b63230d4b9a70adf0a2279f2e8cf0da2.mp3str"
+
+[deps]
+
+source_file="res://test/integration/streaming/fixtures/mp3/access_denied.mp3"
+dest_files=[ "res://.import/access_denied.mp3-b63230d4b9a70adf0a2279f2e8cf0da2.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
