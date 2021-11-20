@@ -6,4 +6,6 @@ addons/*
 !addons/gd-plug
 !addons/glam
 /assets/
+logs/
+mono_crash.*
 todo.gd
