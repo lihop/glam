@@ -17,16 +17,19 @@ Many free asset licenses require attribution as part of their requirements and k
 GLAM offers (or plans to offer) integration with the APIs of the following sources.
 Some of these sources require an api account to use (see 'Account Required').
 
-| Source                                     | Account Required | Support | Notes                                                |
-|--------------------------------------------|------------------|---------|------------------------------------------------------|
-| [AmbientCG](https://ambientcg.com)         | No               | Partial | Currently only PBR textures. No search filters       |
-| [Pixabay](https://pixabay.com)             | Yes              | Partial | Currently only images (no videos). No search filters |
-| [Freesound](https://freesound.org)         | Yes              | Planned | Sound Effects                                        |
-| [Openclipart](https://openclipart.org)     | Yes              | Planned | Vector grapics                                       |
-| [FreeSVG](https://freesvg.org)             | Yes              | Planned | Vector graphics                                      |
-| [Noun Project](https://thenounproject.com) | Yes              | Planned | Icons, Images                                        |
-| [Poly Haven](https://polyhaven.com)        | No               | Planned | PBR Tetures, 3D Models, HDRs                         |
-| [Sketchfab](https://sketchfab.com)         | Yes              | Planned | 3D Models                                            |
+| Source                                     | Account Required | Support     | Notes                                                |
+|--------------------------------------------|------------------|-------------|------------------------------------------------------|
+| [AmbientCG](https://ambientcg.com)         | No               | Partial     | Currently only PBR textures. No search filters       |
+| [Pixabay](https://pixabay.com)             | Yes              | Partial     | Currently only images (no videos). No search filters |
+| [Freesound](https://freesound.org)         | Yes              | In progress | Sound Effects                                        |
+| [Openclipart](https://openclipart.org)     | Yes              | Planned     | Vector Graphics                                      |
+| [FreeSVG](https://freesvg.org)             | Yes              | Planned     | Vector Graphics                                      |
+| [Noun Project](https://thenounproject.com) | Yes              | Planned     | Icons, Images                                        |
+| [Poly Haven](https://polyhaven.com)        | No               | Planned     | PBR Textures, 3D Models, HDRs                        |
+| [Sketchfab](https://sketchfab.com)         | Yes              | Planned     | 3D Models                                            |
+| [Jamendo](https://www.jamendo.com)         | Yes              | Planned     | Music                                                |
+| [ccMixter](http://ccmixter.org)            | No               | Planned     | Music                                                |
+| [SoundCloud](http://soundcloud.com)        | Yes              | Planned     | Music                                                |
 
 
 ## Installation
