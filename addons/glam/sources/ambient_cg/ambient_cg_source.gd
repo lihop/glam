@@ -45,6 +45,8 @@ func get_url() -> String:
 
 
 func fetch() -> void:
+	_num_results = ""
+	_update_status_line()
 	emit_signal("fetch_started")
 	var query_string: String = (
 		"?"
@@ -81,7 +83,7 @@ func fetch_more() -> void:
 func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 	_next_page_url = null
 	_num_results = "?"
-	_num_loaded = -1
+	_num_loaded = 0
 
 	var json = yield(_fetch_json(url), "completed")
 	if fetch_result.get_query_hash() != get_query_hash():
@@ -105,10 +107,13 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 
 
 func _update_status_line():
-	self.status_line = (
-		"Results: %s | Loaded: %s/%s | API Requests Remaining: ∞"
-		% [_num_results, str(_num_loaded) if _num_loaded > 0 else "?", _num_results]
-	)
+	if _num_results.empty():
+		self.status_line = "Results: ? | Loaded: ?/? | API Requests Remaining: ∞"
+	else:
+		self.status_line = (
+			"Results: %s | Loaded: %s/%s | API Requests Remaining: ∞"
+			% [_num_results, str(_num_loaded) if _num_loaded >= 0 else "?", _num_results]
+		)
 
 
 func _on_query_changed():
