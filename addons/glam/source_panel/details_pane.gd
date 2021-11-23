@@ -4,6 +4,7 @@ tool
 extends Panel
 
 const Asset := preload("../assets/asset.gd")
+const AudioStreamAsset := preload("../assets/audio_stream_asset.gd")
 const LicenseDB := preload("../licenses/license_db.gd")
 
 signal tag_selected(tag)
@@ -58,14 +59,16 @@ func set_asset(value: Asset):
 	if asset.preview_image_lq:
 		_preview_image.texture = asset.preview_image_lq
 		_spinner.visible = false
-		_spinner.spinning = false
 	else:
-		_preview_image.call_deferred("load_image", asset.preview_image_url_lq)
+		_preview_image.call_deferred(
+			"load_image", asset.preview_image_url_lq, asset.preview_image_flags
+		)
 		yield(_preview_image, "image_loaded")
 		asset.preview_image_lq = _preview_image.texture
+
+	if asset.preview_image_url_hq:
 		_spinner.visible = true
-		_spinner.spinning = true
-		_preview_image.load_image(asset.preview_image_url_hq)
+		_preview_image.load_image(asset.preview_image_url_hq, asset.preview_image_flags)
 
 	_details.clear()
 	_details.append_bbcode("Author: ")

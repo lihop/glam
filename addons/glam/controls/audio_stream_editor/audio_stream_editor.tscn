@@ -1,8 +1,12 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://audio.mp3" type="AudioStream" id=1]
+[ext_resource path="res://addons/glam/controls/spinner/spinner.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/glam/controls/audio_stream_editor/audio_stream_editor.gd" type="Script" id=2]
+[ext_resource path="res://addons/glam/icons/icon_progress_7.svg" type="Texture" id=3]
+[ext_resource path="res://addons/glam/controls/preview_image.gd" type="Script" id=4]
+[ext_resource path="res://addons/glam/streaming/http_audio_stream_player.gd" type="Script" id=5]
 
-[sub_resource type="Image" id=1]
+[sub_resource type="Image" id=5]
 data = {
 "data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 222, 222, 222, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 73, 222, 222, 222, 182, 223, 223, 223, 73, 222, 222, 222, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 183, 223, 223, 223, 41, 223, 223, 223, 0, 210, 210, 210, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 254, 224, 224, 224, 255, 223, 223, 223, 251, 223, 223, 223, 147, 210, 210, 210, 17, 215, 215, 215, 0, 191, 191, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 255, 223, 223, 223, 255, 223, 223, 223, 254, 224, 224, 224, 255, 223, 223, 223, 238, 221, 221, 221, 108, 191, 191, 191, 4, 191, 191, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 255, 223, 223, 223, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 177, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 255, 223, 223, 223, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 178, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 255, 223, 223, 223, 255, 223, 223, 223, 254, 224, 224, 224, 255, 222, 222, 222, 239, 222, 222, 222, 109, 191, 191, 191, 4, 191, 191, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 254, 224, 224, 224, 255, 223, 223, 223, 251, 223, 223, 223, 147, 210, 210, 210, 17, 216, 216, 216, 0, 191, 191, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 183, 218, 218, 218, 42, 220, 220, 220, 0, 210, 210, 210, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 73, 222, 222, 222, 183, 223, 223, 223, 74, 222, 222, 222, 0, 218, 218, 218, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 222, 222, 222, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
 "format": "RGBA8",
@@ -14,10 +18,10 @@ data = {
 [sub_resource type="ImageTexture" id=2]
 flags = 0
 flags = 0
-image = SubResource( 1 )
+image = SubResource( 5 )
 size = Vector2( 16, 16 )
 
-[sub_resource type="Image" id=3]
+[sub_resource type="Image" id=6]
 data = {
 "data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 222, 222, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 222, 222, 0, 222, 222, 222, 125, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 125, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 222, 222, 0, 222, 222, 222, 125, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 125, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222, 222, 222, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
 "format": "RGBA8",
@@ -29,103 +33,89 @@ data = {
 [sub_resource type="ImageTexture" id=4]
 flags = 0
 flags = 0
-image = SubResource( 3 )
+image = SubResource( 6 )
 size = Vector2( 16, 16 )
 
-[sub_resource type="DynamicFontData" id=5]
-hinting = 1
+[node name="AudioStreamEditor" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
+mouse_filter = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[sub_resource type="DynamicFontData" id=6]
-hinting = 1
+[node name="HTTPAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource( 5 )
 
-[sub_resource type="DynamicFontData" id=7]
-hinting = 1
-
-[sub_resource type="DynamicFontData" id=8]
-hinting = 1
-
-[sub_resource type="DynamicFontData" id=9]
-hinting = 1
-
-[sub_resource type="DynamicFontData" id=10]
-hinting = 1
-
-[sub_resource type="DynamicFontData" id=11]
-hinting = 1
-
-[sub_resource type="DynamicFont" id=12]
-size = 14
-use_mipmaps = true
-use_filter = true
-extra_spacing_top = -1
-extra_spacing_bottom = -1
-font_data = SubResource( 11 )
-fallback/0 = SubResource( 5 )
-fallback/1 = SubResource( 6 )
-fallback/2 = SubResource( 7 )
-fallback/3 = SubResource( 8 )
-fallback/4 = SubResource( 9 )
-fallback/5 = SubResource( 10 )
-
-[node name="11648" type="Node"]
-
-[node name="@@11639" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 1 )
-
-[node name="@@11640" type="VBoxContainer" parent="."]
+[node name="_" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="@@11641" type="ColorRect" parent="@@11640"]
+[node name="Preview" type="TextureRect" parent="_"]
 margin_right = 1024.0
 margin_bottom = 572.0
 size_flags_vertical = 3
-color = Color( 0.125, 0.14375, 0.19375, 1 )
+expand = true
+script = ExtResource( 4 )
 
-[node name="@@11642" type="Control" parent="@@11640/@@11641"]
+[node name="Spinner" parent="_/Preview" instance=ExtResource( 1 )]
+visible = false
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+texture = ExtResource( 3 )
+
+[node name="Indicator" type="Control" parent="_/Preview"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="@@11643" type="HBoxContainer" parent="@@11640"]
+[node name="_" type="HBoxContainer" parent="_"]
 margin_top = 576.0
 margin_right = 1024.0
 margin_bottom = 600.0
-custom_constants/separation = 0
+custom_constants/separation = -8
 
-[node name="@@11644" type="ToolButton" parent="@@11640/@@11643"]
+[node name="PlayButton" type="ToolButton" parent="_/_"]
 margin_right = 28.0
 margin_bottom = 24.0
 focus_mode = 0
+mouse_filter = 1
 icon = SubResource( 2 )
 
-[node name="@@11645" type="ToolButton" parent="@@11640/@@11643"]
-margin_left = 28.0
-margin_right = 56.0
+[node name="StopButton" type="ToolButton" parent="_/_"]
+margin_left = 20.0
+margin_right = 48.0
 margin_bottom = 24.0
 focus_mode = 0
+mouse_filter = 1
 icon = SubResource( 4 )
 
-[node name="@@11646" type="Label" parent="@@11640/@@11643"]
-modulate = Color( 1, 1, 1, 0.5 )
-margin_left = 56.0
-margin_top = 12.0
-margin_right = 1018.0
-margin_bottom = 12.0
+[node name="CurrentLabel" type="Label" parent="_/_"]
+margin_left = 40.0
+margin_top = 5.0
+margin_right = 1024.0
+margin_bottom = 19.0
+mouse_filter = 1
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 12 )
-text = "3.85 /"
+text = "-0.00s"
 align = 2
 
-[node name="@@11647" type="Label" parent="@@11640/@@11643"]
-margin_left = 1018.0
-margin_top = 12.0
-margin_right = 1024.0
-margin_bottom = 12.0
-custom_fonts/font = SubResource( 12 )
-text = "20.11s"
+[connection signal="fully_finished" from="HTTPAudioStreamPlayer" to="." method="_on_player_fully_finished"]
+[connection signal="started" from="HTTPAudioStreamPlayer" to="." method="_on_player_started"]
+[connection signal="stopped" from="HTTPAudioStreamPlayer" to="." method="_on_player_stopped"]
+[connection signal="image_loaded" from="_/Preview" to="." method="_on_preview_image_loaded"]
+[connection signal="draw" from="_/Preview/Indicator" to="." method="_draw_indicator"]
+[connection signal="gui_input" from="_/Preview/Indicator" to="." method="_on_input_indicator"]
+[connection signal="pressed" from="_/_/PlayButton" to="." method="_play"]
+[connection signal="pressed" from="_/_/StopButton" to="." method="_stop"]

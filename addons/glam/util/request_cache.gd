@@ -31,6 +31,11 @@ func set_cache_dir(value: String):
 
 
 func get_response(request: Request) -> CachedResponse:
+	var response: CachedResponse = get_resource(request)
+	return response
+
+
+func get_resource(request: Request) -> Resource:
 	var file_path = get_file_path(request)
 
 	if not _file.file_exists(file_path):
@@ -40,8 +45,7 @@ func get_response(request: Request) -> CachedResponse:
 		_dir.remove(file_path)
 		return null
 
-	var response: CachedResponse = load(file_path)
-	return response
+	return load(file_path)
 
 
 func get_ttl(file_name: String) -> int:
@@ -57,10 +61,17 @@ func is_expired(file_path: String) -> bool:
 
 
 func store(request: Request, result, response_code, headers, body):
-	assert(request.method == HTTPClient.METHOD_GET, "Only GET requests are supported by cache.")
+	assert(
+		[HTTPClient.METHOD_GET, HTTPClient.METHOD_HEAD].has(request.method),
+		"Only GET and HEAD requests are supported by cache."
+	)
 	var response := CachedResponse.new(result, response_code, headers, body)
+	store_resource(request, response)
+
+
+func store_resource(request: Request, resource: Resource):
 	var file_path := get_file_path(request)
-	ResourceSaver.save(file_path, response, ResourceSaver.FLAG_COMPRESS)
+	ResourceSaver.save(file_path, resource, ResourceSaver.FLAG_COMPRESS)
 	_file.open(file_path, File.READ)
 	cache_size_bytes += _file.get_len()
 	_file.close()

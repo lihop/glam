@@ -1,4 +1,6 @@
-extends "res://addons/gut/test.gd"
+# SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
+# SPDX-License-Identifier: MIT
+extends "../base_source_test.gd"
 
 const Asset := preload("res://addons/glam/assets/asset.gd")
 const LicenseDB := preload("res://addons/glam/licenses/license_db.gd")
@@ -8,9 +10,7 @@ var hit: Dictionary
 
 
 func before_all() -> void:
-	var file := File.new()
-	file.open("res://test/unit/sources/pixabay/hit.json", File.READ)
-	hit = JSON.parse(file.get_as_text()).result
+	hit = load_json("./hit.json")
 
 
 func test_can_create_asset_from_data() -> void:

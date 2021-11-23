@@ -54,7 +54,6 @@ func test_can_play_file_shorter_than_one_second():
 
 func test_emits_started_signal_when_playback_started():
 	assert_eq(player.open(BASE_URL + LONG_MP3_PATH, 127.69), OK)
-	watch_signals(player)
 	player.play()
 	assert_signal_emit_count(player, "started", 0)
 	yield(yield_to(player, "started", 1), YIELD)
@@ -98,3 +97,23 @@ func test_playback_position_after_playing_for_a_few_seconds_from_the_middle():
 	# Due to seeking method the player and ref_player will probably not begin playing from exactly
 	# the same position, so check for approximate equality of playback position.
 	assert_almost_eq(player.get_playback_position(), ref_player.get_playback_position(), 1.0)
+
+
+func test_not_buffering_when_fully_finished():
+	assert_eq(player.open(BASE_URL + SHORT_MP3_PATH, 0.309), OK)
+	player.play()
+	assert_true(player.is_buffering())
+	yield(yield_to(player, "stopped", 1), YIELD)
+	assert_signal_emitted(player, "fully_finished")
+	assert_false(player.is_buffering())
+
+
+func test_playing_property():
+	assert_eq(player.playing, false)
+	assert_eq(player.open(BASE_URL + LONG_MP3_PATH, 127.69), OK)
+	assert_eq(player.playing, false)
+	player.play()
+	yield(yield_to(player, "started", 1), YIELD)
+	assert_eq(player.playing, true)
+	player.stop()
+	assert_eq(player.playing, false)

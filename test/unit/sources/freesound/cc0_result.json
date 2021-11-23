@@ -1,0 +1,40 @@
+{
+  "id": 607934,
+  "url": "https://freesound.org/people/SieuAmThanh/sounds/607934/",
+  "name": "Phòng Năng Lượng 1",
+  "tags": [
+    "room",
+    "power",
+    "space",
+    "science",
+    "energy",
+    "ufo",
+    "alien",
+    "starship",
+    "ship",
+    "sci-fi"
+  ],
+  "description": "Laser beam 20 seconds. Use Audacity:\n\nMono Track (left)\n- Tone\nWaveform: Sine\nFrequency: 100\nAmplitude: 0.5\nDuration: 00h 00m 10s\n\nMono Track (right)\n- Tone\nWaveform: Sine\nFrequency: 115\nAmplitude: 0.5\nDuration: 00h 00m 10s",
+  "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+  "type": "wav",
+  "duration": 10,
+  "bitrate": 13780,
+  "username": "SieuAmThanh",
+  "download": "https://freesound.org/apiv2/sounds/607934/download/",
+  "previews": {
+    "preview-lq-ogg": "https://freesound.org/data/previews/607/607934_7554526-lq.ogg",
+    "preview-lq-mp3": "https://freesound.org/data/previews/607/607934_7554526-lq.mp3",
+    "preview-hq-ogg": "https://freesound.org/data/previews/607/607934_7554526-hq.ogg",
+    "preview-hq-mp3": "https://freesound.org/data/previews/607/607934_7554526-hq.mp3"
+  },
+  "images": {
+    "spectral_m": "https://freesound.org/data/displays/607/607934_7554526_spec_M.jpg",
+    "spectral_l": "https://freesound.org/data/displays/607/607934_7554526_spec_L.jpg",
+    "spectral_bw_l": "https://freesound.org/data/displays/607/607934_7554526_spec_bw_L.jpg",
+    "waveform_bw_m": "https://freesound.org/data/displays/607/607934_7554526_wave_bw_M.png",
+    "waveform_bw_l": "https://freesound.org/data/displays/607/607934_7554526_wave_bw_L.png",
+    "waveform_l": "https://freesound.org/data/displays/607/607934_7554526_wave_L.png",
+    "waveform_m": "https://freesound.org/data/displays/607/607934_7554526_wave_M.png",
+    "spectral_bw_m": "https://freesound.org/data/displays/607/607934_7554526_spec_bw_M.jpg"
+  }
+}

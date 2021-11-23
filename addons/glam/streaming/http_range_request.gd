@@ -20,7 +20,7 @@ var _headers: Array
 var _size := -1
 var _media_type: String
 var _retries := 0
-var _client := HTTPClient.new()
+var _client: HTTPClient setget _set_client, _get_client
 var _chunks := []
 var _request_sent := false
 var _request_cancelled := false
@@ -42,6 +42,8 @@ func is_requesting() -> bool:
 
 
 func _ready():
+	connect("open_completed", self, "_on_request_completed")
+	connect("request_completed", self, "_on_request_completed")
 	set_process(false)
 
 
@@ -82,16 +84,25 @@ func request_range(start: int, end: int) -> int:
 	assert(start <= end, "Start of range must not be greater than end.")
 	assert(end < _size, "End index must not be greater than file size.")
 
-	# Check if connection timed out and re-connect if so.
-	_client.poll()
-	if _client.get_status() == HTTPClient.STATUS_BODY:
-		var _chunk := _client.read_response_body_chunk()
-		_client.poll()
-	if _client.get_status() == HTTPClient.STATUS_CONNECTION_ERROR:
-		_connect()
-
 	_range = Vector2(start, end)
 	_chunks = _cache.get_range_statuses(start, end)
+
+	# If first chunk is already cached, return it immediately without having to
+	# wait for client to connect.
+	if not _chunks[0].missing:
+		var rangev = _chunks[0].rangev
+		call_deferred(
+			"emit_signal", "data_received", _cache.data.subarray(rangev.x, rangev.y), rangev
+		)
+		_chunks.pop_front()
+
+	# Check if connection timed out or receiving a large body and re-connect if so.
+	self._client.poll()
+	if not [HTTPClient.STATUS_RESOLVING, HTTPClient.STATUS_CONNECTING, HTTPClient.STATUS_CONNECTED].has(
+		self._client.get_status()
+	):
+		self._client.close()
+		_connect()
 
 	set_process(true)
 	return OK
@@ -106,7 +117,7 @@ func cancel_request() -> void:
 
 func close() -> void:
 	set_process(false)
-	_client.close()
+	self._client = null
 	if is_instance_valid(_cache):
 		_cache.clear()
 	_size = -1
@@ -114,14 +125,44 @@ func close() -> void:
 	_headers = []
 
 
+func _set_client(value: HTTPClient):
+	if _client and not value and get_tree().has_meta("glam"):
+		var client_pool: Dictionary = get_tree().get_meta("glam").http_client_pool
+		if client_pool.has(_url.origin):
+			client_pool[_url.origin].append(self._client)
+		else:
+			client_pool[_url.origin] = [self._client]
+
+	_client = value
+
+
+func _get_client() -> HTTPClient:
+	if not _client:
+		if get_tree().has_meta("glam"):
+			var client_pool: Dictionary = get_tree().get_meta("glam").http_client_pool
+			if _url and client_pool.has(_url.origin):
+				var clients: Array = client_pool[_url.origin]
+				while not _client and not clients.empty():
+					var client: HTTPClient = clients.pop_back()
+					client.poll()
+					if not [HTTPClient.STATUS_RESOLVING, HTTPClient.STATUS_CONNECTING, HTTPClient.STATUS_CONNECTED].has(
+						client.get_status()
+					):
+						client.close()
+					_client = client
+		if not _client:
+			_client = HTTPClient.new()
+	return _client
+
+
 func _exit_tree():
 	close()
 
 
 func _connect() -> int:
-	_client.close()
-	_client.read_chunk_size = CHUNK_SIZE
-	var err = _client.connect_to_host(_url.hostname, _url.port, _url.protocol == "https:")
+	self._client.close()
+	self._client.read_chunk_size = CHUNK_SIZE
+	var err = self._client.connect_to_host(_url.hostname, _url.port, _url.protocol == "https:")
 	if err != OK:
 		return _error("Failed to connect to host.", err)
 	set_process(true)
@@ -129,11 +170,11 @@ func _connect() -> int:
 
 
 func _update_connection() -> bool:
-	var status := _client.get_status()
+	var status := self._client.get_status()
 
 	match status:
 		HTTPClient.STATUS_RESOLVING, HTTPClient.STATUS_CONNECTING, HTTPClient.STATUS_REQUESTING:
-			_client.poll()
+			self._client.poll()
 			return false
 		HTTPClient.STATUS_CONNECTED:
 			_retries = 0
@@ -146,7 +187,7 @@ func _update_connection() -> bool:
 			if _size < 0:
 				# Send an HTTP HEAD request to determine the size of the file
 				# and its general status (e.g. exists, accepts range requests).
-				var err = _client.request(HTTPClient.METHOD_HEAD, _url.tail, _headers)
+				var err = self._client.request(HTTPClient.METHOD_HEAD, _url.tail, _headers)
 
 				if err != OK:
 					_error("HTTP HEAD request failed.", err)
@@ -180,7 +221,7 @@ func _update_connection() -> bool:
 				)
 				return false
 
-			var err = _client.request(
+			var err = self._client.request(
 				HTTPClient.METHOD_GET,
 				_url.tail,
 				PoolStringArray(["Range: bytes=%d-%d" % [start, end]] + _headers)
@@ -196,12 +237,12 @@ func _update_connection() -> bool:
 			if not _got_response:
 				return _handle_response()
 
-			_client.poll()
+			self._client.poll()
 
-			if _client.get_status() != HTTPClient.STATUS_BODY:
+			if self._client.get_status() != HTTPClient.STATUS_BODY:
 				return false
 
-			var chunk := _client.read_response_body_chunk()
+			var chunk := self._client.read_response_body_chunk()
 			if chunk.size() and not _request_cancelled:
 				var start = _cache.get_position()
 				_cache.put_data(chunk)
@@ -225,16 +266,16 @@ func _update_connection() -> bool:
 
 
 func _handle_response() -> bool:
-	if not _client.has_response():
+	if not self._client.has_response():
 		_error("No response from server.")
 		return true
 
-	var response_code := _client.get_response_code()
+	var response_code := self._client.get_response_code()
 	if not [200, 206].has(response_code):
 		_error("Bad HTTP response code '%d'." % response_code)
 		return true
 
-	var response_headers = _client.get_response_headers_as_dictionary()
+	var response_headers = self._client.get_response_headers_as_dictionary()
 	for key in response_headers:
 		response_headers[key.to_lower()] = response_headers[key]
 
@@ -270,3 +311,9 @@ func _error(message := "", code := FAILED) -> int:
 	else:
 		call_deferred("emit_signal", "request_completed", code, PoolByteArray(), Vector2(-1, -1))
 	return code
+
+
+func _on_request_completed(_a = null, _b = null, _c = null) -> void:
+	# Return client to the pool.
+	if get_tree().has_meta("glam") and self._client:
+		self._client = null

@@ -5,9 +5,7 @@ extends TextureRect
 
 signal icon_changed(new_icon)
 
-export(bool) var autostart := false
-
-var spinning := false setget set_spinning
+export var spinning := false setget set_spinning
 
 var _icons := []
 var _current_icon := 0
@@ -17,8 +15,7 @@ onready var _timer := $Timer
 
 func _ready():
 	_timer.wait_time = 0.1
-	if not spinning:
-		self.spinning = autostart
+	self.spinning = visible
 
 
 func _load_icons():
@@ -39,7 +36,7 @@ func _set(property: String, value) -> bool:
 		"visible":
 			assert(value is bool)
 			visible = value
-			spinning = visible
+			self.spinning = visible
 			return true
 		_:
 			return false

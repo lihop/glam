@@ -68,14 +68,17 @@ func get_authenticated() -> bool:
 	http_request.use_threads = true
 	add_child(http_request)
 	if http_request.request("%s/?key=%s" % [API_URL, api_key]) != OK:
+		http_request.queue_free()
 		return false
 
 	var res = yield(http_request, "request_completed")
 	if res[0] != OK or res[1] != 200:
+		http_request.queue_free()
 		return false
 
 	_api_key = api_key
 	emit_signal("query_changed")
+	http_request.queue_free()
 	return true
 
 

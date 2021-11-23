@@ -3,7 +3,7 @@
 tool
 extends AudioStreamPlayer
 
-const HTTPRangeRequest := preload("./http_range_request.gd")
+const HTTPRangeRequest := preload("./cacheable_http_range_request.gd")
 const URL := preload("./url.gd")
 
 signal fully_finished
@@ -11,7 +11,8 @@ signal open_completed(result)
 signal started
 signal stopped
 
-var _duration := -1.0
+var duration := -1.0
+
 var _media_type: String
 var _size: int
 var _http: HTTPRangeRequest
@@ -41,7 +42,7 @@ func is_open() -> bool:
 
 
 func is_buffering() -> bool:
-	return _stream and _playing and not .is_playing()
+	return _playing and (not is_open() or not .is_playing())
 
 
 func get_playback_position() -> float:
@@ -57,11 +58,11 @@ func connect(signal_name: String, target: Object, method: String, binds := [], f
 			return .connect(signal_name, target, method, binds, flags)
 
 
-func open(url: String, duration: float, headers := []) -> int:
+func open(url: String, p_duration: float, headers := []) -> int:
 	close()
 
-	assert(duration > 0, "Duration must be greater than zero.")
-	_duration = duration
+	assert(p_duration > 0, "Duration must be greater than zero.")
+	duration = p_duration
 
 	_http = HTTPRangeRequest.new()
 	_http.connect("open_completed", self, "_on_http_opened")
@@ -78,7 +79,7 @@ func play(from_position := 0.0):
 
 func seek(to_position: float):
 	assert(to_position >= 0.0, "Seek position must be greater than or equal to zero.")
-	assert(to_position <= _duration, "Seek position is greater than duration.")
+	assert(to_position <= duration, "Seek position is greater than duration.")
 
 	var was_playing = _playing
 	stop()
@@ -94,7 +95,7 @@ func seek(to_position: float):
 		var _start := 0
 		match _media_type:
 			"audio/mpeg":
-				var Bps := floor(_size / _duration)
+				var Bps := floor(_size / duration)
 				_start = _start_position * Bps
 			_:
 				push_error("Unsupported media type: '%s'. Closing." % _media_type)
@@ -175,5 +176,10 @@ func _on_finished():
 	else:
 		emit_signal("stopped")
 
-	if _end_received and _stream.data.size() >= _data.size():
+	if (
+		_end_received
+		and _stream.data.size() >= _data.size()
+		and .get_playback_position() >= _stream.get_length()
+	):
+		stop()
 		emit_signal("fully_finished")

@@ -4,6 +4,7 @@ tool
 extends Button
 
 const Asset := preload("../../assets/asset.gd")
+const AudioStreamAsset := preload("../../assets/audio_stream_asset.gd")
 const PreviewImage := preload("../preview_image.gd")
 
 const DEFAULT_WIDTH = 120
@@ -23,10 +24,11 @@ onready var _display_name = find_node("DisplayName")
 onready var _focused_stylebox := get_stylebox("panel")
 onready var _unfocused_stylebox := StyleBoxEmpty.new()
 onready var _http_request: HTTPRequest = find_node("CacheableHTTPRequest")
-onready var _spinner := find_node("Spinner")
+onready var _spinner := _preview_image.find_node("Spinner")
 onready var _download_spinner := find_node("DownloadSpinner")
 onready var _glam = get_tree().get_meta("glam")
 onready var _format_option_button := find_node("FormatOptionButton")
+onready var _audio_preview := find_node("AudioStreamEditor")
 
 var _dragging := false
 var _drag_data = null
@@ -44,13 +46,22 @@ func set_asset(value: Asset) -> void:
 
 	_update_downloaded_status()
 
-	if asset.preview_image:
-		_preview_image.texture = asset.preview_image
+	if asset is AudioStreamAsset:
+		_preview_image.queue_free()
+		_audio_preview.visible = true
+		_audio_preview.thumbnail = self
+		_audio_preview.asset = asset
 	else:
-		_preview_image.load_image(asset.preview_image_url_lq)
-		yield(_preview_image, "image_loaded")
-		_spinner.spinning = false
-		_spinner.visible = false
+		_audio_preview.queue_free()
+		_preview_image.visible = true
+		if asset.preview_image:
+			_preview_image.texture = asset.preview_image
+			_spinner.visible = false
+		else:
+			_spinner.visible = true
+			_preview_image.load_image(asset.preview_image_url_lq, asset.preview_image_flags)
+			yield(_preview_image, "image_loaded")
+			_spinner.visible = false
 
 	asset.connect("download_started", self, "_update_downloaded_status")
 	asset.connect("download_completed", self, "_update_downloaded_status")
@@ -59,7 +70,6 @@ func set_asset(value: Asset) -> void:
 
 
 func set_selected(value):
-	selected = value
 	if selected:
 		add_stylebox_override("panel", _focused_stylebox)
 		emit_signal("selected")
@@ -71,10 +81,8 @@ func _update_downloaded_status(is_downloaded: bool = asset.downloaded) -> void:
 	if asset.downloading:
 		_status_icon.visible = false
 		_download_button.visible = false
-		_download_spinner.spinning = true
 		_download_spinner.visible = true
 	else:
-		_download_spinner.spinning = false
 		_download_spinner.visible = false
 		if is_downloaded:
 			_download_button.visible = false

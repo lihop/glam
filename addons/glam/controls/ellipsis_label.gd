@@ -12,9 +12,10 @@ func _ready():
 	_update_text()
 
 
-func _set(property: String, value: String) -> bool:
+func _set(property: String, value) -> bool:
 	match property:
 		"text":
+			assert(value is String)
 			full_text = value
 			hint_tooltip = full_text
 			_update_text()

@@ -1,0 +1,46 @@
+{
+  "id": 398704,
+  "url": "https://freesound.org/people/InspectorJ/sounds/398704/",
+  "name": "Water Swirl, Small, 15.wav",
+  "tags": [
+    "water",
+    "splash",
+    "pool",
+    "flow",
+    "Flow",
+    "Swooshing",
+    "Water",
+    "swirl",
+    "swirling",
+    "Small",
+    "swooshing",
+    "Swirling",
+    "Swirl",
+    "small",
+    "Splash",
+    "Pool"
+  ],
+  "description": "Raw audio of swirling water with my hands in a swimming pool. The recorder was placed about 15cm away from the swirls.\n\n<b>This sound is <u>not</u> in the public domain. Please attribute/credit the sound if you use it.</b> If you would prefer to not have to give attribution, then take a look at the <b><a href=\"https://www.jshaw.co.uk/inspectorj-freesound-library\" rel=\"nofollow\">attribution-free license</a></b>.\n\nAn example of how you might credit is by putting this in the description/credits:\n\"Water Swirl, Small, 15.wav\" by InspectorJ (<a href=\"http://www.jshaw.co.uk\" rel=\"nofollow\">www.jshaw.co.uk</a>) of <a href=\"http://Freesound.org\" rel=\"nofollow\">Freesound.org</a>\n\nIf any of these sounds have been of help, and you are feeling charitable, please do consider<b> <a href=\"http://www.freesound.org/donations/donate/\" rel=\"nofollow\">donating to Freesound</a> </b>to help keep the site running (a link is also on the home page). Any donations are greatly appreciated! And for more awesome sounds, do please <b><a href=\"https://www.jshaw.co.uk/libraries\" rel=\"nofollow\">check out my sound libraries</a></b> or <b><a href=\"https://www.jshaw.co.uk/store\" rel=\"nofollow\">SFX store</a></b>.\n\nPlease comment on where you intend to use the sound, and feel free to post a link to the work where you used it if you want (I enjoy watching/listening to anything you create!)\n\nThe sound was recorded using a \"H1 Zoom recorder\" on 1st August 2017.\n\nNote: Audio quality is always better when downloaded.",
+  "license": "http://creativecommons.org/licenses/by/3.0/",
+  "type": "wav",
+  "duration": 2.83449,
+  "username": "InspectorJ",
+  "download": "https://freesound.org/apiv2/sounds/398704/download/",
+  "bitrate": 13780,
+  "previews": {
+    "preview-lq-ogg": "https://freesound.org/data/previews/398/398704_5121236-lq.ogg",
+    "preview-lq-mp3": "https://freesound.org/data/previews/398/398704_5121236-lq.mp3",
+    "preview-hq-ogg": "https://freesound.org/data/previews/398/398704_5121236-hq.ogg",
+    "preview-hq-mp3": "https://freesound.org/data/previews/398/398704_5121236-hq.mp3"
+  },
+  "images": {
+    "spectral_m": "https://freesound.org/data/displays/398/398704_5121236_spec_M.jpg",
+    "spectral_l": "https://freesound.org/data/displays/398/398704_5121236_spec_L.jpg",
+    "spectral_bw_l": "https://freesound.org/data/displays/398/398704_5121236_spec_bw_L.jpg",
+    "waveform_bw_m": "https://freesound.org/data/displays/398/398704_5121236_wave_bw_M.png",
+    "waveform_bw_l": "https://freesound.org/data/displays/398/398704_5121236_wave_bw_L.png",
+    "waveform_l": "https://freesound.org/data/displays/398/398704_5121236_wave_L.png",
+    "waveform_m": "https://freesound.org/data/displays/398/398704_5121236_wave_M.png",
+    "spectral_bw_m": "https://freesound.org/data/displays/398/398704_5121236_spec_bw_M.jpg"
+  }
+}

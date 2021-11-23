@@ -248,13 +248,13 @@ func create_metadata_license_file(path: String) -> void:
 
 
 # Fetches and parses json data from the given url.
-func _fetch_json(url: String) -> Dictionary:
+func _fetch_json(url: String, headers := []) -> Dictionary:
 	yield(get_tree(), "idle_frame")  # Ensure function can be yielded.
 
 	var http_request := CacheableHTTPRequest.new()
 	add_child(http_request)
 
-	var err = http_request.request(url)
+	var err = http_request.request(url, headers)
 	if err != OK:
 		return {error = err}
 
@@ -282,7 +282,7 @@ func _fetch_json(url: String) -> Dictionary:
 # Downloads a single file from `url` to `dest` on the local machine. `dest`
 # should begin with "res://" to ensure files are only downloaded within the
 # current project directory.
-func _download_file(url: String, dest: String) -> GDScriptFunctionState:
+func _download_file(url: String, dest: String, headers := PoolStringArray()) -> GDScriptFunctionState:
 	assert(dest.is_abs_path())
 	assert(dest.begins_with("res://"), "Location outside of project directory.")
 	Directory.new().make_dir_recursive(dest.get_base_dir())
@@ -294,7 +294,7 @@ func _download_file(url: String, dest: String) -> GDScriptFunctionState:
 	http_request.use_threads = true
 	http_request.download_file = dest
 
-	var err = http_request.request(url)
+	var err = http_request.request(url, headers)
 	if err != OK:
 		yield(get_tree(), "idle_frame")  # Ensure function can be 'yielded'.
 		return err

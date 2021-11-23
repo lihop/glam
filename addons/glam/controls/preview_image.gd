@@ -14,7 +14,7 @@ func cancel():
 		token.cancel()
 
 
-func load_image(url := ""):
+func load_image(url := "", flags := Texture.FLAGS_DEFAULT):
 	if url.empty():
 		return CancellationToken.new(true)
 
@@ -29,7 +29,7 @@ func load_image(url := ""):
 		"request_completed",
 		self,
 		"_on_http_request_completed",
-		[url, cancellation_token],
+		[url, flags, cancellation_token],
 		CONNECT_ONESHOT
 	)
 	_http_request.request(url)
@@ -37,7 +37,13 @@ func load_image(url := ""):
 
 
 func _on_http_request_completed(
-	result, response_code, headers, body, url: String, cancellation_token: CancellationToken
+	result,
+	response_code,
+	headers,
+	body,
+	url: String,
+	flags: int,
+	cancellation_token: CancellationToken
 ):
 	cancellation_token.http_request.queue_free()
 
@@ -48,8 +54,8 @@ func _on_http_request_completed(
 		push_error("Could not load asset preview image.")
 	var content_type: String
 	for header in headers:
-		if header.begins_with("Content-Type"):
-			content_type = header.trim_prefix("Content-Type:").strip_edges()
+		if header.to_lower().begins_with("content-type"):
+			content_type = header.to_lower().trim_prefix("content-type:").strip_edges()
 	if not content_type:
 		content_type = "image/%s" % url.get_extension()
 	var image := Image.new()
@@ -68,7 +74,7 @@ func _on_http_request_completed(
 	if loaded != OK:
 		push_error("Could not load preview image")
 	texture = ImageTexture.new()
-	texture.create_from_image(image, Texture.FLAGS_DEFAULT | Texture.FLAG_MIPMAPS)
+	texture.create_from_image(image, flags)
 	emit_signal("image_loaded")
 
 

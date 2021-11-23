@@ -4,6 +4,7 @@ tool
 extends Control
 
 const Asset := preload("../assets/asset.gd")
+const AudioStreamAsset := preload("../assets/audio_stream_asset.gd")
 const RequestCache := preload("../util/request_cache.gd")
 const Source := preload("../sources/source.gd")
 const ThumbnailScene := preload("../controls/thumbnail/thumbnail.tscn")
@@ -34,11 +35,15 @@ onready var _results := find_node("Results")
 onready var _glam = get_tree().get_meta("glam")
 onready var _thumbnail_grid := find_node("ThumbnailGrid")
 onready var _status_line := find_node("StatusLine")
+onready var _audio_controls := find_node("AudioControls")
+onready var _volume_slider := find_node("VolumeSlider")
 onready var _request_cache: RequestCache = get_tree().get_meta("glam").request_cache
 
 
 func _ready():
-	assert(source)
+	if not source:
+		return
+
 	source.connect("fetch_started", self, "_on_fetch_started")
 	source.connect("fetch_completed", self, "_on_fetch_completed")
 	source.connect("query_changed", self, "_on_query_changed")
@@ -111,6 +116,9 @@ func _on_fetch_completed(result: Source.FetchResult):
 	for asset in assets:
 		asset.filepath = source.get_asset_path(asset)
 		asset.downloaded = _file.file_exists(asset.filepath)
+		if asset is AudioStreamAsset:
+			_audio_controls.visible = true
+			asset.set_meta("volume", linear2db(_volume_slider.value))
 
 	_thumbnail_grid.append(assets)
 
@@ -210,22 +218,6 @@ func authenticate():
 	pass
 
 
-func _on_thumbnail_selected(thumbnail: Thumbnail):
-	if (
-		selected_thumbnail
-		and is_instance_valid(selected_thumbnail)
-		and selected_thumbnail != thumbnail
-	):
-		selected_thumbnail.selected = false
-	selected_thumbnail = thumbnail
-	_details_pane.asset = thumbnail.asset
-
-
-#func _on_LogoutButton_pressed():
-#	source.logout()
-#	_check_authentication()
-
-
 func _on_Trailer_screen_entered():
 	if is_instance_valid(source) and source.can_fetch_more():
 		source.fetch_more()
@@ -245,3 +237,18 @@ func _on_DetailsPane_tag_selected(tag: String):
 
 func _on_download_requested(asset: Asset):
 	source.download(asset)
+
+
+func _on_StopAllButton_pressed():
+	for child in _thumbnail_grid.get_children():
+		if child is Thumbnail:
+			if "_audio_preview" in child:
+				child._audio_preview._stop()
+
+
+func _on_VolumeSlider_value_changed(value):
+	for child in _thumbnail_grid.get_children():
+		if child is Thumbnail:
+			if "_audio_preview" in child:
+				var player: AudioStreamPlayer = child._audio_preview._player
+				player.volume_db = linear2db(value)

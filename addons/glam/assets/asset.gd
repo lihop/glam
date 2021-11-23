@@ -16,9 +16,11 @@ var id: String
 var name: String
 var download_format := "" setget set_download_format
 var download_formats := []
+var download_urls := {}
 var authors := [] setget set_authors  # One per line.
 var licenses := [] setget set_licenses  # SPDX License Identifier. One per line.
 var downloading := false setget set_downloading
+var description: String
 var filepath: String
 
 # Keep this one.
@@ -29,6 +31,7 @@ var preview_image_url_lq: String
 # High quality preview image url for displaying the asset in the preview panel.
 # Falls back to preview_image_url_lq if not set.
 var preview_image_url_hq: String setget , get_preview_image_url_hq
+var preview_image_flags: int = Texture.FLAGS_DEFAULT
 # Lower case tags.
 var tags := [] setget set_tags, get_tags
 
@@ -114,19 +117,18 @@ func set_preview_image(value: ImageTexture) -> void:
 
 
 func set_tags(value: Array) -> void:
-	var lower = []
+	var normalized := []
 	for tag in value:
 		if tag is String:
-			lower.append(tag.to_lower().strip_edges())
-	tags = lower
+			tag = tag.to_lower().strip_edges()
+			if not normalized.has(tag):
+				normalized.append(tag)
+	tags = normalized
 
 
 func get_tags() -> Array:
-	var lower = []
-	for tag in tags:
-		if tag is String:
-			lower.append(tag.to_lower())
-	return lower
+	self.tags = tags
+	return tags
 
 
 func get_available_formats() -> Array:
@@ -147,84 +149,27 @@ func get_file_name() -> String:
 	return "%s.tres" % get_slug()
 
 
-# What is this?
-func import_files(create_license_files := true) -> Array:
-	var fs: EditorFileSystem = source.get_tree().get_meta("glam").fs
-	var imported := []
-
-	fs.call_deferred("scan")
-	var files = yield(fs, "resources_reimported")
-
-	# Wait a few frames for things to "settle down", otherwise we
-	# get "possible cyclic resource inclusion" errors.
-	yield(source.get_tree(), "idle_frame")
-	yield(source.get_tree(), "idle_frame")
-	yield(source.get_tree(), "idle_frame")
-
-	for file in files:
-		#create_license_file(file, authors, licenses)
-		#create_license_file("%s.import" % file, "none", "CC0-1.0") # TODO: Make default metadata license configurable.
-		imported.append({file = file, name = file, resource = load(file)})
-
-	return imported
-
-
-func get_license_file_contents() -> String:
-	var contents := PoolStringArray()
-	for author in authors:
-		assert(author is Author)
-		contents.append("# SPDX-FileCopyrightText: %s" % author.get_file_copyright_text())
-	for license in licenses:
-		assert(license is License)
-		contents.append("# SPDX-License-Identifier: %s" % license.identifier)
-	contents.append("# Name: %s" % name)
-	contents.append("# Source: %s" % source_url)
-	return contents.join("\n") + "\n"
-
-
-func generate_license(path: String) -> void:
-	var file := File.new()
-	if not file.file_exists(path):
-		push_error("Not generating license for non-existent file: %s" % path)
-		return
-
-	var license_file = path + ".license"
-	if file.file_exists(license_file):
-		push_warning(
-			"Not overwriting existing license file: %s. Please ensure it contains the correct license information."
-		)
-		return
-
-	var err = file.open(license_file, File.WRITE)
-	if err != OK:
-		push_error("Error creating license file: %s" % path)
-		return
-
-#	for author in authors.split("\n"):
-#		file.store_line("# SPDX-FileCopyrightText: %s" % author)
-#	for license in licenses.split("\n"):
-#		file.store_line("# SPDX-License-Identifier: %s" % license)
-	file.close()
-
-
 func create_license_file(path: String):
 	var file := File.new()
 	file.open("%s.license" % path, File.WRITE)
 
 	for author in authors:
 		if author is Author:
-			file.store_line("SPDX-FileCopyrightText: %s" % author.get_file_copyright_text())
+			file.store_line("# SPDX-FileCopyrightText: %s" % author.get_file_copyright_text())
+
+	file.store_line("#")
 
 	for license in licenses:
-		if license is License:
-			file.store_line("SPDX-License-Identifier: %s" % license.identifier)
+		# The next line causes a crash with signal 11, so don't do it.
+		#if license is License:
+		if "identifier" in license:
+			file.store_line("# SPDX-License-Identifier: %s" % license.identifier)
 
 	file.close()
 
 
 func get_download_url() -> String:
-	assert(false, "Not Implemented")
-	return ""
+	return download_urls.get(download_format)
 
 
 class Author:

@@ -11,6 +11,7 @@ var editor_icons: EditorIcons
 var fs: EditorFileSystem
 var request_cache: RequestCache
 var locked := false
+var http_client_pool: Dictionary
 
 const required_directories := [
 	"user://../glam/cache",
@@ -37,6 +38,7 @@ func _enter_tree():
 			dir.make_dir_recursive(path)
 		assert(dir.dir_exists(path), "Required directory '%s' does not exist." % path)
 
+	http_client_pool = {}
 	get_tree().set_meta("glam", self)
 	editor_icons = EditorIcons.new()
 	add_child(editor_icons)
@@ -59,6 +61,7 @@ func _exit_tree():
 	editor_icons.free()
 	editor_icons = null
 	get_tree().remove_meta("glam")
+	http_client_pool.clear()
 
 
 func get_editor_icon(icon_name: String) -> Texture:
