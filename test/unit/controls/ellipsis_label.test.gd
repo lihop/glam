@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
+# SPDX-License-Identifier: MIT
 extends "res://addons/gut/test.gd"
 
 const EllipsisLabel := preload("res://addons/glam/controls/ellipsis_label.gd")
