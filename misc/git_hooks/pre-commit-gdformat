@@ -16,10 +16,7 @@ if ! gdformat --version; then
 	pip install git+git://github.com/Scony/godot-gdscript-toolkit@${GDTOOLKIT_VERSION};
 fi
 
-# Format all selected files.
-echo "$FILES" | xargs gdformat
-
-# Add back the formatted files to staging.
-echo "$FILES" | xargs git add
+# Lint all selected files.
+echo "$FILES" | xargs gdformat --check
 
 exit 0
