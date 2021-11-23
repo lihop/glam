@@ -1,3 +1,7 @@
+<!--
+  SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
+  SPDX-License-Identifier: MIT
+-->
 # **G**odot **L**ibre **A**sset **M**anager
 
 Godot plugin for finding, downloading and managing free, libre, and creative commons assets. Work in progress.

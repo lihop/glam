@@ -8,20 +8,15 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "ResourceFormatSaver",
-"class": "GlamAssetResourceFormatSaver",
-"language": "GDScript",
-"path": "res://addons/glam/glam_resource_format_saver.gd"
-} ]
-_global_script_class_icons={
-"GlamAssetResourceFormatSaver": ""
-}
-
 [application]
 
 config/name="GLAM"
-config/description="Godot Libre Asset Manager."
+config/description="Godot Libre Asset Manager.
+Browse and download free, libre, and creative commons assets in the Godot editor. Keep track of licenses and attribution. 
+
+SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
+SPDX-License-Identifier: MIT
+"
 config/icon="res://icon.png"
 
 [editor_plugins]

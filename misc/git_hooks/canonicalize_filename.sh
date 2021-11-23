@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2015 David Martin <david.martin.mailbox@googlemail.com>
+# SPDX-License-Identifier: BSD-2-Clause 
+
 # Provide the canonicalize filename (physical filename with out any symlinks)
 # like the GNU version readlink with the -f option regardless of the version of
 # readlink (GNU or BSD).

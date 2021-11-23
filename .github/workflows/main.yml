@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
+# SPDX-License-Identifier: MIT
 name: 'Test'
 
 on:
@@ -6,8 +8,8 @@ on:
     - cron: 7 1 * * fri
 
 jobs:
-  test:
-    name: ${{ matrix.os }} ${{ matrix.version }}
+  Test:
+    name: Test (${{ matrix.os }} ${{ matrix.version }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -44,22 +46,34 @@ jobs:
         shell: bash
         run: godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig_all.json
 
+  reuse-compliance-check:
+    name: 'Check REUSE Compliance'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: REUSE Compliance Check
+      uses: fsfe/reuse-action@v1
+
   # Git archive should only include addons/glam directory.
   check-archive:
     name: 'Check Archive'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        submodules: recursive
     - name: Create git archive
       run: git archive -o archive.zip HEAD
     - name: Extract archive
       run: mkdir -p /tmp/unzipped && unzip archive.zip -d /tmp/unzipped
+    - name: Copy extracted archive to working directory
+      run: cp -avr /tmp/unzipped ./unzipped
+    - name: REUSE compliance check
+      uses: fsfe/reuse-action@v1
+      with:
+        args: --root ./unzipped/addons/glam lint
     - name: Check that archive only contains addons directory
       run: |
         shopt -s nullglob dotglob
-        ls -lR /tmp/unzipped
+        ls -laR /tmp/unzipped
         files=(/tmp/unzipped/*)
         if [ ${#files[@]} -ne 1 ]; then
           echo "Wrong number of files in archive (${#files[@]}) expected 1."

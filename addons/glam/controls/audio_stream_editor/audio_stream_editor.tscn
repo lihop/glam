@@ -44,7 +44,9 @@ margin_bottom = -1.0
 mouse_filter = 1
 script = ExtResource( 2 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": "
+"
 }
 
 [node name="HTTPAudioStreamPlayer" type="AudioStreamPlayer" parent="."]

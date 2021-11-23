@@ -5,6 +5,11 @@
 
 [node name="StreamTest" type="Node"]
 script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": "SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
+SPDX-License-Identifier: MIT
+"
+}
 
 [node name="HTTPAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 script = ExtResource( 1 )

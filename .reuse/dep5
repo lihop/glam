@@ -6,7 +6,7 @@ Source: https://github.com/lihop/glam
 # Licenses in this directory are not used by the project, but are used by
 # assets from the various sources. However the REUSE linter complains about
 # unusued licenses so they are kept in a separate directory.
-Files: .LICENSES/*
+Files: addons/glam/.LICENSES/*
 Copyright: ignore
 License: CC0-1.0
 
