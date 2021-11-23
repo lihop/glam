@@ -7,5 +7,7 @@ addons/*
 !addons/glam
 /assets/
 logs/
+/scratch/
 mono_crash.*
 todo.gd
+.gut_editor_config.json
