@@ -3,7 +3,7 @@
 [ext_resource path="res://addons/glam/controls/trailer/trailer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/glam/controls/spinner/spinner.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/glam/controls/thumbnail_grid/thumbnail_grid.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/glam/icons/icon_progress_7.svg" type="Texture" id=4]
+[ext_resource path="res://addons/glam/icons/icon_progress_6.svg" type="Texture" id=4]
 [ext_resource path="res://addons/glam/source_panel/details_pane.gd" type="Script" id=5]
 [ext_resource path="res://addons/glam/controls/source_link/source_link.gd" type="Script" id=6]
 [ext_resource path="res://addons/glam/controls/preview_image.gd" type="Script" id=7]
@@ -130,7 +130,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ResultsPane/DetailsPane/ScrollContainer"]
 margin_right = 250.0
-margin_bottom = 1298.0
+margin_bottom = 574.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -195,28 +195,8 @@ rect_clip_content = false
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-bbcode_text = "Author: Lennart Demes, Donald Canal, Peter Tonalsmith, Colden Macree
-
-License: CC0-1.0, CC-BY-3.0
-
-Description: A cool thing for blah to do on the blah blah blah hah hah hah how.
-
-Tags: fire, ice, cool, part, narlow, thing
-
-Source: https://ambientCG.com/asset/126
-
-"
-text = "Author: Lennart Demes, Donald Canal, Peter Tonalsmith, Colden Macree
-
-License: CC0-1.0, CC-BY-3.0
-
-Description: A cool thing for blah to do on the blah blah blah hah hah hah how.
-
-Tags: fire, ice, cool, part, narlow, thing
-
-Source: https://ambientCG.com/asset/126
-
-"
+bbcode_text = "No details."
+text = "No details."
 fit_content_height = true
 scroll_active = false
 
