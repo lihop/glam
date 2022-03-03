@@ -18,6 +18,20 @@ static func is_valid(url: String) -> bool:
 	return not _parse(url).empty()
 
 
+static func query_string_to_dict(query_string: String) -> Dictionary:
+	var dict := {}
+	var kvs := query_string.replace("?", "").split("&")
+
+	for pair in kvs:
+		var kv: PoolStringArray = pair.split("=")
+		var key = kv[0].http_unescape()
+		var value = kv[1].http_unescape() if kv.size() > 1 else null
+
+		dict[key] = value
+
+	return dict
+
+
 static func _parse(url: String) -> Dictionary:
 	var regex := RegEx.new()
 	regex.compile("(?<proto>.*:)//(?<host>[A-z0-9\\-\\.]+):?(?<port>[0-9]+)?(?<rest>.*)")
