@@ -54,8 +54,8 @@ func set_asset(value: Asset) -> void:
 	else:
 		_audio_preview.queue_free()
 		_preview_image.visible = true
-		if asset.preview_image:
-			_preview_image.texture = asset.preview_image
+		if asset.preview_image_lq:
+			_preview_image.texture = asset.preview_image_lq
 			_spinner.visible = false
 		else:
 			_spinner.visible = true

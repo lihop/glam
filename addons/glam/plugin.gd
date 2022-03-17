@@ -6,6 +6,9 @@ extends EditorPlugin
 const EditorIcons := preload("./icons/editor_icons.gd")
 const RequestCache := preload("./util/request_cache.gd")
 
+const GLAM_DIR := "user://../glam/"
+const TMP_DIR := GLAM_DIR + "/tmp/"
+
 var assets_panel: Control
 var editor_icons: EditorIcons
 var fs: EditorFileSystem
@@ -14,8 +17,9 @@ var locked := false
 var http_client_pool: Dictionary
 
 const required_directories := [
-	"user://../glam/cache",
-	"user://../glam/source_configs",
+	TMP_DIR,
+	"user://../GLAM/cache",
+	"user://../GLAM/source_configs",
 ]
 
 
@@ -38,11 +42,14 @@ func _enter_tree():
 			dir.make_dir_recursive(path)
 		assert(dir.dir_exists(path), "Required directory '%s' does not exist." % path)
 
+	_clear_tmp()
+
 	http_client_pool = {}
 	get_tree().set_meta("glam", self)
 	editor_icons = EditorIcons.new()
 	add_child(editor_icons)
 	fs = get_editor_interface().get_resource_filesystem()
+	fs.connect("resources_reload", self, "_on_resources_reload")
 	request_cache = RequestCache.new()
 	add_child(request_cache)
 	assets_panel = preload("./editor_panel/editor_panel.tscn").instance()
@@ -66,3 +73,19 @@ func _exit_tree():
 
 func get_editor_icon(icon_name: String) -> Texture:
 	return editor_icons.get_icon(icon_name)
+
+
+func _on_resources_reload(resources: PoolStringArray) -> void:
+	print("reloaded resources: ", resources as Array)
+
+
+func _clear_tmp():
+	var dir := Directory.new()
+	dir.open(TMP_DIR)
+	dir.list_dir_begin(true)
+	var file_name := dir.get_next()
+	while file_name != "":
+		if not dir.current_is_dir():
+			dir.remove(TMP_DIR + file_name)
+		file_name = dir.get_next()
+	dir.list_dir_end()

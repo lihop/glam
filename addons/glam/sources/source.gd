@@ -3,7 +3,6 @@
 tool
 extends Node
 
-const Asset := preload("../assets/asset.gd")
 const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
 const EditorIcons := preload("../icons/editor_icons.gd")
 const GDash := preload("../util/gdash.gd")
@@ -152,7 +151,7 @@ func get_query_hash() -> int:
 	return [_filters.hash(), _search_string.hash(), _sort_options.hash()].hash()
 
 
-func download(asset: Asset) -> void:
+func download(asset: GLAMAsset) -> void:
 	yield(get_tree(), "idle_frame")  # Ensure function can be 'yielded'.
 	asset.downloading = true
 	yield(_download(asset), "completed")
@@ -160,7 +159,7 @@ func download(asset: Asset) -> void:
 	asset.downloaded = true
 
 
-func _download(asset: Asset) -> void:
+func _download(asset: GLAMAsset) -> void:
 	yield(get_tree(), "idle_frame")
 	assert(false, "_download() not implemented.")
 
@@ -169,11 +168,11 @@ func get_directory() -> String:
 	return "res://assets/%s" % get_id()
 
 
-func get_asset_directory(asset: Asset) -> String:
+func get_asset_directory(asset: GLAMAsset) -> String:
 	return "%s/%s" % [get_directory(), asset.get_slug()]
 
 
-func get_asset_path(asset: Asset) -> String:
+func get_asset_path(asset: GLAMAsset) -> String:
 	return "%s/%s" % [get_asset_directory(asset), asset.get_file_name()]
 
 
@@ -309,6 +308,12 @@ func _download_file(url: String, dest: String, headers := PoolStringArray()) -> 
 		return FAILED
 
 	return OK
+
+
+func _save_glam_file(asset: GLAMAsset) -> int:
+	var path := "%s/%s.glam" % [get_asset_directory(asset), asset.get_slug()]
+	print("path: ", path)
+	return ResourceSaver.save(path, asset as GLAMAsset)
 
 
 class FetchResult:

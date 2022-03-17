@@ -18,7 +18,7 @@ func cancel():
 
 func load_image(url := "", flags := Texture.FLAGS_DEFAULT):
 	if url.empty():
-		return CancellationToken.new(true)
+		return CancellationToken.new(null, true)
 
 	for token in _cancellation_tokens:
 		token.cancel()
@@ -84,8 +84,9 @@ class CancellationToken:
 	var http_request: HTTPRequest
 	var cancelled := false
 
-	func _init(p_http_request):
+	func _init(p_http_request := HTTPRequest.new(), p_cancelled := false):
 		http_request = p_http_request
+		cancelled = p_cancelled
 
 	func cancel():
 		cancelled = true

@@ -8,6 +8,46 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "GLAMAsset",
+"language": "GDScript",
+"path": "res://addons/glam/assets/asset.gd"
+}, {
+"base": "ResourceFormatLoader",
+"class": "GLAMAssetLoader",
+"language": "GDScript",
+"path": "res://addons/glam/assets/asset_loader.gd"
+}, {
+"base": "ResourceFormatSaver",
+"class": "GLAMAssetSaver",
+"language": "GDScript",
+"path": "res://addons/glam/assets/asset_saver.gd"
+}, {
+"base": "GLAMAsset",
+"class": "GLAMAudioStreamAsset",
+"language": "GDScript",
+"path": "res://addons/glam/assets/audio_stream_asset.gd"
+}, {
+"base": "GLAMAsset",
+"class": "GLAMSpatialMaterialAsset",
+"language": "GDScript",
+"path": "res://addons/glam/assets/spatial_material_asset.gd"
+}, {
+"base": "GLAMAsset",
+"class": "GLAMStreamTextureAsset",
+"language": "GDScript",
+"path": "res://addons/glam/assets/stream_texture_asset.gd"
+} ]
+_global_script_class_icons={
+"GLAMAsset": "",
+"GLAMAssetLoader": "",
+"GLAMAssetSaver": "",
+"GLAMAudioStreamAsset": "",
+"GLAMSpatialMaterialAsset": "",
+"GLAMStreamTextureAsset": ""
+}
+
 [application]
 
 config/name="GLAM"

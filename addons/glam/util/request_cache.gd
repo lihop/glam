@@ -6,7 +6,7 @@ extends Node
 const Request := preload("./request.gd")
 const CachedResponse := preload("./cached_response.gd")
 
-const DEFAULT_CACHE_DIR := "user://../GLAM/cache"
+const DEFAULT_CACHE_DIR := "user://../glam/cache"
 const DEFAULT_TTL := 86400
 
 signal cache_size_updated(size)

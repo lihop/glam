@@ -51,7 +51,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body: Poo
 			config.set_value(
 				"auth", "expires_at", int(int(OS.get_unix_time()) + int(parsed.result.expires_in))
 			)
-			if config.save(source.CONFIG_FILE) == OK:
+			if config.save(source.COFIG_FILE) == OK:
 				set_submitting(false)
 	else:
 		var error_message := (

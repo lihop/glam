@@ -4,7 +4,6 @@ tool
 extends "../source.gd"
 
 const AuthenticationScene := preload("./authentication.tscn")
-const ImageAsset := preload("./pixabay_image_asset.gd")
 
 const API_URL := "https://pixabay.com/api"
 const CONFIG_FILE := "user://../glam/sources/pixabay.cfg"
@@ -86,7 +85,7 @@ func logout() -> void:
 	var config := ConfigFile.new()
 	if config.load(CONFIG_FILE) == OK:
 		config.erase_section("auth")
-		config.save(CONFIG_FILE)
+		config.save(get_meta("glam").get_cfg_file("pixabay"))
 	_api_key = ""
 
 
@@ -152,11 +151,11 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 	return
 
 
-func _download(asset: Asset) -> void:
-	if not asset is ProxyTextureAsset:
+func _download(asset: GLAMAsset) -> void:
+	if not asset is GLAMStreamTextureAsset:
 		return
 
-	var url = asset.get_download_url()
+	var url = ProxyTextureAsset.get_download_url(asset)
 	var extension = url.get_extension()
 	var format = "Vector" if extension == "svg" else asset.download_format.to_int()
 	var dest = "%s/%s_%s.%s" % [get_asset_directory(asset), asset.get_slug(), format, extension]
@@ -180,6 +179,7 @@ func _download(asset: Asset) -> void:
 	proxy_texture.set_base(load(dest))
 	proxy_texture.set_meta("glam_asset", asset)
 	ResourceSaver.save(get_asset_path(asset), proxy_texture)
+	_save_glam_file(asset)
 
 
 func _on_query_changed():
@@ -191,13 +191,13 @@ func _on_query_changed():
 
 class ProxyTextureAsset:
 	tool
-	extends "../../assets/asset.gd"
+	extends Reference
 
 	const Asset := preload("../../assets/asset.gd")
 	const GDash := preload("../../util/gdash.gd")
 
-	static func from_data(data: Dictionary) -> ProxyTextureAsset:
-		var asset = ProxyTextureAsset.new()
+	static func from_data(data: Dictionary) -> GLAMStreamTextureAsset:
+		var asset = GLAMStreamTextureAsset.new()
 		assert(asset, "Failed to create asset")
 
 		# Pixabay assets don't really have names so we can combine the first tag
@@ -262,22 +262,16 @@ class ProxyTextureAsset:
 
 		var author := Asset.Author.new(null, data.user)
 		author.url = "https://pixabay.com/users/%s/" % data.user_id
-		asset.authors.append(author)
-		asset.licenses.append(Asset.License.new("LicenseRef-Pixabay"))
+		asset.authors = [author]
+		asset.licenses = [Asset.License.new("LicenseRef-Pixabay")]
 
 		if "tags" in data:
 			asset.tags = data.tags.split(",")
 
 		return asset
 
-	func get_icon_name() -> String:
-		return "StreamTexture"
-
-	func get_slug() -> String:
-		return name.replace(" ", "_")
-
-	func get_download_url() -> String:
-		return get_meta("download_urls")[download_format]
+	static func get_download_url(asset: GLAMAsset) -> String:
+		return asset.get_meta("download_urls")[asset.download_format]
 
 	static func _sort_numeric(a: String, b: String) -> bool:
 		return a.to_int() < b.to_int()

@@ -193,8 +193,8 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 	return
 
 
-func _download(asset: Asset) -> void:
-	if not asset is AudioStreamAsset:
+func _download(asset: GLAMAsset) -> void:
+	if not asset is GLAMAudioStreamAsset:
 		return
 
 	var url := asset.get_download_url()
@@ -218,6 +218,7 @@ func _download(asset: Asset) -> void:
 
 	asset.create_license_file(dest)
 	create_metadata_license_file("%s.import" % dest)
+	_save_glam_file(asset)
 
 
 func _update_status_line():
@@ -232,13 +233,13 @@ func _update_status_line():
 
 class AudioStreamAsset:
 	tool
-	extends "../../assets/audio_stream_asset.gd"
+	extends Reference
 
 	const Asset := preload("../../assets/asset.gd")
 	const GDash := preload("../../util/gdash.gd")
 
-	static func from_data(data: Dictionary, access_token := "") -> AudioStreamAsset:
-		var asset = AudioStreamAsset.new()
+	static func from_data(data: Dictionary, access_token := "") -> GLAMAudioStreamAsset:
+		var asset = GLAMAudioStreamAsset.new()
 
 		# Create an alphanumeric name.
 		var regex := RegEx.new()

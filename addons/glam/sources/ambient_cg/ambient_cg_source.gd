@@ -121,15 +121,15 @@ func _on_query_changed():
 	._on_query_changed()
 
 
-func get_asset_directory(asset: Asset) -> String:
+func get_asset_directory(asset: GLAMAsset) -> String:
 	return "res://assets/%s/%s" % [get_id(), asset.get_slug()]
 
 
-func _download(asset: Asset) -> void:
-	if not asset is SpatialMaterialAsset:
+func _download(asset: GLAMAsset) -> void:
+	if not asset is GLAMSpatialMaterialAsset:
 		return
 
-	var url = asset.get_download_url()
+	var url = SpatialMaterialAsset.get_download_url(asset)
 	var dest = (
 		"%s/%s_%s.zip"
 		% [get_asset_directory(asset), asset.get_slug(), asset.download_format]
@@ -187,18 +187,23 @@ func _download(asset: Asset) -> void:
 				"PREVIEW", _:
 					continue
 
-		ResourceSaver.save(get_asset_path(asset), material)
+		err = ResourceSaver.save(get_asset_path(asset), material)
+		if err != OK:
+			push_error(err)
+
+		err = _save_glam_file(asset)
+		if err != OK:
+			push_error(err)
 
 
 class SpatialMaterialAsset:
 	tool
-	extends "../../assets/asset.gd"
+	extends Reference
 
-	const Asset := preload("../../assets/asset.gd")
 	const GDash := preload("../../util/gdash.gd")
 
-	static func from_data(data: Dictionary) -> SpatialMaterialAsset:
-		var asset = SpatialMaterialAsset.new()
+	static func from_data(data: Dictionary) -> GLAMSpatialMaterialAsset:
+		var asset = GLAMSpatialMaterialAsset.new()
 		assert(asset, "Failed to create asset")
 
 		asset.id = data.assetId
@@ -229,25 +234,19 @@ class SpatialMaterialAsset:
 			year = int(data.releaseDate.split("-")[0])
 
 		# All assets from this source are created by Lennart Demes and released under CC0-1.0.
-		asset.authors.append(Asset.Author.new(year, "Lennart Demes", "hello[at]ambientCG.com"))
-		asset.licenses.append(Asset.License.new("CC0-1.0"))
+		asset.authors.append(GLAMAsset.Author.new(year, "Lennart Demes", "hello[at]ambientCG.com"))
+		asset.licenses.append(GLAMAsset.License.new("CC0-1.0"))
 
 		if "tags" in data:
 			asset.tags = data.tags
 
 		return asset
 
-	func get_icon_name() -> String:
-		return "SpatialMaterial"
-
-	func get_slug() -> String:
-		return name.replace(" ", "_")
-
-	func get_download_url() -> String:
-		var downloads = get_meta("downloads")
+	static func get_download_url(asset: GLAMSpatialMaterialAsset) -> String:
+		var downloads = asset.get_meta("downloads")
 		assert(downloads is Array, "Downloads list is missing")
 		for download in downloads:
-			if GDash.get_val(download, "attribute") == download_format:
+			if GDash.get_val(download, "attribute") == asset.download_format:
 				return GDash.get_val(download, "fullDownloadPath")
 		assert(false, "Could not determine download url")
 		return ""
