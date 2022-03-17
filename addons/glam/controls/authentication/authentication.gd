@@ -10,11 +10,11 @@ var source: Node
 var values: Dictionary
 var loading := false
 
-onready var instructions_label := $VBoxContainer/InstructionsLabel
+onready var instructions_label := $_/InstructionsLabel
 onready var http_request := $HTTPRequest
-onready var submit_button: Button = $VBoxContainer/SubmitButton
-onready var error_label: RichTextLabel = $VBoxContainer/ErrorLabel
-onready var fields = $VBoxContainer/Fields
+onready var submit_button: Button = $_/SubmitButton
+onready var error_label: RichTextLabel = $_/ErrorLabel
+onready var fields = $_/Fields
 
 
 class Field:
