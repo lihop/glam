@@ -86,10 +86,3 @@ func test_tail():
 	assert_eq(url3.tail, "/test")
 	assert_eq(url4.tail, "/hello?world=true&yes=true#something")
 	assert_eq(url5.tail, "/hel.lo/t_o/the?what=True&yes=true#WorlD")
-
-
-func test_query_string_to_dict():
-	assert_eq_deep(
-		URL.query_string_to_dict("world=true&n=" + "Tảo?&#đỏ".http_escape()),
-		{world = "true", n = "Tảo?&#đỏ"}
-	)
