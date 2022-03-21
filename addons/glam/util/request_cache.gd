@@ -6,14 +6,14 @@ extends Node
 const Request := preload("./request.gd")
 const CachedResponse := preload("./cached_response.gd")
 
-const DEFAULT_CACHE_DIR := "user://../glam/cache"
 const DEFAULT_TTL := 86400
 
 signal cache_size_updated(size)
 
-export(String, DIR) var cache_dir := ProjectSettings.globalize_path(DEFAULT_CACHE_DIR) setget set_cache_dir
-
 var cache_size_bytes: int
+var cache_dir := ProjectSettings.globalize_path(
+	ProjectSettings.get_meta("glam/directory") + "/cache"
+)
 
 var _dir := Directory.new()
 var _file := File.new()

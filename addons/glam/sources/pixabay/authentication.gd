@@ -32,8 +32,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body: Poo
 	if result == OK and response_code == 200:
 		var config := ConfigFile.new()
 		config.set_value("auth", "api_key", values["API Key"].strip_edges())
-		if config.save(source.CONFIG_FILE) != OK:
-			set_submitting(false, "Error saving config file: %s" % source.CONFIG_FILE)
+		if config.save(source.config_file) != OK:
+			set_submitting(false, "Error saving config file: %s" % source.config_file)
 		else:
 			set_submitting(false)
 	else:

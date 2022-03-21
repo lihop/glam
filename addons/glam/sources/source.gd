@@ -35,12 +35,16 @@ var loading := false
 
 var status: int = Status.NONE
 var status_line := "" setget set_status_line
-
-onready var _glam = get_tree().get_meta("glam")
+var config_file := (
+	"%s/source_configs/%s.cfg"
+	% [ProjectSettings.get_meta("glam/directory"), get_id()]
+)
 
 var _filters := [] setget , get_filters
 var _search_string := "" setget set_search_string, get_search_string
 var _sort_options := {value = null, options = []} setget , get_sort_options
+
+onready var _glam = get_tree().get_meta("glam")
 
 
 func set_status_line(value := ""):
@@ -197,10 +201,7 @@ func get_icon() -> Texture:
 
 
 func _touch_config_file():
-	if not "CONFIG_FILE" in self:
-		return
-
-	var path := ProjectSettings.globalize_path(get("CONFIG_FILE"))
+	var path := ProjectSettings.globalize_path(config_file)
 	var dir := Directory.new()
 	var file := File.new()
 

@@ -7,7 +7,6 @@ const AuthenticationScene := preload("./authentication.tscn")
 
 const API_URL := "https://freesound.org/apiv2"
 const CLIENT_ID := "0vy6LQde1arAmWBgHgYD"
-const CONFIG_FILE := "user://../glam/sources/freesound.cfg"
 
 const License = {
 	Attribution = "https://creativecommons.org/licenses/by/3.0/",
@@ -63,7 +62,7 @@ func get_authenticated() -> bool:
 	yield(get_tree(), "idle_frame")
 
 	var config := ConfigFile.new()
-	config.load(CONFIG_FILE)
+	config.load(config_file)
 
 	var refresh_token = config.get_value("auth", "refresh_token", "")
 	var expires_at = config.get_value("auth", "expires_at", OS.get_unix_time())
@@ -100,7 +99,7 @@ func get_authenticated() -> bool:
 			config.set_value("auth", "access_token", access_token)
 			config.set_value("auth", "refresh_token", refresh_token)
 			config.set_value("auth", "expires_at", expires_at)
-			config.save(CONFIG_FILE)
+			config.save(config_file)
 			http_request.queue_free()
 			emit_signal("query_changed")
 			return true
@@ -126,9 +125,9 @@ func get_auth_user() -> String:
 
 func logout() -> void:
 	var config := ConfigFile.new()
-	config.load(CONFIG_FILE)
+	config.load(config_file)
 	config.erase_section("auth")
-	config.save(CONFIG_FILE)
+	config.save(config_file)
 
 
 func fetch() -> void:

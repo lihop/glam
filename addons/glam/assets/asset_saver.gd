@@ -17,7 +17,8 @@ func recognize(resource: Resource) -> bool:
 
 
 func save(path: String, resource: Resource, flags: int) -> int:
-	var tmp := "user://../glam/tmp/%s_%s.tres" % [hash(path), path.get_file()]
+	var glam_dir: String = ProjectSettings.get_meta("glam/directory")
+	var tmp := "%s/tmp/%s_%s.tres" % [glam_dir, hash(path), path.get_file()]
 
 	# Ensure file is not compressed.
 	flags &= ~ResourceSaver.FLAG_COMPRESS

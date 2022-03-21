@@ -6,7 +6,6 @@ extends "../source.gd"
 const AuthenticationScene := preload("./authentication.tscn")
 
 const API_URL := "https://pixabay.com/api"
-const CONFIG_FILE := "user://../glam/sources/pixabay.cfg"
 
 var _api_key: String
 var _page := 1
@@ -53,7 +52,7 @@ func get_authenticated() -> bool:
 		return true
 
 	var config := ConfigFile.new()
-	if config.load(CONFIG_FILE) != OK:
+	if config.load(config_file) != OK:
 		return false
 
 	if not config.has_section_key("auth", "api_key"):
@@ -83,7 +82,7 @@ func get_authenticated() -> bool:
 
 func logout() -> void:
 	var config := ConfigFile.new()
-	if config.load(CONFIG_FILE) == OK:
+	if config.load(config_file) == OK:
 		config.erase_section("auth")
 		config.save(get_meta("glam").get_cfg_file("pixabay"))
 	_api_key = ""

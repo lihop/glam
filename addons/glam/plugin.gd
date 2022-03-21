@@ -6,8 +6,7 @@ extends EditorPlugin
 const EditorIcons := preload("./icons/editor_icons.gd")
 const RequestCache := preload("./util/request_cache.gd")
 
-const GLAM_DIR := "user://../glam/"
-const TMP_DIR := GLAM_DIR + "/tmp/"
+const DEFAULT_GLAM_DIR := "user://../GLAM"
 
 var assets_panel: Control
 var editor_icons: EditorIcons
@@ -15,12 +14,6 @@ var fs: EditorFileSystem
 var request_cache: RequestCache
 var locked := false
 var http_client_pool: Dictionary
-
-const required_directories := [
-	TMP_DIR,
-	"user://../GLAM/cache",
-	"user://../GLAM/source_configs",
-]
 
 
 func get_plugin_name():
@@ -32,6 +25,15 @@ func get_plugin_icon():
 
 
 func _enter_tree():
+	var glam_dir := DEFAULT_GLAM_DIR
+	ProjectSettings.set_meta("glam/directory", glam_dir)
+
+	var required_directories := [
+		glam_dir + "/tmp",
+		glam_dir + "/cache",
+		glam_dir + "/source_configs",
+	]
+
 	# Ensure required directories exist.
 	var paths = []
 	for path in required_directories:
@@ -80,12 +82,13 @@ func _on_resources_reload(resources: PoolStringArray) -> void:
 
 
 func _clear_tmp():
+	var tmp_dir = ProjectSettings.get_meta("glam/directory") + "/tmp"
 	var dir := Directory.new()
-	dir.open(TMP_DIR)
+	dir.open(tmp_dir)
 	dir.list_dir_begin(true)
 	var file_name := dir.get_next()
 	while file_name != "":
 		if not dir.current_is_dir():
-			dir.remove(TMP_DIR + file_name)
+			dir.remove(tmp_dir + "/" + file_name)
 		file_name = dir.get_next()
 	dir.list_dir_end()

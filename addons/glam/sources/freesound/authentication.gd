@@ -45,13 +45,13 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body: Poo
 	if result == OK and response_code == 200:
 		var config := ConfigFile.new()
 		var parsed: JSONParseResult = JSON.parse(body.get_string_from_utf8())
-		if parsed.error == OK and config.load(source.CONFIG_FILE) == OK:
+		if parsed.error == OK and config.load(source.config_file) == OK:
 			config.set_value("auth", "access_token", parsed.result.access_token)
 			config.set_value("auth", "refresh_token", parsed.result.refresh_token)
 			config.set_value(
 				"auth", "expires_at", int(int(OS.get_unix_time()) + int(parsed.result.expires_in))
 			)
-			if config.save(source.COFIG_FILE) == OK:
+			if config.save(source.config_file) == OK:
 				set_submitting(false)
 	else:
 		var error_message := (

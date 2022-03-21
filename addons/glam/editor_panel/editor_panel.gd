@@ -47,7 +47,7 @@ func select_panel(index: int) -> void:
 
 
 func _get_glam_directory() -> String:
-	return ProjectSettings.globalize_path("user://../glam")
+	return ProjectSettings.globalize_path(ProjectSettings.get_meta("glam/directory"))
 
 
 func select_source(index: int):
