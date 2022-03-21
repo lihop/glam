@@ -31,4 +31,5 @@
 /icon.png.import export-ignore
 /plug.gd export-ignore
 /project.godot export-ignore
+/requirements.txt export-ignore
 /*.license export-ignore
