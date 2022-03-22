@@ -51,6 +51,7 @@ plug("lihop/glam", {commit = "432cb3561db0b2e69471883b13e24e0f5d15e155", include
 ![3D Editor with Ambient CG textures](/docs/texture_search.jpg)
 ![Vector images from Pixabay](/docs/vector_search.jpg)
 ![Images of mountains from Pixabay](/docs/image_search.jpg)
+![Audio files of fire crackling from Freesound](/docs/audio_search.jpg)
 
 
 ## Developing
