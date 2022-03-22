@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
+# SPDX-FileCopyrightText: 2021-2022 Leroy Hopson <glam@leroy.geek.nz>
 # SPDX-License-Identifier: MIT
 tool
 extends TextureRect
@@ -78,6 +78,11 @@ func _on_http_request_completed(
 	texture = ImageTexture.new()
 	texture.create_from_image(image, flags)
 	emit_signal("image_loaded")
+
+
+func _exit_tree():
+	for token in _cancellation_tokens:
+		token.cancel()
 
 
 class CancellationToken:
