@@ -58,3 +58,31 @@ func test_gets_correct_license_for_cc_by_nc_3_0_asset() -> void:
 	assert_eq(asset.licenses.size(), 1)
 	assert_eq(asset.licenses[0].identifier, "CC-BY-NC-3.0")
 	assert_true(LicenseDB.has_license(asset.licenses[0].identifier))
+
+
+class TestGetFilterStr:
+	extends "res://addons/gut/test.gd"
+
+	func test_all_licenses() -> void:
+		var filter_str = Freesound._get_filter_str(
+			[
+				{
+					name = "License",
+					value = ["Attribution", "Attribution Noncommercial", "Creative Commons 0"]
+				}
+			]
+		)
+		assert_eq(
+			filter_str,
+			'license:("Attribution" OR "Attribution Noncommercial" OR "Creative Commons 0")%20'
+		)
+
+	func test_single_license() -> void:
+		var filter_str = Freesound._get_filter_str(
+			[{name = "License", value = ["Creative Commons 0"]}]
+		)
+		assert_eq(filter_str, 'license:("Creative Commons 0")%20')
+
+	func test_no_license() -> void:
+		var filter_str = Freesound._get_filter_str([{name = "License", value = []}])
+		assert_eq(filter_str, "license:()%20")

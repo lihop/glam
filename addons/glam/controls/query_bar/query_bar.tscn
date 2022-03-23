@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/glam/controls/query_bar/query_bar.gd" type="Script" id=1]
 [ext_resource path="res://addons/glam/icons/icon_animation_filter.svg" type="Texture" id=2]
 [ext_resource path="res://addons/glam/icons/icon_search.svg" type="Texture" id=3]
+[ext_resource path="res://addons/glam/controls/filters_panel/filters_panel.tscn" type="PackedScene" id=4]
 
 [node name="QueryBar" type="HBoxContainer"]
 anchor_right = 1.0
@@ -13,17 +14,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Filters" type="MenuButton" parent="."]
+[node name="FiltersButton" type="Button" parent="."]
 visible = false
-margin_right = 71.0
+margin_right = 70.0
 margin_bottom = 26.0
-focus_mode = 2
+toggle_mode = true
 text = "Filters"
 icon = ExtResource( 2 )
-items = [ "Generate Licenses", null, 0, false, false, 0, 0, null, "", false ]
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="FiltersPanel" parent="FiltersButton" instance=ExtResource( 4 )]
+margin_right = 250.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 250, 0 )
+focus_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="."]
 margin_right = 1024.0
@@ -56,6 +59,9 @@ selected = 0
 wait_time = 1.25
 one_shot = true
 
+[connection signal="toggled" from="FiltersButton" to="." method="_on_FiltersButton_toggled"]
+[connection signal="filters_changed" from="FiltersButton/FiltersPanel" to="." method="_on_FiltersPanel_filters_changed"]
+[connection signal="modal_closed" from="FiltersButton/FiltersPanel" to="." method="_on_FiltersPanel_modal_closed"]
 [connection signal="gui_input" from="LineEdit" to="." method="_on_LineEdit_gui_input"]
 [connection signal="text_changed" from="LineEdit" to="." method="_on_LineEdit_text_changed"]
 [connection signal="text_entered" from="LineEdit" to="." method="_on_LineEdit_text_entered"]

@@ -41,6 +41,7 @@ var config_file := (
 )
 
 var _filters := [] setget , get_filters
+var _filters_hash := _filters.hash()
 var _search_string := "" setget set_search_string, get_search_string
 var _sort_options := {value = null, options = []} setget , get_sort_options
 
@@ -53,12 +54,10 @@ func set_status_line(value := ""):
 		emit_signal("status_line_changed", status_line)
 
 
-func set_filter_value(filter_name: String, value) -> void:
-	var prev_hash = _filters.hash()
-	for filter in _filters:
-		if filter.has("name") and filter.get("name") == filter_name:
-			filter.value = value
-	if prev_hash != _filters.hash():
+func check_filters() -> void:
+	var prev_filters_hash := _filters_hash
+	_filters_hash = _filters.hash()
+	if prev_filters_hash != _filters_hash:
 		emit_signal("query_changed")
 
 
@@ -75,6 +74,8 @@ func set_search_string(value := "") -> void:
 	_search_string = value
 	if prev_hash != _search_string.hash():
 		emit_signal("query_changed")
+	else:
+		check_filters()
 
 
 func get_sort_options() -> Dictionary:

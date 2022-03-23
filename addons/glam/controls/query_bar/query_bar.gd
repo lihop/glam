@@ -14,6 +14,8 @@ onready var _search_bar := find_node("SearchBar")
 onready var _sort_label := find_node("SortLabel")
 onready var _sort_select := find_node("SortSelect")
 onready var _timer := find_node("Timer")
+onready var _filters_button := find_node("FiltersButton")
+onready var _filters_panel := find_node("FiltersPanel")
 
 
 func set_source(value: Source) -> void:
@@ -26,10 +28,17 @@ func set_source(value: Source) -> void:
 
 func _on_query_changed():
 	if source:
+		var filters = source.get_filters()
 		var search_string = source.get_search_string()
 		var sort_options = source.get_sort_options()
 
-		# TODO: filters
+		if filters.empty():
+			_filters_button.visible = false
+		else:
+			_filters_button.visible = true
+			_filters_panel.clear()
+			for filter in filters:
+				_filters_panel.add_filter(filter, source.get_id())
 
 		if _line_edit.text != search_string:
 			_line_edit.text = search_string
@@ -93,3 +102,21 @@ func _on_LineEdit_gui_input(event):
 			_line_edit_clicked = true
 	elif event is InputEventKey:
 		_line_edit_clicked = false
+
+
+func _on_FiltersButton_toggled(button_pressed: bool) -> void:
+	if button_pressed:
+		_filters_panel.popup()
+		_filters_panel.set_global_position(_filters_button.rect_global_position + Vector2(5, 25))
+		_filters_panel.grab_focus()
+		_filters_button.mouse_filter = MOUSE_FILTER_IGNORE
+
+
+func _on_FiltersPanel_modal_closed():
+	_filters_button.pressed = false
+	_filters_button.call_deferred("set_mouse_filter", MOUSE_FILTER_PASS)
+	source.check_filters()
+
+
+func _on_FiltersPanel_filters_changed():
+	_timer.start()

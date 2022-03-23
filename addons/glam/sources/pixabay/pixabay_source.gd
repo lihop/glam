@@ -107,6 +107,7 @@ func fetch() -> void:
 				page = _page,
 				per_page = PER_PAGE_LIMIT,
 				order = _sort_options.value.to_lower(),
+				filter = 'license:"Creative Commons 0"',
 			}
 		)
 	)

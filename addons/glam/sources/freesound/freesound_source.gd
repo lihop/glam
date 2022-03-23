@@ -37,6 +37,14 @@ func _ready():
 			{value = "rating_asc", name = "Rating (lowest first)"},
 		]
 	}
+	_filters = [
+		{
+			name = "License",
+			type = "multi_choice",
+			options = ["Attribution", "Attribution Noncommercial", "Creative Commons 0"],
+			value = ["Attribution", "Attribution Noncommercial", "Creative Commons 0"],
+		}
+	]
 	emit_signal("query_changed")
 
 
@@ -136,17 +144,16 @@ func fetch() -> void:
 	_num_loaded = 0
 	_update_status_line()
 	emit_signal("fetch_started")
-	var query_string: String = (
-		"/search/text/?"
-		+ HTTPClient.new().query_string_from_dict(
-			{
-				query = _search_string,
-				page_size = PER_PAGE_LIMIT,
-				fields = "id,url,name,tags,description,license,type,bitrate,duration,username,download,previews,images",
-				sort = _sort_options.value,
-			}
-		)
-	)
+	var query = {
+		query = _search_string,
+		page_size = PER_PAGE_LIMIT,
+		fields = "id,url,name,tags,description,license,type,bitrate,duration,username,download,previews,images",
+		sort = _sort_options.value,
+	}
+	var filter_str = _get_filter_str(_filters)
+	if not filter_str.empty():
+		query.filter = filter_str
+	var query_string: String = "/search/text/?" + HTTPClient.new().query_string_from_dict(query)
 	var result = FetchResult.new(get_query_hash())
 	yield(_fetch(API_URL + query_string, result), "completed")
 	if result.get_query_hash() == get_query_hash():
@@ -228,6 +235,21 @@ func _update_status_line():
 			"Results: %s | Loaded: %s/%s"
 			% [_num_results, str(_num_loaded), _num_results]
 		)
+
+
+static func _get_filter_str(filters := []) -> String:
+	var filter_str := ""
+
+	for filter in filters:
+		match filter.name:
+			"License":
+				filter_str += "license:("
+				var licenses := PoolStringArray()
+				for license in filter.value:
+					licenses.append('"%s"' % license)
+				filter_str += "%s)%%20" % licenses.join(" OR ")
+
+	return filter_str
 
 
 class AudioStreamAsset:
