@@ -43,13 +43,8 @@ jobs:
         shell: bash
         run: godot --editor --quit
       - name: Run unit tests
-        if: ${{ matrix.os != 'windows-latest' }}
         shell: bash
         run: godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig.json
-      - name: Run unit and integration tests
-        if: ${{ matrix.os == 'windows-latest' }}
-        shell: bash
-        run: godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig_all.json
 
   reuse-compliance-check:
     name: 'Check REUSE Compliance'
