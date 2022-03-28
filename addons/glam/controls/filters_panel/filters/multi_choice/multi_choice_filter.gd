@@ -15,6 +15,11 @@ func init(filter: Dictionary, source_id := "") -> void:
 
 	$Label.text = _filter.name
 
+	if "description" in _filter:
+		$Label/Tooltip.text = _filter.description
+	else:
+		$Label/Tooltip.queue_free()
+
 	for choice in filter.options:
 		assert(choice is String, "Choice must be a string.")
 		var check_box := CheckBox.new()

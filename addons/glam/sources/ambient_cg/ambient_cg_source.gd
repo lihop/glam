@@ -25,6 +25,35 @@ func _ready():
 			{value = "Random", name = "Random"},
 		],
 	}
+	_filters = [
+		{
+			name = "Method",
+			type = "multi_choice",
+			description = "The method that was used to create the texture",
+			options = [
+				"Bitmap Approximation",
+				"Height Field Photogrammetry",
+				"Substance Designer Procedural",
+				"Substance Designer Photo Based",
+				"Multi Angle Approximation",
+				"Plain Photo",
+				"3D Photogrammetry",
+				"Jsplacement",
+				"Gaea",
+			],
+			value = [
+				"Bitmap Approximation",
+				"Height Field Photogrammetry",
+				"Substance Designer Procedural",
+				"Substance Designer Photo Based",
+				"Multi Angle Approximation",
+				"Plain Photo",
+				"3D Photogrammetry",
+				"Jsplacement",
+				"Gaea",
+			],
+		}
+	]
 	emit_signal("query_changed")
 
 
@@ -48,6 +77,10 @@ func fetch() -> void:
 	_num_results = ""
 	_update_status_line()
 	emit_signal("fetch_started")
+	var method_str = ""
+	for filter in _filters:
+		if filter.name == "Method":
+			method_str += PoolStringArray(filter.value).join(",").replace(" ", "")
 	var query_string: String = (
 		"?"
 		+ HTTPClient.new().query_string_from_dict(
@@ -57,6 +90,7 @@ func fetch() -> void:
 				limit = PER_PAGE_LIMIT,
 				sort = _sort_options.value,
 				include = "displayData,downloadData,imageData,tagData",
+				method = method_str,
 			}
 		)
 	)
