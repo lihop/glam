@@ -8,7 +8,6 @@
 addons/*
 !addons/gd-plug
 !addons/glam
-/assets/
 logs/
 /scratch/
 mono_crash.*
