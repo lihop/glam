@@ -17,7 +17,7 @@ if [ ! -f .venv/bin/activate ] || ! source .venv/bin/activate; then
 	python -m venv .venv && source .venv/bin/activate;
 fi
 if ! gdformat --version; then
-	pip install git+git://github.com/Scony/godot-gdscript-toolkit@${GDTOOLKIT_VERSION};
+	pip install git+https://github.com/Scony/godot-gdscript-toolkit@${GDTOOLKIT_VERSION};
 fi
 
 # Lint all selected files.
