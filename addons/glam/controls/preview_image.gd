@@ -9,6 +9,11 @@ signal image_loaded
 
 var _http_request: CacheableHTTPRequest
 var _cancellation_tokens := []
+var _request_type
+
+
+func _init(request_type = CacheableHTTPRequest):
+	_request_type = request_type
 
 
 func cancel():
@@ -23,7 +28,7 @@ func load_image(url := "", flags := Texture.FLAGS_DEFAULT):
 	for token in _cancellation_tokens:
 		token.cancel()
 
-	_http_request = CacheableHTTPRequest.new()
+	_http_request = _request_type.new()
 	var cancellation_token := CancellationToken.new(_http_request)
 	_cancellation_tokens.append(cancellation_token)
 	add_child(_http_request)
@@ -86,10 +91,12 @@ func _exit_tree():
 
 
 class CancellationToken:
-	var http_request: HTTPRequest
+	const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
+
+	var http_request: CacheableHTTPRequest
 	var cancelled := false
 
-	func _init(p_http_request := HTTPRequest.new(), p_cancelled := false):
+	func _init(p_http_request := CacheableHTTPRequest.new(), p_cancelled := false):
 		http_request = p_http_request
 		cancelled = p_cancelled
 
