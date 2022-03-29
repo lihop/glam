@@ -41,7 +41,7 @@ func set_asset(value: Asset) -> void:
 	assert(not asset, "Thumbnail already has asset. Create a new thumbnail instead.")
 	asset = value
 
-	_display_name.text = asset.name
+	_display_name.text = asset.title
 	_type_icon.texture = get_tree().get_meta("glam").get_editor_icon(asset.get_icon_name())
 
 	_update_downloaded_status()

@@ -48,7 +48,7 @@ func set_asset(value: Asset):
 	_preview_image.cancel()
 	find_node("PreviewLarge").cancel()
 
-	_display_name.text = asset.name
+	_display_name.text = asset.title
 
 	_download_format_option_button.clear()
 	for option in asset.download_formats:

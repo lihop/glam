@@ -136,13 +136,11 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 		return
 
 	var results = []
-	for asset in json.data.hits:
-		results.append(ProxyTextureAsset.from_data(asset))
-#	for asset in parsed.result.foundAssets:
-#		match asset.dataType:
-#			"PhotoTexturePBR":
-#				results.append(SpatialMaterialAsset.from_data(asset))
-#
+	for asset_data in json.data.hits:
+		var asset = StreamTextureAsset.from_data(asset_data)
+		asset.source_id = get_id()
+		results.append(asset)
+
 	_page += 1
 	_hits = json.data.totalHits
 	_hits_loaded = _hits_loaded + results.size()
@@ -155,17 +153,17 @@ func _download(asset: GLAMAsset) -> void:
 	if not asset is GLAMStreamTextureAsset:
 		return
 
-	var url = ProxyTextureAsset.get_download_url(asset)
+	var url = StreamTextureAsset.get_download_url(asset)
 	var extension = url.get_extension()
 	var format = "Vector" if extension == "svg" else asset.download_format.to_int()
-	var dest = "%s/%s_%s.%s" % [get_asset_directory(asset), asset.get_slug(), format, extension]
+	var dest = "%s/%s_%s.%s" % [get_asset_directory(asset), get_slug(asset), format, extension]
 
 	var err = yield(_download_file(url, dest), "completed")
 
 	if err != OK:
 		return
 
-	var glam = get_tree().get_meta("glam")
+	var glam = get_tree().get_meta("glam") if get_tree().has_meta("glam") else null
 	while glam.locked:
 		yield(get_tree(), "idle_frame")
 	glam.locked = true
@@ -179,6 +177,7 @@ func _download(asset: GLAMAsset) -> void:
 	proxy_texture.set_base(load(dest))
 	proxy_texture.set_meta("glam_asset", asset)
 	ResourceSaver.save(get_asset_path(asset), proxy_texture)
+	create_metadata_license_file(get_asset_path(asset))
 	_save_glam_file(asset)
 
 
@@ -189,7 +188,7 @@ func _on_query_changed():
 	._on_query_changed()
 
 
-class ProxyTextureAsset:
+class StreamTextureAsset:
 	tool
 	extends Reference
 
@@ -200,12 +199,15 @@ class ProxyTextureAsset:
 		var asset = GLAMStreamTextureAsset.new()
 		assert(asset, "Failed to create asset")
 
-		# Pixabay assets don't really have names so we can combine the first tag
-		# with the id to generate a nice unique name. This is also what pixabay
+		# Pixabay assets don't really have titles so we can combine the first tag
+		# with the id to generate a nice unique title. This is also what pixabay
 		# does to generate the url slugs and image file names.
 		var nice_name = "%s %s" % [data.tags.split(",")[0].capitalize(), data.id]
 		asset.id = nice_name.replace(" ", "_")
-		asset.name = nice_name
+		asset.title = nice_name
+		asset.official_title = false
+
+		asset.source_url = data.pageURL
 
 #		return asset
 #
@@ -249,7 +251,7 @@ class ProxyTextureAsset:
 			download_urls["Vector (Original)"] = data.vectorURL
 
 		asset.download_formats = download_urls.keys()
-		asset.download_formats.sort_custom(ProxyTextureAsset, "_sort_numeric")
+		asset.download_formats.sort_custom(StreamTextureAsset, "_sort_numeric")
 		for format in asset.download_formats:
 			if format.begins_with("Vector"):
 				asset.download_format = format
@@ -271,7 +273,11 @@ class ProxyTextureAsset:
 		return asset
 
 	static func get_download_url(asset: GLAMAsset) -> String:
-		return asset.get_meta("download_urls")[asset.download_format]
+		return (
+			asset.get_meta("download_urls")[asset.download_format]
+			if asset.has_meta("download_urls")
+			else ""
+		)
 
 	static func _sort_numeric(a: String, b: String) -> bool:
 		return a.to_int() < b.to_int()

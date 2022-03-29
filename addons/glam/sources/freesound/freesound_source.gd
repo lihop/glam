@@ -4,6 +4,7 @@ tool
 extends "../source.gd"
 
 const AuthenticationScene := preload("./authentication.tscn")
+const Strings := preload("../../util/strings.gd")
 
 const API_URL := "https://freesound.org/apiv2"
 const CLIENT_ID := "0vy6LQde1arAmWBgHgYD"
@@ -191,6 +192,8 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 		if not asset:
 			push_error("Failed to create asset: ")
 			print(JSON.print(asset_data))
+		asset.source_id = get_id()
+		asset.source_url = asset_data.url
 		results.append(asset)
 
 	_num_loaded += results.size()
@@ -206,7 +209,7 @@ func _download(asset: GLAMAsset) -> void:
 	var url := asset.get_download_url()
 	var format = asset.download_format
 	var extension = url.get_extension() if url.get_extension() else asset.get_meta("type")
-	var dest = "%s/%s_%s.%s" % [get_asset_directory(asset), asset.get_slug(), format, extension]
+	var dest = "%s/%s_%s.%s" % [get_asset_directory(asset), get_slug(asset), format, extension]
 
 	var err = yield(
 		_download_file(url, dest, PoolStringArray(asset.get_meta("api_headers"))), "completed"
@@ -252,6 +255,10 @@ static func _get_filter_str(filters := []) -> String:
 	return filter_str
 
 
+func get_slug(asset: GLAMAsset) -> String:
+	return asset.id
+
+
 class AudioStreamAsset:
 	tool
 	extends Reference
@@ -262,18 +269,13 @@ class AudioStreamAsset:
 	static func from_data(data: Dictionary, access_token := "") -> GLAMAudioStreamAsset:
 		var asset = GLAMAudioStreamAsset.new()
 
-		# Create an alphanumeric name.
-		var regex := RegEx.new()
-		regex.compile("[\\w\\. -]")
-
-		var matches = regex.search_all(data.name)
-		for m in matches:
-			asset.id += m.get_string()
-		asset.id = asset.id.replace(" ", "_")
+		# Create an alphanumeric id.
+		asset.id = Strings.alphanumeric(data.name)
 		asset.id = asset.id.replace(".", "_")
 		asset.id += "_%s" % str(data.id)
 
-		asset.name = data.name
+		asset.title = data.name
+		asset.source_url = data.url
 
 		asset.preview_image_url_lq = GDash.get_val(data, "images.waveform_m")
 		asset.preview_image_url_hq = GDash.get_val(data, "images.waveform_l")

@@ -15,7 +15,9 @@ func before_each():
 
 func test_can_create_asset_from_data() -> void:
 	assert_eq(asset.id, "Water_Swirl_Small_15_wav_398704")
-	assert_eq(asset.name, "Water Swirl, Small, 15.wav")
+	assert_eq(asset.title, "Water Swirl, Small, 15.wav")
+	assert_eq(asset.official_title, true)
+	assert_eq(asset.source_url, "https://freesound.org/people/InspectorJ/sounds/398704/")
 	assert_eq(asset.authors.size(), 1)
 	assert_eq(asset.authors[0].name, "InspectorJ")
 	assert_eq(asset.authors[0].url, "https://freesound.org/people/InspectorJ/")

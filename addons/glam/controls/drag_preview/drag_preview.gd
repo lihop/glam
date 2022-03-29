@@ -14,6 +14,6 @@ onready var _label := find_node("Label")
 func _ready():
 	if asset:
 		_texture_rect.load_image(asset.preview_image_url_lq)
-		_label.text = asset.name
+		_label.text = asset.title
 	else:
 		_label.text = "Download asset to enable drag and drop."

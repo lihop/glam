@@ -4,6 +4,7 @@ tool
 extends "../source.gd"
 
 const Source := preload("../source.gd")
+const Strings := preload("../../util/strings.gd")
 const Unzipper := preload("../../util/unzipper.gd")
 
 const _API_URL := "https://ambientCG.com/api/v2/full_json"
@@ -73,6 +74,10 @@ func get_url() -> String:
 	return "https://ambientcg.com"
 
 
+func get_slug(asset: GLAMAsset) -> String:
+	return Strings.alphanumeric(asset.title)
+
+
 func fetch() -> void:
 	_num_results = ""
 	_update_status_line()
@@ -130,7 +135,9 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 	for asset in json.data.foundAssets:
 		match asset.dataType:
 			"PhotoTexturePBR":
-				results.append(SpatialMaterialAsset.from_data(asset))
+				var material = SpatialMaterialAsset.from_data(asset)
+				material.source_id = get_id()
+				results.append(material)
 
 	_next_page_url = json.data.nextPageHttp
 	_num_results = GDash.get_val(json, "data.numberOfResults")
@@ -156,7 +163,7 @@ func _on_query_changed():
 
 
 func get_asset_directory(asset: GLAMAsset) -> String:
-	return "res://assets/%s/%s" % [get_id(), asset.get_slug()]
+	return "res://assets/%s/%s" % [get_id(), get_slug(asset)]
 
 
 func _download(asset: GLAMAsset) -> void:
@@ -164,10 +171,7 @@ func _download(asset: GLAMAsset) -> void:
 		return
 
 	var url = SpatialMaterialAsset.get_download_url(asset)
-	var dest = (
-		"%s/%s_%s.zip"
-		% [get_asset_directory(asset), asset.get_slug(), asset.download_format]
-	)
+	var dest = "%s/%s_%s.zip" % [get_asset_directory(asset), get_slug(asset), asset.download_format]
 	var err = yield(_download_file(url, dest), "completed")
 
 	if err != OK:
@@ -224,6 +228,7 @@ func _download(asset: GLAMAsset) -> void:
 		err = ResourceSaver.save(get_asset_path(asset), material)
 		if err != OK:
 			push_error(err)
+		create_metadata_license_file(get_asset_path(asset))
 
 		err = _save_glam_file(asset)
 		if err != OK:
@@ -242,8 +247,10 @@ class SpatialMaterialAsset:
 
 		asset.id = data.assetId
 		assert(asset.id, "Asset id is required")
-		asset.name = data.displayName
-		assert(asset.name, "Asset name is required")
+		asset.title = data.displayName
+		assert(asset.title, "Asset name is required")
+		asset.source_url = data.shortLink
+		assert(asset.source_url, "Asset source_url is required")
 
 		# Get preview image URLs. 256px for low quality, 1024px for high quality.
 		asset.preview_image_url_lq = GDash.get_val(data, "previewImage.128-PNG")
@@ -268,7 +275,14 @@ class SpatialMaterialAsset:
 			year = int(data.releaseDate.split("-")[0])
 
 		# All assets from this source are created by Lennart Demes and released under CC0-1.0.
-		asset.authors.append(GLAMAsset.Author.new(year, "Lennart Demes", "hello[at]ambientCG.com"))
+		asset.authors.append(
+			GLAMAsset.Author.new(
+				year,
+				"Lennart Demes",
+				"hello[at]ambientCG.com",
+				"https://www.artstation.com/struffelproductions"
+			)
+		)
 		asset.licenses.append(GLAMAsset.License.new("CC0-1.0"))
 
 		if "tags" in data:

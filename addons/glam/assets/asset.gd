@@ -4,9 +4,9 @@ tool
 class_name GLAMAsset
 extends Resource
 
-const AssetInstance := preload("./asset_instance.gd")
 const Author := preload("./asset_author.gd")
 const License := preload("./asset_license.gd")
+const Strings := preload("../util/strings.gd")
 
 signal preview_image_loaded(image)
 signal download_format_changed(new_format)
@@ -14,24 +14,38 @@ signal download_status_changed(is_downloaded)
 signal download_started
 signal download_completed
 
+enum Type {
+	OTHER,
+	TEXTURE,
+	IMAGE,
+	SOUND,
+	MUSIC,
+	MODEL,
+}
+
+export(Type) var type := Type.OTHER
+
 export(String, MULTILINE) var description: String
 export(String, MULTILINE) var Tags := "" setget set_Tags, get_Tags
 
-var source: Node
+export var source_id: String
 var resource
 # Unique identifer amongst assets from the same source. Preferably human friendly.
 export var id: String
-export var name: String
+export var title: String
+export var official_title := true
 var download_format := "" setget set_download_format
 var download_formats := []
 var download_urls := {}
+export var source_url := ""
 export(Array) var authors := [] setget set_authors
 export(Array) var licenses := [] setget set_licenses
+export(Array) var derived_from := [] setget set_derived_from
 var downloading := false setget set_downloading
 
-var filepath: String
+export(Array) var files := []
 
-var source_id: String
+var filepath: String
 
 # Keep this one.
 var options := {}
@@ -51,31 +65,18 @@ export var preview_image_hq: Texture = null
 var preview_image_url: String
 var preview_image: ImageTexture setget set_preview_image
 
-var files: Dictionary
 var downloaded := false setget set_downloaded
 var expected_files: PoolStringArray = []
 
-var source_url: String
-
-var instances := [] setget set_instances, get_instances
+# Additional notes to be displayed in credits. Could include things such as who
+# commisioned the work or what modifications were made to the original.
+export(String, MULTILINE) var notes := ""
 
 
 # Workaround for: https://github.com/godotengine/godot/issues/29179
 func _init():
 	authors = []
 	licenses = []
-	instances = []
-
-
-func set_instances(value: Array) -> void:
-	for i in range(value.size()):
-		if value[i] == null:
-			value[i] = AssetInstance.new()
-	instances = value
-
-
-func get_instances() -> Array:
-	return instances
 
 
 func set_downloaded(value: bool) -> void:
@@ -112,11 +113,11 @@ func set_authors(value := []) -> void:
 
 
 func set_name(value: String):
-	name = value.to_lower().replace(" ", "_").strip_edges()
+	title = value.to_lower().replace(" ", "_").strip_edges()
 
 
 func get_slug():
-	return name.replace(" ", "_").strip_edges() + "_%s" % hash(id)
+	return Strings.alphanumeric(title).replace(" ", "_").strip_edges()
 
 
 func get_preview_image_url_hq() -> String:
@@ -129,6 +130,14 @@ func set_licenses(value := []) -> void:
 	for i in range(licenses.size()):
 		if licenses[i] == null:
 			licenses[i] = License.new()
+
+
+func set_derived_from(value := []) -> void:
+	derived_from = value
+
+	for i in derived_from.size():
+		if derived_from[i] == null:
+			derived_from[i] = Object()
 
 
 func set_preview_image(value: ImageTexture) -> void:

@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
 # SPDX-License-Identifier: MIT
 tool
+class_name GLAMSource
 extends Node
 
 const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
@@ -37,7 +38,14 @@ var status: int = Status.NONE
 var status_line := "" setget set_status_line
 var config_file := (
 	"%s/source_configs/%s.cfg"
-	% [ProjectSettings.get_meta("glam/directory"), get_id()]
+	% [
+		(
+			ProjectSettings.get_meta("glam/directory")
+			if ProjectSettings.has_meta("glam/directory")
+			else "user://"
+		),
+		get_id()
+	]
 )
 
 var _filters := [] setget , get_filters
@@ -45,7 +53,7 @@ var _filters_hash := _filters.hash()
 var _search_string := "" setget set_search_string, get_search_string
 var _sort_options := {value = null, options = []} setget , get_sort_options
 
-onready var _glam = get_tree().get_meta("glam")
+onready var _glam = get_tree().get_meta("glam") if get_tree().has_meta("glam") else null
 
 
 func set_status_line(value := ""):
@@ -174,7 +182,7 @@ func get_directory() -> String:
 
 
 func get_asset_directory(asset: GLAMAsset) -> String:
-	return "%s/%s" % [get_directory(), asset.get_slug()]
+	return "%s/%s" % [get_directory(), get_slug(asset)]
 
 
 func get_asset_path(asset: GLAMAsset) -> String:
@@ -199,6 +207,10 @@ func get_display_name() -> String:
 
 func get_icon() -> Texture:
 	return _glam.get_editor_icon("ResourcePreloader")
+
+
+func get_slug(asset: GLAMAsset) -> String:
+	return asset.get_slug().replace(" ", "_")
 
 
 func _touch_config_file():
@@ -313,8 +325,7 @@ func _download_file(url: String, dest: String, headers := PoolStringArray()) -> 
 
 
 func _save_glam_file(asset: GLAMAsset) -> int:
-	var path := "%s/%s.glam" % [get_asset_directory(asset), asset.get_slug()]
-	print("path: ", path)
+	var path := "%s/%s.glam" % [get_asset_directory(asset), get_slug(asset)]
 	return ResourceSaver.save(path, asset as GLAMAsset)
 
 
