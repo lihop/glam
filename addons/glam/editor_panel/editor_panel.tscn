@@ -4,8 +4,8 @@
 [ext_resource path="res://addons/glam/editor_panel/editor_panel.gd" type="Script" id=2]
 [ext_resource path="res://addons/glam/controls/query_bar/query_bar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/glam/icon_glam.svg" type="Texture" id=4]
-[ext_resource path="res://addons/glam/sources/pixabay/icon.png" type="Texture" id=5]
-[ext_resource path="res://addons/glam/sources/freesound/icon.png" type="Texture" id=6]
+[ext_resource path="res://addons/glam/sources/freesound/icon.png" type="Texture" id=5]
+[ext_resource path="res://addons/glam/sources/pixabay/icon.png" type="Texture" id=6]
 
 [node name="AssetPanel" type="Control"]
 anchor_right = 1.0
@@ -33,7 +33,7 @@ margin_bottom = 26.0
 rect_min_size = Vector2( 150, 0 )
 text = "ambientCG"
 icon = ExtResource( 1 )
-items = [ "ambientCG", ExtResource( 1 ), false, 0, null, "Pixabay", ExtResource( 5 ), false, 1, null, "Freesound", ExtResource( 6 ), false, 2, null ]
+items = [ "ambientCG", ExtResource( 1 ), false, 0, null, "Freesound", ExtResource( 5 ), false, 1, null, "Pixabay", ExtResource( 6 ), false, 2, null ]
 selected = 0
 
 [node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
@@ -57,7 +57,7 @@ margin_right = 1024.0
 margin_bottom = 26.0
 text = "GLAM"
 icon = ExtResource( 4 )
-items = [ "Generate Licenses", null, 0, false, false, 0, 0, null, "", false ]
+items = [ "Generate Licenses", null, 0, false, false, 0, 0, null, "", false, "Generate CREDITS.md", null, 0, false, false, 2, 0, null, "", false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -72,4 +72,4 @@ __meta__ = {
 }
 
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/SourceSelect" to="." method="select_source"]
-[connection signal="submitted" from="VBoxContainer/SourcePanels/SourcePanel3/Authentication" to="VBoxContainer/SourcePanels/SourcePanel3/Authentication" method="_on_submitted"]
+[connection signal="submitted" from="VBoxContainer/SourcePanels/SourcePanel2/Authentication" to="VBoxContainer/SourcePanels/SourcePanel2/Authentication" method="_on_submitted"]

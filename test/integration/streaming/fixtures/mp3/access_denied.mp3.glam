@@ -1,0 +1,48 @@
+; SPDX-FileCopyrightText: none
+;
+; SPDX-License-Identifier: CC0-1.0
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://addons/glam/assets/asset_file.gd" type="Script" id=1]
+[ext_resource path="res://addons/glam/assets/asset_author.gd" type="Script" id=2]
+[ext_resource path="res://addons/glam/assets/audio_stream_asset.gd" type="Script" id=3]
+[ext_resource path="res://addons/glam/assets/asset_license.gd" type="Script" id=4]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+name = "Jacco18"
+year = 0
+contact = ""
+url = "https://freesound.org/people/Jacco18/"
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 1 )
+path = "res://test/integration/streaming/fixtures/mp3/access_denied.mp3"
+md5 = ""
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 4 )
+identifier = "CC0-1.0"
+
+[resource]
+script = ExtResource( 3 )
+__meta__ = {
+"volume": 0.0
+}
+type = 0
+description = ""
+Tags = ""
+source_id = "freesound"
+id = ""
+title = "acess denied buzz"
+official_title = true
+source_url = "https://freesound.org/people/Jacco18/sounds/419023/"
+authors = [ SubResource( 1 ) ]
+licenses = [ SubResource( 2 ) ]
+derived_from = [  ]
+files = [ SubResource( 3 ) ]
+preview_image_url_lq = ""
+preview_image_url_hq = ""
+notes = ""
+duration = 0.309342
+preview_audio_url = "res://test/integration/streaming/fixtures/mp3/access_denied.mp3"

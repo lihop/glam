@@ -25,6 +25,7 @@
 /.gut_editor_config.json export-ignore
 /.gutconfig.json export-ignore
 /.gutconfig_all.json export-ignore
+/CREDITS.md export-ignore
 /LICENSE export-ignore
 /README.md export-ignore
 /default_env.tres export-ignore
