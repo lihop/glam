@@ -43,6 +43,7 @@ func _enter_tree():
 		if not dir.dir_exists(path):
 			dir.make_dir_recursive(path)
 		assert(dir.dir_exists(path), "Required directory '%s' does not exist." % path)
+	_ensure_cachedir_tag()
 
 	_clear_tmp()
 
@@ -81,6 +82,21 @@ func _on_resources_reload(resources: PoolStringArray) -> void:
 	print("reloaded resources: ", resources as Array)
 
 
+func _ensure_cachedir_tag(path := "") -> void:
+	if path.empty():
+		path = ProjectSettings.get_meta("glam/directory") + "/cache/CACHEDIR.TAG"
+	var file := File.new()
+	file.open(path, File.WRITE)
+	file.store_string(
+		"""Signature: 8a477f597d28d172789f06886806bc55
+# This file is a cache directory tag created by GLAM (Godot Libre Asset Manager).
+# For information about cache directory tags, see:
+#	https://bford.info/cachedir/
+"""
+	)
+	file.close()
+
+
 func _clear_tmp():
 	var tmp_dir = ProjectSettings.get_meta("glam/directory") + "/tmp"
 	var dir := Directory.new()
@@ -92,3 +108,4 @@ func _clear_tmp():
 			dir.remove(tmp_dir + "/" + file_name)
 		file_name = dir.get_next()
 	dir.list_dir_end()
+	_ensure_cachedir_tag(tmp_dir + "/CACHEDIR.TAG")
