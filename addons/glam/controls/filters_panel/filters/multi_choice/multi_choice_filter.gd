@@ -3,22 +3,10 @@
 tool
 extends "../filter.gd"
 
-var _filter: Dictionary
 
-
-func init(filter: Dictionary, source_id := "") -> void:
-	_filter = filter
+func init(filter: Dictionary, source_id := ""):
+	.init(filter, source_id)
 	assert(filter.type == "multi_choice", "Wrong filter type.")
-	var src_str := "Filter '%s' for source '%s'" % [_filter.name, source_id]
-	assert("options" in _filter, "%s must have options." % src_str)
-	assert("value" in _filter, "%s must have initial value." % src_str)
-
-	$Label.text = _filter.name
-
-	if "description" in _filter:
-		$Label/Tooltip.text = _filter.description
-	else:
-		$Label/Tooltip.queue_free()
 
 	for choice in filter.options:
 		assert(choice is String, "Choice must be a string.")

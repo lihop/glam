@@ -6,6 +6,7 @@ extends PopupPanel
 signal filters_changed
 
 const MultiChoiceFilter := preload("./filters/multi_choice/multi_choice_filter.tscn")
+const SelectFilter := preload("./filters/select/select_filter.tscn")
 
 
 func add_filter(filter: Dictionary, source_id := "") -> void:
@@ -17,6 +18,8 @@ func add_filter(filter: Dictionary, source_id := "") -> void:
 	match filter.type:
 		"multi_choice":
 			filter_control = MultiChoiceFilter.instance()
+		"select":
+			filter_control = SelectFilter.instance()
 		_:
 			push_error("Unrecognized filter type: '%s'." % filter.type)
 

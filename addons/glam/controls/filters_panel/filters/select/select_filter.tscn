@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/glam/controls/filters_panel/filters/select/select_filter.gd" type="Script" id=1]
+[ext_resource path="res://addons/glam/controls/filters_panel/filters/filter.tscn" type="PackedScene" id=2]
+
+[node name="SelectFilter" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+
+[node name="OptionButton" type="OptionButton" parent="." index="1"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 38.0
