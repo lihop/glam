@@ -266,6 +266,12 @@ func _fetch_json(url: String, headers := []) -> Dictionary:
 
 	var http_request := CacheableHTTPRequest.new()
 	add_child(http_request)
+	headers.push_front(
+		(
+			"User-Agent: GLAM/%s Godot Libre Asset Manager plugin (glam@leroy.geek.nz)"
+			% load("res://addons/glam/plugin.gd").get_version()
+		)
+	)
 
 	var err = http_request.request(url, headers)
 	if err != OK:

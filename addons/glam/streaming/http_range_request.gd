@@ -53,11 +53,6 @@ func open(url: String, headers := []) -> int:
 	if not URL.is_valid(url):
 		return _error("Invalid url '%s'." % url)
 
-	# Get current plugin version for User-Agent header.
-	var config := ConfigFile.new()
-	config.load(get_script().resource_path.get_base_dir() + "/../plugin.cfg")
-	var plugin_version: String = config.get_value("plugin", "version", "unknown-version")
-
 	_url = URL.new(url)
 	_headers = (
 		headers
@@ -66,7 +61,7 @@ func open(url: String, headers := []) -> int:
 			"DNT: 1",
 			(
 				"User-Agent: GLAM/%s Godot Libre Asset Manager plugin (glam@leroy.geek.nz)"
-				% plugin_version
+				% load("res://addons/glam/plugin.gd").get_version()
 			),
 		]
 	)

@@ -109,3 +109,9 @@ func _clear_tmp():
 		file_name = dir.get_next()
 	dir.list_dir_end()
 	_ensure_cachedir_tag(tmp_dir + "/CACHEDIR.TAG")
+
+
+static func get_version() -> String:
+	var config := ConfigFile.new()
+	config.load("res://addons/glam/plugin.cfg")
+	return config.get_value("plugin", "version", "unknown-version")
