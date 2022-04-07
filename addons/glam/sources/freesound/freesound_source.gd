@@ -265,6 +265,7 @@ class AudioStreamAsset:
 
 	const Asset := preload("../../assets/asset.gd")
 	const GDash := preload("../../util/gdash.gd")
+	const LicenseDB := preload("../../licenses/license_db.gd")
 
 	static func from_data(data: Dictionary, access_token := "") -> GLAMAudioStreamAsset:
 		var asset = GLAMAudioStreamAsset.new()
@@ -310,17 +311,7 @@ class AudioStreamAsset:
 		asset.authors = [author]
 
 		# TODO: Handle remixes.
-		match data.license:
-			"http://creativecommons.org/publicdomain/zero/1.0/":
-				asset.licenses = [Asset.License.new("CC0-1.0")]
-			"http://creativecommons.org/licenses/by/3.0/":
-				asset.licenses = [Asset.License.new("CC-BY-3.0")]
-			"http://creativecommons.org/licenses/by-nc/3.0/":
-				asset.licenses = [Asset.License.new("CC-BY-NC-3.0")]
-			"http://creativecommons.org/licenses/sampling+/1.0/":
-				asset.licenses = [Asset.License.new("LicenseRef-CC-Sampling-Plus-1.0")]
-			_:
-				assert(false, "Unrecognized license: '%s'." % data.license)
+		asset.licenses = [LicenseDB.get_license_from_cc_url(data.license)]
 
 		asset.tags = data.tags
 
