@@ -15,8 +15,8 @@ static func list_files_rec(path: String, extension := ".glam") -> PoolStringArra
 	dir.list_dir_begin(true)
 	var file_name: String = dir.get_next()
 	while file_name != "":
-		# Ignore directories containing .gdignore file.
-		if file_name == ".gdignore":
+		# Ignore directories containing .gdignore or .glamignore file.
+		if file_name == ".gdignore" or file_name == ".glamignore":
 			return PoolStringArray()
 
 		if dir.current_is_dir():
