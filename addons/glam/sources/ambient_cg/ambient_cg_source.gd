@@ -32,26 +32,26 @@ func _ready():
 			type = "multi_choice",
 			description = "The method that was used to create the texture",
 			options = [
-				"Bitmap Approximation",
-				"Height Field Photogrammetry",
-				"Substance Designer Procedural",
-				"Substance Designer Photo Based",
-				"Multi Angle Approximation",
-				"Plain Photo",
-				"3D Photogrammetry",
-				"Jsplacement",
-				"Gaea",
+				"PBRApproximated",
+				"PBRPhotogrammetry",
+				"PBRProcedural",
+				"PBRMultiAngle",
+				"PlainPhoto",
+				"3DPhotogrammetry",
+				"HDRIStitched",
+				"HDRIStitchedEdited",
+				"UnknownOrOther",
 			],
 			value = [
-				"Bitmap Approximation",
-				"Height Field Photogrammetry",
-				"Substance Designer Procedural",
-				"Substance Designer Photo Based",
-				"Multi Angle Approximation",
-				"Plain Photo",
-				"3D Photogrammetry",
-				"Jsplacement",
-				"Gaea",
+				"PBRApproximated",
+				"PBRPhotogrammetry",
+				"PBRProcedural",
+				"PBRMultiAngle",
+				"PlainPhoto",
+				"3DPhotogrammetry",
+				"HDRIStitched",
+				"HDRIStitchedEdited",
+				"UnknownOrOther",
 			],
 		}
 	]
@@ -90,7 +90,7 @@ func fetch() -> void:
 		"?"
 		+ HTTPClient.new().query_string_from_dict(
 			{
-				type = "PhotoTexturePBR",
+				type = "Material",
 				q = _search_string,
 				limit = PER_PAGE_LIMIT,
 				sort = _sort_options.value,
@@ -134,13 +134,13 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 	var results = []
 	for asset in json.data.foundAssets:
 		match asset.dataType:
-			"PhotoTexturePBR":
+			"Material":
 				var material = SpatialMaterialAsset.from_data(asset)
 				material.source_id = get_id()
 				results.append(material)
 
 	_next_page_url = json.data.nextPageHttp
-	_num_results = GDash.get_val(json, "data.numberOfResults")
+	_num_results = str(GDash.get_val(json, "data.numberOfResults"))
 	_num_loaded = GDash.get_val(json, "data.searchQuery.offset", 0) + results.size()
 
 	fetch_result.assets = results
@@ -258,7 +258,7 @@ class SpatialMaterialAsset:
 		asset.preview_image_url_hq = GDash.get_val(data, "previewImage.512-PNG")
 
 		# Get download variations (e.g. 1K-JPG, 8K-PNG, etc).
-		var downloads_path = "downloadFolders./.downloadFiletypeCategories.zip.downloads"
+		var downloads_path = "downloadFolders.default.downloadFiletypeCategories.zip.downloads"
 		var downloads = GDash.get_val(data, downloads_path)
 		assert(downloads is Array, "Downloads list not found (id: %s)." % asset.id)
 		asset.set_meta("downloads", downloads)
@@ -295,7 +295,7 @@ class SpatialMaterialAsset:
 		assert(downloads is Array, "Downloads list is missing")
 		for download in downloads:
 			if GDash.get_val(download, "attribute") == asset.download_format:
-				return GDash.get_val(download, "fullDownloadPath")
+				return GDash.get_val(download, "downloadPath")
 		assert(false, "Could not determine download url")
 		return ""
 

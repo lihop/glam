@@ -154,7 +154,9 @@ func get_Tags() -> String:
 
 
 func set_tags(value) -> void:
-	assert(value is Array or value is PoolStringArray)
+	if value is Dictionary:
+		value = value.values()
+	assert(value is Array or value is PoolStringArray, "Expected Array or PoolStringArray.")
 	var normalized := []
 	for tag in value as Array:
 		if tag is String:

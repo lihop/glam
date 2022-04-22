@@ -1,24 +1,31 @@
 {
   "assetId": "Bricks075B",
-  "releaseDate": "2021-11-28",
-  "dataType": "PhotoTexturePBR",
-  "creationMethod": "HeightFieldPhotogrammetry",
+  "releaseDate": "2021-11-28 00:00:00",
+  "earlyReleaseDate": "2021-11-28 00:00:00",
+  "dataType": "Material",
+  "creationMethod": "PBRPhotogrammetry",
   "category": "Bricks",
-  "tags": [
-    "Bricks",
-    "Dirty"
-  ],
-  "dataTypeName": "Photo Texture (PBR)",
+  "tags": {
+    "1": "brick",
+    "2": "bricks",
+    "3": "dirt",
+    "4": "dirty",
+    "5": "moss",
+    "6": "mossy",
+    "7": "old"
+  },
+  "dataTypeName": "PBR Material",
   "dataTypeDescription": "A photo texture with PBR maps.",
   "creationMethodName": "Height field photogrammetry",
   "creationMethodDescription": "Displacement generated using photogrammetry.",
-  "displayName": "Bricks 075 (Dirty)",
+  "displayName": "Bricks 075 B",
+  "customDisplayName": "",
   "description": null,
   "displayCategory": "Bricks",
   "shortLink": "https://ambientCG.com/a/Bricks075B",
   "downloadFolders": {
-    "/": {
-      "title": "",
+    "default": {
+      "title": "default",
       "downloadFiletypeCategories": {
         "zip": {
           "title": "zip",
@@ -27,97 +34,229 @@
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_12K-JPG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_12K-JPG.zip",
               "fileName": "Bricks075B_12K-JPG.zip",
-              "size": "456011458",
+              "size": 456011458,
               "filetype": "zip",
-              "attribute": "12K-JPG"
+              "attribute": "12K-JPG",
+              "zipContent": [
+                "Bricks075B_12K-JPG.usda",
+                "Bricks075B_12K-JPG.usdc",
+                "Bricks075B_12K_AmbientOcclusion.jpg",
+                "Bricks075B_12K_Color.jpg",
+                "Bricks075B_12K_Displacement.jpg",
+                "Bricks075B_12K_NormalDX.jpg",
+                "Bricks075B_12K_NormalGL.jpg",
+                "Bricks075B_12K_Roughness.jpg",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_12K-PNG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_12K-PNG.zip",
               "fileName": "Bricks075B_12K-PNG.zip",
-              "size": "1090439874",
+              "size": 1090439874,
               "filetype": "zip",
-              "attribute": "12K-PNG"
+              "attribute": "12K-PNG",
+              "zipContent": [
+                "Bricks075B_12K-PNG.usda",
+                "Bricks075B_12K-PNG.usdc",
+                "Bricks075B_12K_AmbientOcclusion.png",
+                "Bricks075B_12K_Color.png",
+                "Bricks075B_12K_Displacement.png",
+                "Bricks075B_12K_NormalDX.png",
+                "Bricks075B_12K_NormalGL.png",
+                "Bricks075B_12K_Roughness.png",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_16K-JPG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_16K-JPG.zip",
               "fileName": "Bricks075B_16K-JPG.zip",
-              "size": "828435522",
+              "size": 828435522,
               "filetype": "zip",
-              "attribute": "16K-JPG"
+              "attribute": "16K-JPG",
+              "zipContent": [
+                "Bricks075B_16K-JPG.usda",
+                "Bricks075B_16K-JPG.usdc",
+                "Bricks075B_16K_AmbientOcclusion.jpg",
+                "Bricks075B_16K_Color.jpg",
+                "Bricks075B_16K_Displacement.jpg",
+                "Bricks075B_16K_NormalDX.jpg",
+                "Bricks075B_16K_NormalGL.jpg",
+                "Bricks075B_16K_Roughness.jpg",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_16K-PNG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_16K-PNG.zip",
               "fileName": "Bricks075B_16K-PNG.zip",
-              "size": "1883614594",
+              "size": 1883614594,
               "filetype": "zip",
-              "attribute": "16K-PNG"
+              "attribute": "16K-PNG",
+              "zipContent": [
+                "Bricks075B_16K-PNG.usda",
+                "Bricks075B_16K-PNG.usdc",
+                "Bricks075B_16K_AmbientOcclusion.png",
+                "Bricks075B_16K_Color.png",
+                "Bricks075B_16K_Displacement.png",
+                "Bricks075B_16K_NormalDX.png",
+                "Bricks075B_16K_NormalGL.png",
+                "Bricks075B_16K_Roughness.png",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_1K-JPG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_1K-JPG.zip",
               "fileName": "Bricks075B_1K-JPG.zip",
-              "size": "4209466",
+              "size": 4209466,
               "filetype": "zip",
-              "attribute": "1K-JPG"
+              "attribute": "1K-JPG",
+              "zipContent": [
+                "Bricks075B_1K-JPG.usda",
+                "Bricks075B_1K-JPG.usdc",
+                "Bricks075B_1K_AmbientOcclusion.jpg",
+                "Bricks075B_1K_Color.jpg",
+                "Bricks075B_1K_Displacement.jpg",
+                "Bricks075B_1K_NormalDX.jpg",
+                "Bricks075B_1K_NormalGL.jpg",
+                "Bricks075B_1K_Roughness.jpg",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_1K-PNG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_1K-PNG.zip",
               "fileName": "Bricks075B_1K-PNG.zip",
-              "size": "8684730",
+              "size": 8684730,
               "filetype": "zip",
-              "attribute": "1K-PNG"
+              "attribute": "1K-PNG",
+              "zipContent": [
+                "Bricks075B_1K-PNG.usda",
+                "Bricks075B_1K-PNG.usdc",
+                "Bricks075B_1K_AmbientOcclusion.png",
+                "Bricks075B_1K_Color.png",
+                "Bricks075B_1K_Displacement.png",
+                "Bricks075B_1K_NormalDX.png",
+                "Bricks075B_1K_NormalGL.png",
+                "Bricks075B_1K_Roughness.png",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_2K-JPG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_2K-JPG.zip",
               "fileName": "Bricks075B_2K-JPG.zip",
-              "size": "15322170",
+              "size": 15322170,
               "filetype": "zip",
-              "attribute": "2K-JPG"
+              "attribute": "2K-JPG",
+              "zipContent": [
+                "Bricks075B_2K-JPG.usda",
+                "Bricks075B_2K-JPG.usdc",
+                "Bricks075B_2K_AmbientOcclusion.jpg",
+                "Bricks075B_2K_Color.jpg",
+                "Bricks075B_2K_Displacement.jpg",
+                "Bricks075B_2K_NormalDX.jpg",
+                "Bricks075B_2K_NormalGL.jpg",
+                "Bricks075B_2K_Roughness.jpg",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_2K-PNG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_2K-PNG.zip",
               "fileName": "Bricks075B_2K-PNG.zip",
-              "size": "33133818",
+              "size": 33133818,
               "filetype": "zip",
-              "attribute": "2K-PNG"
+              "attribute": "2K-PNG",
+              "zipContent": [
+                "Bricks075B_2K-PNG.usda",
+                "Bricks075B_2K-PNG.usdc",
+                "Bricks075B_2K_AmbientOcclusion.png",
+                "Bricks075B_2K_Color.png",
+                "Bricks075B_2K_Displacement.png",
+                "Bricks075B_2K_NormalDX.png",
+                "Bricks075B_2K_NormalGL.png",
+                "Bricks075B_2K_Roughness.png",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_4K-JPG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_4K-JPG.zip",
               "fileName": "Bricks075B_4K-JPG.zip",
-              "size": "57328506",
+              "size": 57328506,
               "filetype": "zip",
-              "attribute": "4K-JPG"
+              "attribute": "4K-JPG",
+              "zipContent": [
+                "Bricks075B_4K-JPG.usda",
+                "Bricks075B_4K-JPG.usdc",
+                "Bricks075B_4K_AmbientOcclusion.jpg",
+                "Bricks075B_4K_Color.jpg",
+                "Bricks075B_4K_Displacement.jpg",
+                "Bricks075B_4K_NormalDX.jpg",
+                "Bricks075B_4K_NormalGL.jpg",
+                "Bricks075B_4K_Roughness.jpg",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_4K-PNG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_4K-PNG.zip",
               "fileName": "Bricks075B_4K-PNG.zip",
-              "size": "128474234",
+              "size": 128474234,
               "filetype": "zip",
-              "attribute": "4K-PNG"
+              "attribute": "4K-PNG",
+              "zipContent": [
+                "Bricks075B_4K-PNG.usda",
+                "Bricks075B_4K-PNG.usdc",
+                "Bricks075B_4K_AmbientOcclusion.png",
+                "Bricks075B_4K_Color.png",
+                "Bricks075B_4K_Displacement.png",
+                "Bricks075B_4K_NormalDX.png",
+                "Bricks075B_4K_NormalGL.png",
+                "Bricks075B_4K_Roughness.png",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_8K-JPG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_8K-JPG.zip",
               "fileName": "Bricks075B_8K-JPG.zip",
-              "size": "214180026",
+              "size": 214180026,
               "filetype": "zip",
-              "attribute": "8K-JPG"
+              "attribute": "8K-JPG",
+              "zipContent": [
+                "Bricks075B_8K-JPG.usda",
+                "Bricks075B_8K-JPG.usdc",
+                "Bricks075B_8K_AmbientOcclusion.jpg",
+                "Bricks075B_8K_Color.jpg",
+                "Bricks075B_8K_Displacement.jpg",
+                "Bricks075B_8K_NormalDX.jpg",
+                "Bricks075B_8K_NormalGL.jpg",
+                "Bricks075B_8K_Roughness.jpg",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             },
             {
               "fullDownloadPath": "https://cdn3.struffelproductions.com/file/ambientCG/download/Bricks075B_8n7p1y5t/Bricks075B_8K-PNG.zip",
               "downloadLink": "https://ambientcg.com/get?file=Bricks075B_8K-PNG.zip",
               "fileName": "Bricks075B_8K-PNG.zip",
-              "size": "497778938",
+              "size": 497778938,
               "filetype": "zip",
-              "attribute": "8K-PNG"
+              "attribute": "8K-PNG",
+              "zipContent": [
+                "Bricks075B_8K-PNG.usda",
+                "Bricks075B_8K-PNG.usdc",
+                "Bricks075B_8K_AmbientOcclusion.png",
+                "Bricks075B_8K_Color.png",
+                "Bricks075B_8K_Displacement.png",
+                "Bricks075B_8K_NormalDX.png",
+                "Bricks075B_8K_NormalGL.png",
+                "Bricks075B_8K_Roughness.png",
+                "Bricks075B_PREVIEW.jpg"
+              ]
             }
           ]
         }
