@@ -231,7 +231,7 @@ func _touch_config_file():
 
 func import_files(files: Array):
 	var glam = get_tree().get_meta("glam")
-	var fs: EditorFileSystem = glam.fs
+	var fs = glam.fs
 
 	var needs_import := false
 	for file in files:

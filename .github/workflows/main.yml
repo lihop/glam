@@ -45,6 +45,10 @@ jobs:
       - name: Run unit tests
         shell: bash
         run: godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig.json
+      - name: Run (some) integration tests
+        shell: bash
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: godot --no-window -s addons/gut/gut_cmdln.gd -gdir=res://test/integration/sources -gexit
 
   reuse-compliance-check:
     name: 'Check REUSE Compliance'

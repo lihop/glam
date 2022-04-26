@@ -171,6 +171,7 @@ func _download(asset: GLAMAsset) -> void:
 		return
 
 	var url = SpatialMaterialAsset.get_download_url(asset)
+	assert(url and not url.empty(), "Could not determine download url")
 	var dest = "%s/%s_%s.zip" % [get_asset_directory(asset), get_slug(asset), asset.download_format]
 	var err = yield(_download_file(url, dest), "completed")
 
@@ -295,8 +296,7 @@ class SpatialMaterialAsset:
 		assert(downloads is Array, "Downloads list is missing")
 		for download in downloads:
 			if GDash.get_val(download, "attribute") == asset.download_format:
-				return GDash.get_val(download, "downloadPath")
-		assert(false, "Could not determine download url")
+				return GDash.get_val(download, "downloadLink")
 		return ""
 
 	static func _sort_numeric(a: String, b: String) -> bool:
