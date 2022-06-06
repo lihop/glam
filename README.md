@@ -2,7 +2,13 @@
   SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
   SPDX-License-Identifier: MIT
 -->
-# **G**odot **L**ibre **A**sset **M**anager
+
+<img align="left" width="64" height="64" src="icon.png">
+
+# GLAM
+```
+Godot Libre Asset Manager
+```
 
 Godot plugin for finding, downloading and managing free, libre, and creative commons assets. Work in progress.
 
