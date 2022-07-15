@@ -33,7 +33,7 @@ jobs:
         run: npx http-server --port=7121 ./test/integration/streaming/ &
       - name: Setup Godot
         id: setup-godot
-        uses: lihop/setup-godot@v1.0.0
+        uses: lihop/setup-godot@v1.0.1
         with:
           version: ${{ matrix.version }}
       - name: Install plugins
