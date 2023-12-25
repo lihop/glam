@@ -41,16 +41,15 @@ Some of these sources require an api account to use (see 'Account Required').
 | [ccMixter](http://ccmixter.org)            | No               | Planned     | Music                                                |
 | [SoundCloud](http://soundcloud.com)        | Yes              | Planned     | Music                                                |
 
-
 ## Installation
 
 Copy the `addons/glam` directory in this repo to your Godot project.
 
 Or install the [gd-plug](https://godotengine.org/asset-library/asset/962) plugin. By adding the following to your `plug.gd` file (changing the commit hash to the version of GLAM you want to use):
-```
-plug("lihop/glam", {commit = "432cb3561db0b2e69471883b13e24e0f5d15e155", include = ["addons/glam"]})
-```
 
+```gdscript
+plug("lihop/glam", {tag = "0.1.0", include = ["addons/glam"]})
+```
 
 ## Screenshots
 
@@ -59,24 +58,30 @@ plug("lihop/glam", {commit = "432cb3561db0b2e69471883b13e24e0f5d15e155", include
 ![Images of mountains from Pixabay](/docs/image_search.jpg)
 ![Audio files of fire crackling from Freesound](/docs/audio_search.jpg)
 
-
 ## Developing
 
 If you cloned this repo locally and want to work on it you will need to install the plugins using the following command to install additional plugins:
 
-```
-godot --no-window -s plug.gd install
+```shell
+godot --no-window --script plug.gd install
+# or: just install-addons
 ```
 
 ### Testing
 
 GLAM uses the [Gut](https://github.com/bitwes/Gut) tool for testing. These tests can be run from the command line using:
+
+```shell
+godot --no-window --script addons/gut/gut_cmdln.gd
+# or: just unit
 ```
-godot --no-window -s addons/gut/gut_cmdln.gd
-```
+
 By default, only unit tests will be run.
 To run all tests (including integration tests) use:
+
+```shell
+godot --no-window --script addons/gut/gut_cmdln.gd -gconfig=.gutconfig_all.json
+# or: just integration
 ```
-godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig_all.json
-```
-**Note:** Integration tests require Node.js to be installed as they use the `npx` command to start an [http-server](https://www.npmjs.com/package/http-server) HTTP server. The integration tests also take a long time (more than 30 seconds) to run.
+
+**Note:** Integration tests require [python](https://www.python.org/) to be installed to start an [http.server](https://docs.python.org/3/library/http.server.html) HTTP server. The integration tests also take a long time (more than 30 seconds) to run.

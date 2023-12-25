@@ -51,7 +51,7 @@ _global_script_class_icons={
 "GLAMAudioStreamAsset": "",
 "GLAMSource": "",
 "GLAMSpatialMaterialAsset": "",
-"GLAMStreamTextureAsset": ""
+"GLAMStreamTextureAsset": "",
 }
 
 [application]

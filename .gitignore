@@ -14,3 +14,4 @@ mono_crash.*
 todo.gd
 .gut_editor_config.json
 *.swp
+venv/

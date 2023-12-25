@@ -1,111 +1,82 @@
 # SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
 # SPDX-License-Identifier: MIT
-name: 'Test'
+
+name: Release Packaging
 
 on:
   push:
-  schedule: # Keep the cache alive!
-    - cron: 7 1 * * fri
+  workflow_dispatch:
+
+env:
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
-  Test:
-    name: Test (${{ matrix.os }} ${{ matrix.version }})
+  check:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v1
+
+      - name: Load dotenv
+        run: just ci-load-dotenv
+
+      - name: Check
+        run: just fmt
+
+      - name: Ensure version is equal to tag
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          [ "${{ env.addon_version }}" == "${{ env.BRANCH_NAME }}" ] || exit 2
+
+  test:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-        version: [ "v3.3-stable", "v3.4.4-stable", "v3.5-beta4" ]
+        os: [ ubuntu-22.04, windows-2022, macos-12 ]
+        godot_version: [ '3.3.4', '3.4.5', '3.5.3' ]
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v1
+
+      - name: Setup Godot dependencies
+        uses: ./.github/actions/setup-godot
+
+      - uses: actions/setup-python@v5
         with:
-          node-version: 16.13.0
-      - name: Install npx
-        if: ${{ matrix.os == 'windows-latest' }}
-        shell: bash
-        run: npm i -g npx
-      - name: Start HTTP server
-        if: ${{ matrix.os == 'windows-latest' }}
-        shell: bash
-        run: npx http-server --port=7121 ./test/integration/streaming/ &
-      - name: Setup Godot
-        id: setup-godot
-        uses: lihop/setup-godot@v2
-        with:
-          version: ${{ matrix.version }}
-      - name: Install plugins
-        shell: bash
-        run: godot --no-window -s plug.gd install
-      - name: Import files
-        shell: bash
-        run: godot --editor --quit
+          python-version: '3.10'
+
       - name: Run unit tests
-        shell: bash
-        run: godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig.json
-      - name: Run (some) integration tests
-        shell: bash
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: godot --no-window -s addons/gut/gut_cmdln.gd -gdir=res://test/integration/sources -gexit
+        run: just unit
+        env:
+          GODOT_VERSION: ${{ matrix.godot_version }}
 
-  reuse-compliance-check:
-    name: 'Check REUSE Compliance'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: REUSE Compliance Check
-      uses: fsfe/reuse-action@v1
+      - name: Run integration tests
+        if: ${{ runner.os == 'Linux' }}
+        run: just integration
+        env:
+          GODOT_VERSION: ${{ matrix.godot_version }}
 
-  gdformat-check:
-    name: 'Check GDScript Format'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
-    - name: GDFormat Check
-      run: |
-        python -m pip install -r requirements.txt
-        gdformat -c .
+  publish:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    needs: [check, test]
 
-  # Git archive should only include addons/glam directory.
-  check-archive:
-    name: 'Check Archive'
-    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Create git archive
-      run: git archive -o archive.zip HEAD
-    - name: Extract archive
-      run: mkdir -p /tmp/unzipped && unzip archive.zip -d /tmp/unzipped
-    - name: Copy extracted archive to working directory
-      run: cp -avr /tmp/unzipped ./unzipped
-    - name: REUSE compliance check
-      uses: fsfe/reuse-action@v1
-      with:
-        args: --root ./unzipped/addons/glam lint
-    - name: Check that archive only contains addons directory
-      run: |
-        shopt -s nullglob dotglob
-        ls -laR /tmp/unzipped
-        files=(/tmp/unzipped/*)
-        if [ ${#files[@]} -ne 1 ]; then
-          echo "Wrong number of files in archive (${#files[@]}) expected 1."
-          exit 1
-        fi
-        if [ ! -d "/tmp/unzipped/addons" ]; then
-          echo "Expected directory (addons) not found."
-          exit 1
-        fi
-        files=(/tmp/unzipped/addons)
-        if [ ${#files[@]} -ne 1 ]; then
-          echo "Wrong number of files in addons directory (${#files[@]}) expected 1."
-          exit 1
-        fi
-        if [ ! -d "/tmp/unzipped/addons/glam" ]; then
-          echo "Expected directory (addons/glam) not found."
-          exit 1
-        fi
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v1
+
+      - name: Load dotenv
+        run: just ci-load-dotenv
+
+      - name: Publish
+        run: just publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
