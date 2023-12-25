@@ -30,7 +30,7 @@ export(String, MULTILINE) var Tags := "" setget set_Tags, get_Tags
 
 export var source_id: String
 var resource
-# Unique identifer amongst assets from the same source. Preferably human friendly.
+# Unique identifier amongst assets from the same source. Preferably human friendly.
 export var id: String
 export var title: String
 export var official_title := true
@@ -69,7 +69,7 @@ var downloaded := false setget set_downloaded
 var expected_files: PoolStringArray = []
 
 # Additional notes to be displayed in credits. Could include things such as who
-# commisioned the work or what modifications were made to the original.
+# commissioned the work or what modifications were made to the original.
 export(String, MULTILINE) var notes := ""
 
 

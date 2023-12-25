@@ -34,7 +34,7 @@ func get_fields() -> Array:
 	return []
 
 
-func _on_submit(vaules) -> void:
+func _on_submit(values) -> void:
 	set_submitting(false, "Method _on_submit() Not Implemented!")
 
 

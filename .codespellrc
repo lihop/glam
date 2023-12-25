@@ -2,5 +2,5 @@
 # SPDX-License-Identifier: CC0-1.0
 
 [codespell]
-skip = assets/**,addons/gd-plug/**,LICENSES/**
-ignore-words-list = lod,LOD
+skip = assets/**,test/**,addons/gd-plug/**,LICENSES/**,addons/glam/LICENSES/**,addons/glam/.LICENSES/**
+ignore-words-list = acess
