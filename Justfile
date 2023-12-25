@@ -17,7 +17,7 @@ alias e := editor
 
 # Global directories
 # To make the Godot binaries available for other projects
-main_dir := ".glam_tmp"
+main_dir := ".glam"
 cache_dir := main_dir / "cache"
 bin_dir := main_dir / "bin"
 
@@ -66,7 +66,7 @@ venv_dir := justfile_directory() / "venv"
 [private]
 @makedirs:
     mkdir -p {{ cache_dir }} {{ bin_dir }}
-    touch {{ main_dir }}/.gdignore 
+    touch {{ main_dir }}/.gdignore
     touch {{ main_dir }}/.gitignore
     echo '*' > {{ main_dir }}/.gitignore
 
@@ -93,7 +93,7 @@ install-godot:
 
 # Download plugins
 install-addons:
-    [ -f plug.gd ] && just godot --no-window --script plug.gd install || true
+    [ -f plug.gd ] && just godot --no-window -s plug.gd install || true
 
 # Import game resources
 import-resources:
@@ -121,7 +121,7 @@ editor:
 
 # Run files formatters
 fmt:
-    just venv pip install pre-commit==3.5.0 reuse==2.1.0 gdtoolkit==4.*
+    just venv pip install pre-commit==3.5.0 reuse==2.1.0 gdtoolkit==3.*
     just venv pre-commit run -a
 
 # Remove cache and binaries created by this Justfile
