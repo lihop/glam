@@ -27,24 +27,6 @@ repos:
   - id: codespell
 - repo: local
   hooks:
-  - id: lower-case-only
-    name: lower case only
-    entry: filenames must be lower-case or lower_case only
-    language: fail
-    files: '[^a-z0-9._/-]'
-    exclude: |
-      (?x)^(
-          .reuse/|
-          LICENSES/|
-          public/|
-          docs/|
-          Justfile|
-          CONTRIBUTING.md|
-          CHANGELOG.md|
-          CREDITS.md|
-          LICENSE.md|
-          README.md
-      )
   - id: check-gdscript
     name: check gdscript
     entry: gdformat

@@ -265,7 +265,7 @@ class AudioStreamAsset:
 
 	const Asset := preload("../../assets/asset.gd")
 	const GDash := preload("../../util/gdash.gd")
-	const LicenseDB := preload("../../licenses/license_db.gd")
+	const LicenseDB := preload("../../license/license_db.gd")
 
 	static func from_data(data: Dictionary, access_token := "") -> GLAMAudioStreamAsset:
 		var asset = GLAMAudioStreamAsset.new()

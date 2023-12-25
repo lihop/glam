@@ -63,7 +63,7 @@ plug("lihop/glam", {tag = "0.1.0", include = ["addons/glam"]})
 If you cloned this repo locally and want to work on it you will need to install the plugins using the following command to install additional plugins:
 
 ```shell
-godot --no-window --script plug.gd install
+godot --no-window -s plug.gd install
 # or: just install-addons
 ```
 
@@ -72,7 +72,7 @@ godot --no-window --script plug.gd install
 GLAM uses the [Gut](https://github.com/bitwes/Gut) tool for testing. These tests can be run from the command line using:
 
 ```shell
-godot --no-window --script addons/gut/gut_cmdln.gd
+godot --no-window -s addons/gut/gut_cmdln.gd
 # or: just unit
 ```
 
@@ -80,7 +80,7 @@ By default, only unit tests will be run.
 To run all tests (including integration tests) use:
 
 ```shell
-godot --no-window --script addons/gut/gut_cmdln.gd -gconfig=.gutconfig_all.json
+godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig_all.json
 # or: just integration
 ```
 

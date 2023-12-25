@@ -58,7 +58,7 @@ _global_script_class_icons={
 
 config/name="GLAM"
 config/description="Godot Libre Asset Manager.
-Browse and download free, libre, and creative commons assets in the Godot editor. Keep track of licenses and attribution. 
+Browse and download free, libre, and creative commons assets in the Godot editor. Keep track of licenses and attribution.
 
 SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
 SPDX-License-Identifier: MIT

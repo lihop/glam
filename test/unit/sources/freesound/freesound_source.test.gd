@@ -3,7 +3,7 @@
 extends "../base_source_test.gd"
 
 const Asset := preload("res://addons/glam/assets/asset.gd")
-const LicenseDB := preload("res://addons/glam/licenses/license_db.gd")
+const LicenseDB := preload("res://addons/glam/license/license_db.gd")
 const Freesound := preload("res://addons/glam/sources/freesound/freesound_source.gd")
 
 var asset: Asset

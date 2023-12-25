@@ -3,7 +3,7 @@
 extends Object
 
 const FileScanner := preload("../util/file_scanner.gd")
-const LicenseDB := preload("../licenses/license_db.gd")
+const LicenseDB := preload("../license/license_db.gd")
 
 
 static func generate_credits(root := "res://", sources := []) -> String:
@@ -113,7 +113,7 @@ static func _get_licenses(asset: GLAMAsset) -> String:
 				if license.identifier.begins_with("LicenseRef-")
 				else license.identifier
 			)
-			strs.append(_get_link(name, details.url, "Uknown License"))
+			strs.append(_get_link(name, details.url, "Unknown License"))
 
 	return strs.join(", ")
 

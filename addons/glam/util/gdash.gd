@@ -19,7 +19,7 @@ static func value(value):
 	return value
 
 
-# Returns value at '.' seperated `path` of `object` or `fallback` if the path
+# Returns value at '.' separated `path` of `object` or `fallback` if the path
 # does not exist.
 # Example:
 # ```gdscript
