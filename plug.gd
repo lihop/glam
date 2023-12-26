@@ -4,7 +4,7 @@ extends "res://addons/gd-plug/plug.gd"
 
 
 func _plugging():
-	plug("bitwes/Gut", {commit = "70c08aebb318529fc7d3b07f7282b145f7512dee"})
+	plug("bitwes/Gut", {commit = "18f6bddf7010b01754d6feb5f96557214e3ead8c"})
 	plug(
 		"deep-entertainment/godot-epic-anchors",
 		{commit = "e1e5d445c823036fe2f7324272cd1f920cbf6f91"}
