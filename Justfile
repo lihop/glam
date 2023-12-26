@@ -133,7 +133,7 @@ clean-glam-cache:
 # Remove plugins
 clean-addons:
     rm -rf .plugged
-    [ -f plug.gd ] && find addons/ -type d -not -name 'addons' -not -name 'gd-plug' -not -name '{{ addon_name }}' -exec rm -rf {} \; || true
+    [ -f plug.gd ] && find addons/ -maxdepth 1 -type d -not -name 'addons' -not -name 'gd-plug' -not -name '{{ addon_name }}' -exec rm -rf {} \; || true
 
 # Remove any unnecessary files
 clean: clean-addons
