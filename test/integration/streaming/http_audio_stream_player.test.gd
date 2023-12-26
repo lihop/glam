@@ -17,7 +17,7 @@ var server_pid: int
 
 func before_all():
 	var path := ProjectSettings.globalize_path("res://test/integration/streaming")
-	server_pid = OS.execute("npx", ["http-server", "--port=%d" % PORT, path], false)
+	server_pid = OS.execute("python", ["-m", "http.server", "%d" % PORT, "-d", path], false)
 	var tcp := StreamPeerTCP.new()
 	while tcp.get_status() != StreamPeerTCP.STATUS_CONNECTED:
 		if tcp.get_status() != StreamPeerTCP.STATUS_CONNECTING:

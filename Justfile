@@ -173,5 +173,4 @@ unit: install-addons import-resources
 
 # Run integration tests
 integration: install-addons import-resources
-    just venv http.server 7121 -d ./test/integration/streaming/ &
     just godot --no-window -s addons/gut/gut_cmdln.gd -gdir=res://test/integration/sources -gexit
