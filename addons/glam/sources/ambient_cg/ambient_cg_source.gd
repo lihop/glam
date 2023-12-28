@@ -141,7 +141,7 @@ func _fetch(url: String, fetch_result: FetchResult) -> GDScriptFunctionState:
 
 	_next_page_url = json.data.nextPageHttp
 	_num_results = str(GDash.get_val(json, "data.numberOfResults"))
-	_num_loaded = GDash.get_val(json, "data.searchQuery.offset", 0) + results.size()
+	_num_loaded = int(GDash.get_val(json, "data.searchQuery.offset", 0)) + results.size()
 
 	fetch_result.assets = results
 	return
