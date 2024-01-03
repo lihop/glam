@@ -1,0 +1,67 @@
+# SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
+# SPDX-License-Identifier: MIT
+
+name: Setup Godot
+description: Setup Godot dependencies.
+runs:
+  using: "composite"
+  steps:
+
+    ############
+    # Windows  #
+    ############
+
+    - name: Installing Mesa3D
+      if: ${{ runner.os == 'Windows' }}
+      uses: ssciwr/setup-mesa-dist-win@v1
+
+    - name: Installing Scream, a virtual sound card
+      if: ${{ runner.os == 'Windows' }}
+      shell: powershell
+      run: |
+        <# Script to install Scream, a dummy sound card for Windows: https://github.com/duncanthrax/scream
+        Taken from comment by Aleksandr Chebotov (al-cheb) at: https://github.com/actions/virtual-environments/issues/2528#issuecomment-766883233 #>
+        Start-Service audio*
+        Invoke-WebRequest https://github.com/duncanthrax/scream/releases/download/3.6/Scream3.6.zip -OutFile C:\Scream3.6.zip
+        Expand-Archive C:\Scream3.6.zip -DestinationPath C:\Scream
+        $cert = (Get-AuthenticodeSignature C:\Scream\Install\driver\Scream.sys).SignerCertificate
+        $store = [System.Security.Cryptography.X509Certificates.X509Store]::new("TrustedPublisher", "LocalMachine")
+        $store.Open("ReadWrite")
+        $store.Add($cert)
+        $store.Close()
+        cd C:\Scream\Install\driver
+        C:\Scream\Install\helpers\devcon install Scream.inf *Scream
+
+    ############
+    # Linux    #
+    ############
+
+    - name: Installing Linux dependencies
+      if: ${{ runner.os == 'Linux' }}
+      shell: bash
+      run: sudo apt-get install -y pulseaudio xvfb x11-xserver-utils mesa-vulkan-drivers
+
+    - name: Starting X11 server on :0
+      if: ${{ runner.os == 'Linux' }}
+      shell: bash
+      run: xset -q || /bin/bash -c "sudo Xvfb -ac :0 -screen 0 1920x1080x24 > /dev/null 2>&1 &"
+      env:
+        DISPLAY: ":0"
+
+    - name: Check that X11 server is running
+      if: ${{ runner.os == 'Linux' }}
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 1
+        max_attempts: 5
+        command: /bin/bash -c "xset -q > /dev/null 2>&1"
+      env:
+        DISPLAY: ":0"
+
+    - name: Starting dummy sound device
+      if: ${{ runner.os == 'Linux' }}
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 1
+        max_attempts: 3
+        command: pulseaudio --check || pulseaudio -D

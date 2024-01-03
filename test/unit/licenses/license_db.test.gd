@@ -3,7 +3,7 @@
 extends "res://addons/gut/test.gd"
 
 const GDash := preload("res://addons/glam/util/gdash.gd")
-const LicenseDB := preload("res://addons/glam/licenses/license_db.gd")
+const LicenseDB := preload("res://addons/glam/license/license_db.gd")
 
 
 class TestLicenseFromCCUrl:

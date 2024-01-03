@@ -5,7 +5,7 @@ extends Panel
 
 const Asset := preload("../assets/asset.gd")
 const AudioStreamAsset := preload("../assets/audio_stream_asset.gd")
-const LicenseDB := preload("../licenses/license_db.gd")
+const LicenseDB := preload("../license/license_db.gd")
 
 signal tag_selected(tag)
 signal download_requested(asset)

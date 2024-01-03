@@ -1,9 +1,12 @@
 # SPDX-FileCopyrightText: 2021 Leroy Hopson <glam@leroy.geek.nz>
 # SPDX-License-Identifier: MIT
 extends Node
-# Make sure to start and http server serving res://test/integration/streaming/fixtures and listening
-# on port 8081. If nodejs is installed, this can be done using npx with the command:
+# Make sure to start an http server serving res://test/integration/streaming/fixtures and listening
+# on port 8081.
+# - If nodejs is installed, this can be done using npx with the command:
 # `npx http-server --port 8081`.
+# - If python is installed, this can be done with the command:
+# `python -m http.server 8081`.
 #
 # Set/unset the Use Http Player script variable to compare between the HTTPAudioStreamPlayer and
 # a normal AudioStreamPlayer loading the file directly from disk.

@@ -41,16 +41,15 @@ Some of these sources require an api account to use (see 'Account Required').
 | [ccMixter](http://ccmixter.org)            | No               | Planned     | Music                                                |
 | [SoundCloud](http://soundcloud.com)        | Yes              | Planned     | Music                                                |
 
-
 ## Installation
 
 Copy the `addons/glam` directory in this repo to your Godot project.
 
 Or install the [gd-plug](https://godotengine.org/asset-library/asset/962) plugin. By adding the following to your `plug.gd` file (changing the commit hash to the version of GLAM you want to use):
-```
-plug("lihop/glam", {commit = "432cb3561db0b2e69471883b13e24e0f5d15e155", include = ["addons/glam"]})
-```
 
+```gdscript
+plug("lihop/glam", {tag = "0.1.0", include = ["addons/glam"]})
+```
 
 ## Screenshots
 
@@ -59,24 +58,49 @@ plug("lihop/glam", {commit = "432cb3561db0b2e69471883b13e24e0f5d15e155", include
 ![Images of mountains from Pixabay](/docs/image_search.jpg)
 ![Audio files of fire crackling from Freesound](/docs/audio_search.jpg)
 
-
 ## Developing
 
-If you cloned this repo locally and want to work on it you will need to install the plugins using the following command to install additional plugins:
+If you've cloned this repository and wish to contribute or work on it, you should know that we use [just](https://just.systems/man/en/) as command runner and [pre-commit](https://pre-commit.com/) for automated code formatting (it's run tools like codespell, reuse, gdformat).
 
-```
+> [!NOTE]
+> For more details on each tool, including installation instructions and usage guidelines, refer to their official documentation.
+
+### Installing plugins
+
+Before diving into development, make sure to install the required plugins using the following command:
+
+```shell
 godot --no-window -s plug.gd install
+# or: just install-addons
 ```
 
 ### Testing
 
-GLAM uses the [Gut](https://github.com/bitwes/Gut) tool for testing. These tests can be run from the command line using:
-```
+GLAM uses [Gut](https://github.com/bitwes/Gut) as testing framework.
+
+To run tests from the command line, use the following commands:
+
+```shell
 godot --no-window -s addons/gut/gut_cmdln.gd
+# or: just unit
 ```
+
 By default, only unit tests will be run.
+
 To run all tests (including integration tests) use:
-```
+
+```shell
 godot --no-window -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig_all.json
+# or: just integration
 ```
-**Note:** Integration tests require Node.js to be installed as they use the `npx` command to start an [http-server](https://www.npmjs.com/package/http-server) HTTP server. The integration tests also take a long time (more than 30 seconds) to run.
+
+> [!IMPORTANT]
+> Integration tests require [python](https://www.python.org/) to be installed to start an [http.server](https://docs.python.org/3/library/http.server.html) HTTP server. The integration tests also take a long time (more than 30 seconds) to run.
+
+### Continuous Integration
+
+We use [GitHub Actions](https://docs.github.com/en/actions) for continuous integration, ensuring that code changes are validated and tested on each push. The workflow tests the addon on each plaftform and several last major versions of Godot. Check the [`.github/workflows/main.yml`](./.github/workflows/main.yml) file for details on the CI workflow.
+
+### Continuous Delivery
+
+Whenever a tag is pushed, the main workflow triggers a `publish` step, creating a GitHub release. This automated process simplifies the release management. But before tagging the code, make sure the version in the [`.env`](./.env) is correctly bumped.

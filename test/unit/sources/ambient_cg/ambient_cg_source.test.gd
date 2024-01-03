@@ -3,7 +3,7 @@
 extends "../base_source_test.gd"
 
 const AmbientCG := preload("res://addons/glam/sources/ambient_cg/ambient_cg_source.gd")
-const LicenseDB := preload("res://addons/glam/licenses/license_db.gd")
+const LicenseDB := preload("res://addons/glam/license/license_db.gd")
 
 var hit: Dictionary
 var source: AmbientCG
