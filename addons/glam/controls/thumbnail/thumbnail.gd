@@ -3,6 +3,9 @@
 tool
 extends Button
 
+signal download_requested(asset)
+signal selected
+
 const Asset := preload("../../assets/asset.gd")
 const AudioStreamAsset := preload("../../assets/audio_stream_asset.gd")
 const PreviewImage := preload("../preview_image.gd")
@@ -10,11 +13,11 @@ const PreviewImage := preload("../preview_image.gd")
 const DEFAULT_WIDTH = 120
 const DEFAULT_HEIGHT = 156
 
-signal download_requested(asset)
-signal selected
-
 var asset: Asset setget set_asset
 var selected = false setget set_selected
+
+var _dragging := false
+var _drag_data = null
 
 onready var _preview_image: PreviewImage = find_node("PreviewImage")
 onready var _type_icon = find_node("Icon")
@@ -29,12 +32,6 @@ onready var _download_spinner := find_node("DownloadSpinner")
 onready var _glam = get_tree().get_meta("glam")
 onready var _format_option_button := find_node("FormatOptionButton")
 onready var _audio_preview := find_node("AudioStreamEditor")
-
-var _dragging := false
-var _drag_data = null
-
-#func _ready():
-#	connect("item_rect_changed", self, "_on_size_changed")
 
 
 func set_asset(value: Asset) -> void:
@@ -69,7 +66,7 @@ func set_asset(value: Asset) -> void:
 	asset.connect("download_format_changed", self, "_on_download_format_changed")
 
 
-func set_selected(value):
+func set_selected(_value):
 	if selected:
 		add_stylebox_override("panel", _focused_stylebox)
 		emit_signal("selected")

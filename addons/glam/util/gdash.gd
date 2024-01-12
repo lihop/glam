@@ -52,7 +52,8 @@ static func get_val(object, path: String, fallback = null):
 	if object is Dictionary and object.has(key) or object is Object and key in object:
 		if keys.empty():
 			return object.get(key)
-		elif object.get(key) is Object or object.get(key) is Dictionary:
+
+		if object.get(key) is Object or object.get(key) is Dictionary:
 			return get_val(object.get(key), PoolStringArray(keys).join("."), fallback)
 
 	return fallback

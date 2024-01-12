@@ -3,9 +3,9 @@
 tool
 extends TextureRect
 
-const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
-
 signal image_loaded
+
+const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
 
 var _http_request: CacheableHTTPRequest
 var _cancellation_tokens := []
@@ -91,9 +91,10 @@ func _exit_tree():
 
 
 class CancellationToken:
+	#gdlint:disable=duplicated-load
 	const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
 
-	var http_request: CacheableHTTPRequest
+	var http_request
 	var cancelled := false
 
 	func _init(p_http_request := CacheableHTTPRequest.new(), p_cancelled := false):

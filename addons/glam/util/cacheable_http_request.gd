@@ -3,10 +3,10 @@
 tool
 extends HTTPRequest
 
+signal cacheable_request_completed(result, response_code, headers, body)
+
 const Request = preload("./request.gd")
 const RequestCache = preload("./request_cache.gd")
-
-signal cacheable_request_completed(result, response_code, headers, body)
 
 var _request_cache: RequestCache
 

@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: none
 # SPDX-License-Identifier: CC0-1.0
-const data = {
+const DATA = {
 	"LicenseRef-Pixabay":
 	{
 		name = "Pixabay License",

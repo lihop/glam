@@ -87,7 +87,7 @@ func _play():
 		set_process(true)
 
 
-func _stop():
+func stop():
 	_player.stop()
 	_play_button.icon = PlayIcon
 	_current = 0
@@ -159,4 +159,4 @@ func _on_player_stopped():
 
 func _on_player_fully_finished():
 	_spinner.visible = false
-	_stop()
+	stop()

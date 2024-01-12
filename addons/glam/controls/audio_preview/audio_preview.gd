@@ -24,11 +24,11 @@ func _draw():
 	pass
 
 
-func _gui_input(event):
+func _gui_input(_event):
 	# TODO: Move playhead based on click position
 	#update()
 	pass
 
 
-func _on_Button_toggled(button_pressed):
+func _on_Button_toggled(_button_pressed):
 	pass

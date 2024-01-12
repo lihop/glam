@@ -3,6 +3,8 @@
 tool
 extends Resource
 
+const RangeUtils := preload("../util/range_utils.gd")
+
 var data := PoolByteArray()
 var ranges := PoolVector2Array()
 
@@ -54,13 +56,13 @@ func put_data(p_data: PoolByteArray, rangev := Vector2(-1, -1)):
 	var new_ranges := PoolVector2Array()
 	var added := false
 	for r in ranges:
-		match _relpos(rangev, r):
-			0:
+		match RangeUtils.relative_position(rangev, r):
+			RangeUtils.POSITION_CONJOINED:
 				rangev.x = min(rangev.x, r.x)
 				rangev.y = max(rangev.y, r.y)
-			1:
+			RangeUtils.POSITION_AFTER:
 				new_ranges.append(r)
-			-1:
+			RangeUtils.POSITION_BEFORE:
 				if not added:
 					new_ranges.append(rangev)
 					added = true
@@ -89,12 +91,12 @@ func get_missing_ranges(start: int, end: int, p_ranges := ranges) -> PoolVector2
 	var missing := PoolVector2Array()
 	var rangev := Vector2(start, end)
 	for r in p_ranges:
-		match _relpos(rangev, r):
-			-1:
+		match RangeUtils.relative_position(rangev, r):
+			RangeUtils.POSITION_BEFORE:
 				missing.append(rangev)
 				return missing
-			0:
-				var subtracted = _subtract_range(rangev, r)
+			RangeUtils.POSITION_CONJOINED:
+				var subtracted = RangeUtils.subtract_range(rangev, r)
 				match subtracted.size():
 					0:
 						return missing
@@ -113,35 +115,6 @@ func clear() -> void:
 	ranges = PoolVector2Array()
 	_buffer = StreamPeerBuffer.new()
 	_buffer.data_array = data
-
-
-# Get the position of range a with regards to range b.
-# Possible return values:
-#   -1: indicates that range a comes before range b with a gap between.
-#   0: indicates that range a and range b overlap or are adjacent.
-#   1: indicates that range a comes after range b with a gap between.
-static func _relpos(a: Vector2, b: Vector2) -> int:
-	if a.y == b.x - 1 or b.y == a.x - 1:
-		return 0
-	if a.y < b.x:
-		return -1
-	elif a.x > b.y:
-		return 1
-	else:
-		return 0
-
-
-static func _subtract_range(a: Vector2, b: Vector2) -> Array:
-	if a.x >= b.x and a.y <= b.y:
-		return []
-	elif a.x < b.x and a.y > b.y:
-		return [Vector2(a.x, b.x - 1), Vector2(b.y + 1, a.y)]
-	elif a.x < b.x and a.y <= b.y:
-		return [Vector2(a.x, b.x - 1)]
-	elif a.x >= b.x and a.x <= b.y and a.y > b.y:
-		return [Vector2(b.y + 1, a.y)]
-	else:
-		return [a]
 
 
 static func _sort_range_statuses(a: Dictionary, b: Dictionary) -> bool:

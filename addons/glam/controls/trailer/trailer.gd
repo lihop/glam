@@ -50,5 +50,5 @@ func set_status(value) -> void:
 func _process(_delta):
 	var on_screen := is_on_screen()
 	if on_screen and not _was_on_screen:
-		emit_signal("screen_entered") if on_screen else emit_signal("screen_exited")
+		emit_signal("screen_entered" if on_screen else "screen_exited")
 	_was_on_screen = on_screen

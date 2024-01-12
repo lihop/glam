@@ -3,10 +3,10 @@
 tool
 extends Control
 
+signal source_changed(new_source)
+
 const FileScanner := preload("../util/file_scanner.gd")
 const Markdown := preload("../credits/markdown.gd")
-
-signal source_changed(new_source)
 
 var sources := []
 
@@ -52,7 +52,7 @@ func _ready():
 	select_source(0)
 
 
-func select_panel(index: int) -> void:
+func select_panel(_index: int) -> void:
 	pass
 
 

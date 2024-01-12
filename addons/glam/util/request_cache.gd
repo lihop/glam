@@ -3,12 +3,12 @@
 tool
 extends Node
 
+signal cache_size_updated(size)
+
 const Request := preload("./request.gd")
 const CachedResponse := preload("./cached_response.gd")
 
 const DEFAULT_TTL := 86400
-
-signal cache_size_updated(size)
 
 var cache_size_bytes: int
 var cache_dir := ProjectSettings.globalize_path(

@@ -29,16 +29,14 @@ static func unzip(zip_path) -> Dictionary:
 	)
 	if exit_code != 0:
 		return {error = FAILED, files = []}
-	else:
-		var files = []
-		for line in out[0].split("\n"):
-			if line.begins_with("UnzippedFile:"):
-				files.append(
-					ProjectSettings.localize_path(
-						line.replace("UnzippedFile:", "").replace("\n", "")
-					)
-				)
-		return {error = OK, files = files}
+
+	var files = []
+	for line in out[0].split("\n"):
+		if line.begins_with("UnzippedFile:"):
+			files.append(
+				ProjectSettings.localize_path(line.replace("UnzippedFile:", "").replace("\n", ""))
+			)
+	return {error = OK, files = files}
 
 
 func _init():

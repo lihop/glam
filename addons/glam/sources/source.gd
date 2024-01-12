@@ -4,12 +4,6 @@ tool
 class_name GLAMSource
 extends Node
 
-const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
-const EditorIcons := preload("../icons/editor_icons.gd")
-const GDash := preload("../util/gdash.gd")
-
-const PER_PAGE_LIMIT := 24
-
 # Deprecated
 signal search_started
 signal search_completed(results)
@@ -28,6 +22,12 @@ enum Status {
 	NO_MORE_RESULTS,
 	ERROR,
 }
+
+const CacheableHTTPRequest := preload("../util/cacheable_http_request.gd")
+const EditorIcons := preload("../icons/editor_icons.gd")
+const GDash := preload("../util/gdash.gd")
+
+const PER_PAGE_LIMIT := 24
 
 var fetching := false
 var searching := false
@@ -172,7 +172,7 @@ func download(asset: GLAMAsset) -> void:
 	asset.downloaded = true
 
 
-func _download(asset: GLAMAsset) -> void:
+func _download(_asset: GLAMAsset) -> void:
 	yield(get_tree(), "idle_frame")
 	assert(false, "_download() not implemented.")
 
@@ -301,7 +301,9 @@ func _fetch_json(url: String, headers := []) -> Dictionary:
 # Downloads a single file from `url` to `dest` on the local machine. `dest`
 # should begin with "res://" to ensure files are only downloaded within the
 # current project directory.
-func _download_file(url: String, dest: String, headers := PoolStringArray()) -> GDScriptFunctionState:
+func _download_file(
+	url: String, dest: String, headers := PoolStringArray()
+) -> GDScriptFunctionState:
 	assert(dest.is_abs_path())
 	assert(dest.begins_with("res://"), "Location outside of project directory.")
 	Directory.new().make_dir_recursive(dest.get_base_dir())

@@ -3,15 +3,15 @@
 tool
 extends Node
 
+signal open_completed(result, size, media_type)
+signal data_received(data, rangev)
+signal request_completed(result, data, rangev)
+
 const BufferCache := preload("./buffer_cache.gd")
 const URL := preload("./url.gd")
 
 const CHUNK_SIZE := 512 * 1024  # 512 KiB
 const MAX_RETRIES := 1
-
-signal open_completed(result, size, media_type)
-signal data_received(data, rangev)
-signal request_completed(result, data, rangev)
 
 var err_msg := ""
 

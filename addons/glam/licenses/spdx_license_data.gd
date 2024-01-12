@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Linux Foundation and its Contributors
 # SPDX-License-Identifier: CC0-1.0
 # Source: https://github.com/fsfe/reuse-tool/blob/ec169e9603cb41fcdb6d5b056814d23ee1218317/src/reuse/resources/licenses.json
-const data = {
+const DATA = {
 	"licenseListVersion": "3.13",
 	"licenses":
 	[

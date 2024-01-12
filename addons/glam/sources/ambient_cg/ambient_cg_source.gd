@@ -7,7 +7,7 @@ const Source := preload("../source.gd")
 const Strings := preload("../../util/strings.gd")
 const Unzipper := preload("../../util/unzipper.gd")
 
-const _API_URL := "https://ambientCG.com/api/v2/full_json"
+const API_URL := "https://ambientCG.com/api/v2/full_json"
 
 var _next_page_url = null
 var _num_results := ""
@@ -100,7 +100,7 @@ func fetch() -> void:
 		)
 	)
 	var result = FetchResult.new(get_query_hash())
-	yield(_fetch(_API_URL + query_string, result), "completed")
+	yield(_fetch(API_URL + query_string, result), "completed")
 	if result.get_query_hash() == get_query_hash():
 		_update_status_line()
 		emit_signal("fetch_completed", result)

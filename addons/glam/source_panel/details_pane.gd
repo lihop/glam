@@ -3,12 +3,12 @@
 tool
 extends Panel
 
+signal tag_selected(tag)
+signal download_requested(asset)
+
 const Asset := preload("../assets/asset.gd")
 const AudioStreamAsset := preload("../assets/audio_stream_asset.gd")
 const LicenseDB := preload("../licenses/license_db.gd")
-
-signal tag_selected(tag)
-signal download_requested(asset)
 
 var asset: Asset setget set_asset
 var _popup_just_closed := false

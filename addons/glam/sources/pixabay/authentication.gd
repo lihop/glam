@@ -28,7 +28,7 @@ func _on_submit(values):
 		set_submitting(false, "HTTPRequest error: %d" % err)
 
 
-func _on_HTTPRequest_request_completed(result, response_code, headers, body: PoolByteArray):
+func _on_HTTPRequest_request_completed(result, response_code, _headers, body: PoolByteArray):
 	if result == OK and response_code == 200:
 		var config := ConfigFile.new()
 		config.set_value("auth", "api_key", values["API Key"].strip_edges())

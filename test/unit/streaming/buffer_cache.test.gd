@@ -11,29 +11,6 @@ func before_each():
 	buffer = BufferCache.new()
 
 
-func test__relpos():
-	assert_eq(BufferCache._relpos(Vector2(0, 0), Vector2(1, 1)), 0)
-	assert_eq(BufferCache._relpos(Vector2(0, 50), Vector2(100, 1000)), -1)
-	assert_eq(BufferCache._relpos(Vector2(51, 52), Vector2(53, 54)), 0)
-	assert_eq(BufferCache._relpos(Vector2(0, 0), Vector2(0, 0)), 0)
-	assert_eq(BufferCache._relpos(Vector2(0, 50), Vector2(0, 1000)), 0)
-	assert_eq(BufferCache._relpos(Vector2(51, 52), Vector2(52, 53)), 0)
-	assert_eq(BufferCache._relpos(Vector2(1, 1), Vector2(0, 0)), 0)
-	assert_eq(BufferCache._relpos(Vector2(100, 1000), Vector2(0, 50)), 1)
-	assert_eq(BufferCache._relpos(Vector2(53, 54), Vector2(51, 52)), 0)
-
-
-func test__subtract_range():
-	assert_eq(BufferCache._subtract_range(Vector2(0, 0), Vector2(0, 0)), [])
-	assert_eq(BufferCache._subtract_range(Vector2(1, 1), Vector2(0, 0)), [Vector2(1, 1)])
-	assert_eq(BufferCache._subtract_range(Vector2(0, 1), Vector2(0, 0)), [Vector2(1, 1)])
-	assert_eq(BufferCache._subtract_range(Vector2(1, 2), Vector2(0, 1)), [Vector2(2, 2)])
-	assert_eq(BufferCache._subtract_range(Vector2(5, 9), Vector2(3, 7)), [Vector2(8, 9)])
-	assert_eq(
-		BufferCache._subtract_range(Vector2(0, 10), Vector2(6, 8)), [Vector2(0, 5), Vector2(9, 10)]
-	)
-
-
 func test_initial_state():
 	assert_eq(buffer.ranges.size(), 0)
 	assert_eq(buffer.data as Array, [])

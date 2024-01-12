@@ -62,16 +62,16 @@ static func create_credit(asset: GLAMAsset, level := 0) -> String:
 	var derivative_level := 1
 	var strs := PoolStringArray()
 
-	strs.append(_get_title(asset))
+	strs.append(Formatter.get_title(asset))
 	strs.append("by")
-	strs.append(_get_authors(asset))
+	strs.append(Formatter.get_authors(asset))
 	strs.append("licensed under")
-	strs.append(_get_licenses(asset))
+	strs.append(Formatter.get_licenses(asset))
 
 	if not asset.notes.empty():
 		strs.append("/ %s" % asset.notes)
 
-	var derivatives := _get_derivative_credits(asset, derivative_level)
+	var derivatives := Formatter.get_derivative_credits(asset, derivative_level)
 	if not asset.derived_from.empty():
 		strs.append("/ Derived from:\n")
 		for source_asset in asset.derived_from:
@@ -83,51 +83,48 @@ static func create_credit(asset: GLAMAsset, level := 0) -> String:
 	return strs.join(" ")
 
 
-static func _get_title(asset: GLAMAsset) -> String:
-	var link := _get_link(asset.title, asset.source_url)
-	return link if asset.title.empty() or not asset.official_title else '"%s"' % link
+class Formatter:
+	static func get_title(asset: GLAMAsset) -> String:
+		var link := _get_link(asset.title, asset.source_url)
+		return link if asset.title.empty() or not asset.official_title else '"%s"' % link
 
+	static func get_authors(asset: GLAMAsset) -> String:
+		var strs := PoolStringArray()
 
-static func _get_authors(asset: GLAMAsset) -> String:
-	var strs := PoolStringArray()
+		if asset.authors.empty():
+			strs.append("Unknown")
+		else:
+			for author in asset.authors:
+				strs.append(_get_link(author.name, author.url, "Unknown"))
 
-	if asset.authors.empty():
-		strs.append("Unknown")
-	else:
-		for author in asset.authors:
-			strs.append(_get_link(author.name, author.url, "Unknown"))
+		return strs.join(", ")
 
-	return strs.join(", ")
+	static func get_licenses(asset: GLAMAsset) -> String:
+		var strs := PoolStringArray()
 
+		if asset.licenses.empty():
+			strs.append("Unknown License")
+		else:
+			for license in asset.licenses:
+				var details := LicenseDB.get_license(license.identifier)
+				var name = (
+					details.name
+					if license.identifier.begins_with("LicenseRef-")
+					else license.identifier
+				)
+				strs.append(_get_link(name, details.url, "Unknown License"))
 
-static func _get_licenses(asset: GLAMAsset) -> String:
-	var strs := PoolStringArray()
+		return strs.join(", ")
 
-	if asset.licenses.empty():
-		strs.append("Unknown License")
-	else:
-		for license in asset.licenses:
-			var details := LicenseDB.get_license(license.identifier)
-			var name = (
-				details.name
-				if license.identifier.begins_with("LicenseRef-")
-				else license.identifier
-			)
-			strs.append(_get_link(name, details.url, "Uknown License"))
+	#gdlint:ignore=unused-argument
+	static func get_derivative_credits(asset: GLAMAsset, level := 1) -> String:
+		return ""  # Not implemented.
 
-	return strs.join(", ")
-
-
-static func _get_derivative_credits(asset: GLAMAsset, level := 1) -> String:
-	return "  ".repeat(level) + "- lol"
-
-
-static func _get_link(name := "", url := "", default_name := "Untitled") -> String:
-	if name and url:
-		return "[%s](%s)" % [name, url]
-	elif name.empty() and url:
-		return "[%s](%s)" % [default_name, url]
-	elif name and url.empty():
-		return name
-	else:
+	static func _get_link(name := "", url := "", default_name := "Untitled") -> String:
+		if name and url:
+			return "[%s](%s)" % [name, url]
+		if name.empty() and url:
+			return "[%s](%s)" % [default_name, url]
+		if name and url.empty():
+			return name
 		return default_name

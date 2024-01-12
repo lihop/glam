@@ -9,12 +9,6 @@ const Strings := preload("../../util/strings.gd")
 const API_URL := "https://freesound.org/apiv2"
 const CLIENT_ID := "0vy6LQde1arAmWBgHgYD"
 
-const License = {
-	Attribution = "https://creativecommons.org/licenses/by/3.0/",
-	Attribution_Noncommercial = "https://creativecommons.org/licenses/by-nc/3.0/",
-	Creative_Commons_0 = "https://creativecommons.org/publicdomain/zero/1.0/"
-}
-
 var auth_user := ""
 var access_token := ""
 
@@ -82,7 +76,8 @@ func get_authenticated() -> bool:
 	if not access_token.empty() and not expired:
 		emit_signal("query_changed")
 		return true
-	elif expired and not refresh_token.empty():
+
+	if expired and not refresh_token.empty():
 		var http_client := HTTPClient.new()
 		var query = http_client.query_string_from_dict(
 			{
@@ -151,7 +146,7 @@ func fetch() -> void:
 		fields = "id,url,name,tags,description,license,type,bitrate,duration,username,download,previews,images",
 		sort = _sort_options.value,
 	}
-	var filter_str = _get_filter_str(_filters)
+	var filter_str = FilterString.from_filters(_filters)
 	if not filter_str.empty():
 		query.filter = filter_str
 	var query_string: String = "/search/text/?" + HTTPClient.new().query_string_from_dict(query)
@@ -240,21 +235,6 @@ func _update_status_line():
 		)
 
 
-static func _get_filter_str(filters := []) -> String:
-	var filter_str := ""
-
-	for filter in filters:
-		match filter.name:
-			"License":
-				filter_str += "license:("
-				var licenses := PoolStringArray()
-				for license in filter.value:
-					licenses.append('"%s"' % license)
-				filter_str += "%s)%%20" % licenses.join(" OR ")
-
-	return filter_str
-
-
 func get_slug(asset: GLAMAsset) -> String:
 	return asset.id
 
@@ -316,3 +296,19 @@ class AudioStreamAsset:
 		asset.tags = data.tags
 
 		return asset
+
+
+class FilterString:
+	static func from_filters(filters := []) -> String:
+		var filter_str := ""
+
+		for filter in filters:
+			match filter.name:
+				"License":
+					filter_str += "license:("
+					var licenses := PoolStringArray()
+					for license in filter.value:
+						licenses.append('"%s"' % license)
+					filter_str += "%s)%%20" % licenses.join(" OR ")
+
+		return filter_str

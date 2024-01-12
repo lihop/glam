@@ -3,14 +3,14 @@
 tool
 extends Control
 
+signal source_selected(index)
+
 const Asset := preload("../assets/asset.gd")
 const AudioStreamAsset := preload("../assets/audio_stream_asset.gd")
 const RequestCache := preload("../util/request_cache.gd")
 const Source := preload("../sources/source.gd")
 const ThumbnailScene := preload("../controls/thumbnail/thumbnail.tscn")
 const Thumbnail := preload("../controls/thumbnail/thumbnail.gd")
-
-signal source_selected(index)
 
 export(Script) var source_script
 
@@ -22,11 +22,12 @@ var selected_thumbnail: Thumbnail
 
 var _file := File.new()
 
-onready var _account_button := find_node("AccountButton")
 onready var account_menu := find_node("AccountMenu")
 onready var user_label := find_node("UserLabel")
 onready var source_link := find_node("SourceLink")
 onready var thumbnail_grid := find_node("ThumbnailGrid")
+
+onready var _account_button := find_node("AccountButton")
 onready var _details_pane := find_node("DetailsPane")
 onready var _trailer := find_node("Trailer")
 onready var _results_pane := find_node("ResultsPane")
@@ -82,7 +83,7 @@ func _on_cache_size_updated(size: int) -> void:
 	find_node("CacheLabel").text = "Cache Size: %dM" % (size / 1000000)
 
 
-func _on_search_entered(text: String) -> void:
+func _on_search_entered(_text: String) -> void:
 	var filters = source.get_new_filters()
 	source.search(filters)
 
@@ -243,7 +244,7 @@ func _on_StopAllButton_pressed():
 	for child in _thumbnail_grid.get_children():
 		if child is Thumbnail:
 			if "_audio_preview" in child:
-				child._audio_preview._stop()
+				child._audio_preview.stop()
 
 
 func _on_VolumeSlider_value_changed(value):

@@ -64,7 +64,7 @@ func test_request_entire_file_range():
 	yield(get_tree(), "idle_frame")
 	assert_signal_emit_count(http, "request_completed", 1)
 	var params = get_signal_parameters(http, "request_completed")
-	var stream = preload(CONTENT_PATH)
+	var stream = load(CONTENT_PATH)
 	assert_eq(params[0], OK)
 	assert_eq((params[1] as Array).hash(), (stream.data as Array).hash())
 	assert_eq(params[2], Vector2(0, CONTENT_LENGTH - 1))

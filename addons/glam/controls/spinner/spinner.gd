@@ -28,7 +28,7 @@ func _load_icons():
 func set_spinning(value: bool) -> void:
 	spinning = value
 	if _timer:
-		_timer.start() if spinning else _timer.stop()
+		_timer.call("start" if spinning else "stop")
 
 
 func _set(property: String, value) -> bool:

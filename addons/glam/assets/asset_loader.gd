@@ -17,7 +17,7 @@ func handles_type(typename: String) -> bool:
 	return typename == "Resource"
 
 
-func load(path: String, original_path: String):
+func load(path: String, _original_path: String):
 	var tmp := path + ".tres"
 	var dir := Directory.new()
 

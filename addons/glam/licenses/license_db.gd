@@ -2,19 +2,19 @@
 # SPDX-License-Identifier: MIT
 extends Reference
 
-const licenses = preload("./custom_license_data.gd").data
-const spdx_licenses = preload("./spdx_license_data.gd").data.licenses
+const LICENSES = preload("./custom_license_data.gd").DATA
+const SPDX_LICENSES = preload("./spdx_license_data.gd").DATA.licenses
 const GDash = preload("../util/gdash.gd")
 
 const STATIC := {}
 
 
 static func get_license(id: String) -> Dictionary:
-	if licenses.has(id):
-		return licenses[id]
+	if LICENSES.has(id):
+		return LICENSES[id]
 
-	var license = GDash.find(spdx_licenses, {licenseId = id})
-	licenses[id] = (
+	var license = GDash.find(SPDX_LICENSES, {licenseId = id})
+	LICENSES[id] = (
 		{
 			name = license.name,
 			url = license.reference,
@@ -22,14 +22,14 @@ static func get_license(id: String) -> Dictionary:
 		if license
 		else null
 	)
-	return licenses[id]
+	return LICENSES[id]
 
 
 static func has_license(id: String) -> bool:
-	if licenses.has(id):
+	if LICENSES.has(id):
 		return true
 	else:
-		return !!GDash.find(spdx_licenses, {licenseId = id}, false)
+		return !!GDash.find(SPDX_LICENSES, {licenseId = id}, false)
 
 
 static func get_license_from_cc_url(url: String) -> GLAMAsset.License:

@@ -3,13 +3,13 @@
 tool
 extends AudioStreamPlayer
 
-const HTTPRangeRequest := preload("./cacheable_http_range_request.gd")
-const URL := preload("./url.gd")
-
 signal fully_finished
 signal open_completed(result)
 signal started
 signal stopped
+
+const HTTPRangeRequest := preload("./cacheable_http_range_request.gd")
+const URL := preload("./url.gd")
 
 var duration := -1.0
 
@@ -92,16 +92,16 @@ func seek(to_position: float):
 		_data.resize(0)
 		_http.cancel_request()
 
-		var _start := 0
+		var start := 0
 		match _media_type:
 			"audio/mpeg":
-				var Bps := floor(_size / duration)
-				_start = _start_position * Bps
+				var bps := floor(_size / duration)
+				start = _start_position * bps
 			_:
 				push_error("Unsupported media type: '%s'. Closing." % _media_type)
 				return close()
 
-		_http.request_range(_start, _size - 1)
+		_http.request_range(start, _size - 1)
 
 
 func stop():

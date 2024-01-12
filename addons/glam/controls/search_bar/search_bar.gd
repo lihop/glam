@@ -24,7 +24,7 @@ func _on_Timer_timeout():
 	_on_LineEdit_text_entered(text)
 
 
-func _on_LineEdit_text_changed(new_text):
+func _on_LineEdit_text_changed(_new_text):
 	timer.start()
 
 
