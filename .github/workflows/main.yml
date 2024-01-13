@@ -18,7 +18,7 @@ jobs:
         version: [ "v3.3-stable", "v3.4.4-stable", "v3.5-beta4" ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
@@ -54,7 +54,7 @@ jobs:
     name: 'Check REUSE Compliance'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: REUSE Compliance Check
       uses: fsfe/reuse-action@v1
 
@@ -62,7 +62,7 @@ jobs:
     name: 'Check GDScript Format'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: actions/setup-python@v2
       with:
         python-version: 3.9
@@ -76,7 +76,7 @@ jobs:
     name: 'Check Archive'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Create git archive
       run: git archive -o archive.zip HEAD
     - name: Extract archive
