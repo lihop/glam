@@ -60,7 +60,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: REUSE Compliance Check
-      uses: fsfe/reuse-action@v1
+      uses: fsfe/reuse-action@v2
 
   gdformat-check:
     name: 'Check GDScript Format'
@@ -88,7 +88,7 @@ jobs:
     - name: Copy extracted archive to working directory
       run: cp -avr /tmp/unzipped ./unzipped
     - name: REUSE compliance check
-      uses: fsfe/reuse-action@v1
+      uses: fsfe/reuse-action@v2
       with:
         args: --root ./unzipped/addons/glam lint
     - name: Check that archive only contains addons directory
