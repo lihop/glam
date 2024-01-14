@@ -6,15 +6,26 @@
 
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
-
 # The above only works properly for Git 2.10+, so for older versions
 # we need to manually list the binary files we don't want modified.
 *.mp3 binary
 *.png binary
 
-# Exclude all top-level files and directories (except addons) from zip downloads.
-# This makes installing through the AssetLib easier, because no files and folders
-# need to be unchecked.
-/**				        export-ignore
-/addons/glam			!export-ignore
-/addons/glam/**			!export-ignore
+# Files to exclude from asset-lib download.
+/LICENSES export-ignore
+/assets export-ignore
+/addons/gd-plug export-ignore
+/docs export-ignore
+/misc export-ignore
+/CREDITS.md export-ignore
+/Justfile export-ignore
+/LICENSE export-ignore
+/README.md export-ignore
+/default_env.tres export-ignore
+/icon.png export-ignore
+/icon.png.import export-ignore
+/plug.gd export-ignore
+/project.godot export-ignore
+/requirements.txt export-ignore
+/*.* export-ignore
+/.* export-ignore

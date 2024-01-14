@@ -1,5 +1,7 @@
 # SPDX-FileCopyrightText: none
 # SPDX-License-Identifier: CC0-1.0
+default_install_hook_types: [pre-commit, post-commit]
+default_stages: [pre-commit, post-commit]
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.4.0
@@ -45,3 +47,10 @@ repos:
       (?x)^(
           addons/gd-plug/|
       )
+- repo: https://github.com/lihop/setup-godot
+  rev: 'c09abffba92b976821bd6012ad2c8407ba0486b4'
+  hooks:
+    - id: validate-git-archive
+      args: [addons/glam]
+      stages: [post-commit]
+      always_run: true
